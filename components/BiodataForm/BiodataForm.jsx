@@ -1,9 +1,76 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import AddFieldModal from '../AddFieldModal/AddFieldModal';
 import AddSectionModal from '../AddSectionModal/AddSectionModal';
+import { PDFDownloadLink, Document, Page, View, Text, Image, StyleSheet } from '@react-pdf/renderer';
+import PDFPreview from '../PDFPreview/PDFPreview';
 
+// Create styles for PDF document
+// Update the PDF styles in your BiodataForm.jsx file
+const styles = StyleSheet.create({
+    page: {
+        flexDirection: 'column',
+        backgroundColor: '#FFFFFF'
+    },
+    header: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        marginBottom: 30,
+        marginTop: 20 // Add top margin
+    },
+    profileImage: {
+        width: 100,
+        height: 100,
+        borderRadius: 50,
+        borderWidth: 3,
+        borderColor: '#9E2665',
+        marginRight: 20
+    },
+    name: {
+        fontSize: 22,
+        fontWeight: 'bold',
+        color: '#4649C0'
+    },
+    subtitle: {
+        fontSize: 14,
+        color: '#666666'
+    },
+    section: {
+        marginBottom: 25, // Increased margin between sections
+        marginHorizontal: 20 // Add horizontal margins
+    },
+    sectionTitle: {
+        fontSize: 16,
+        fontWeight: 'bold',
+        color: '#9E2665',
+        borderBottomWidth: 2,
+        borderBottomColor: '#9E2665',
+        marginBottom: 15, // Increased space after section title
+        paddingBottom: 5
+    },
+    fieldRow: {
+        flexDirection: 'row',
+        marginBottom: 3,
+        width: '100%'
+    },
+    fieldName: {
+        width: '40%',
+        fontSize: 11,
+        fontWeight: 'bold',
+        paddingRight: 10 // Add padding between field name and value
+    },
+    fieldValue: {
+        width: '60%',
+        fontSize: 11
+    },
+    templateBackground: {
+        position: 'absolute',
+        width: '100%',
+        height: '100%',
+        opacity: 0.8 // Make template slightly transparent so content is more visible
+    }
+});
 
-const BiodataForm = () => {
+const BiodataForm = ({ scrollToTemplates }) => {
     // Form state
     const [formData, setFormData] = useState({
         name: '',
@@ -76,7 +143,293 @@ const BiodataForm = () => {
     const [newFieldLabel, setNewFieldLabel] = useState('');
     const [newSectionName, setNewSectionName] = useState('');
     const [sectionFields, setSectionFields] = useState([]);
+    const [isDropdownOpen, setDropdownOpen] = useState(false);
 
+    // Add to your existing state
+    const [currentLanguage, setCurrentLanguage] = useState('English');
+    const [translations, setTranslations] = useState({
+
+        English: {
+            name: 'Name',
+            dateOfBirth: 'Date of Birth',
+            timeOfBirth: 'Time of Birth',
+            placeOfBirth: 'Place of Birth',
+            complexion: 'Complexion',
+            height: 'Height',
+            gotraCaste: 'Gotra/Caste',
+            occupation: 'Occupation',
+            income: 'Income',
+            education: 'Education',
+            fatherName: 'Father\'s Name',
+            fatherOccupation: 'Father\'s Occupation',
+            motherName: 'Mother\'s Name',
+            motherOccupation: 'Mother\'s Occupation',
+            siblings: 'Brother / Sister',
+            contactPerson: 'Contact Person',
+            contactNumber: 'Contact Number',
+            residentialAddress: 'Residential Address',
+            personalDetails: 'Personal Details',
+            familyDetails: 'Family Details',
+            contactDetails: 'Contact Details',
+            createYourBiodata: 'Create Your Biodata',
+            changeLanguage: 'Change Biodata Language',
+            uploadImage: 'Upload Image',
+            chooseTemplate: 'Choose Your Template',
+            addNewField: 'Add New Field',
+            addNewSection: 'Add New Section',
+            resetForm: 'Reset Form',
+            generateBiodata: 'Generate Biodata',
+            enter: 'Enter'
+        },
+        हिंदी: {
+            name: 'नाम',
+            dateOfBirth: 'जन्म तिथि',
+            timeOfBirth: 'जन्म समय',
+            placeOfBirth: 'जन्म स्थान',
+            complexion: 'रंग',
+            height: 'ऊंचाई',
+            gotraCaste: 'गोत्र/जाति',
+            occupation: 'व्यवसाय',
+            income: 'आय',
+            education: 'शिक्षा',
+            fatherName: 'पिता का नाम',
+            fatherOccupation: 'पिता का व्यवसाय',
+            motherName: 'माता का नाम',
+            motherOccupation: 'माता का व्यवसाय',
+            siblings: 'भाई / बहन',
+            contactPerson: 'संपर्क व्यक्ति',
+            contactNumber: 'संपर्क नंबर',
+            residentialAddress: 'निवास पता',
+            personalDetails: 'व्यक्तिगत विवरण',
+            familyDetails: 'पारिवारिक विवरण',
+            contactDetails: 'संपर्क विवरण',
+            createYourBiodata: 'अपना बायोडाटा बनाएं',
+            changeLanguage: 'बायोडाटा भाषा बदलें',
+            uploadImage: 'तस्वीर अपलोड करें',
+            chooseTemplate: 'अपना टेम्पलेट चुनें',
+            addNewField: 'नया फील्ड जोड़ें',
+            addNewSection: 'नया सेक्शन जोड़ें',
+            resetForm: 'फॉर्म रीसेट करें',
+            generateBiodata: 'बायोडाटा जनरेट करें',
+            enter: 'दर्ज करें'
+        },
+        मराठी: {
+            name: 'नाव',
+            dateOfBirth: 'जन्मतारीख',
+            timeOfBirth: 'जन्मवेळ',
+            placeOfBirth: 'जन्मस्थान',
+            complexion: 'रंग',
+            height: 'उंची',
+            gotraCaste: 'गोत्र/जात',
+            occupation: 'व्यवसाय',
+            income: 'उत्पन्न',
+            education: 'शिक्षण',
+            fatherName: 'वडिलांचे नाव',
+            fatherOccupation: 'वडिलांचा व्यवसाय',
+            motherName: 'आईचे नाव',
+            motherOccupation: 'आईचा व्यवसाय',
+            siblings: 'भाऊ / बहीण',
+            contactPerson: 'संपर्क व्यक्ती',
+            contactNumber: 'संपर्क क्रमांक',
+            residentialAddress: 'निवासी पत्ता',
+            personalDetails: 'वैयक्तिक तपशील',
+            familyDetails: 'कौटुंबिक तपशील',
+            contactDetails: 'संपर्क तपशील',
+            createYourBiodata: 'तुमचे बायोडाटा तयार करा',
+            changeLanguage: 'बायोडाटा भाषा बदला',
+            uploadImage: 'प्रतिमा अपलोड करा',
+            chooseTemplate: 'तुमचे टेम्पलेट निवडा',
+            addNewField: 'नवीन फील्ड जोडा',
+            addNewSection: 'नवीन विभाग जोडा',
+            resetForm: 'फॉर्म रीसेट करा',
+            generateBiodata: 'बायोडाटा जनरेट करा',
+            enter: 'प्रविष्ट करा'
+        },
+        বাংলা: {
+            name: 'নাম',
+            dateOfBirth: 'জন্ম তারিখ',
+            timeOfBirth: 'জন্ম সময়',
+            placeOfBirth: 'জন্মস্থান',
+            complexion: 'বর্ণ',
+            height: 'উচ্চতা',
+            gotraCaste: 'গোত্র/জাতি',
+            occupation: 'পেশা',
+            income: 'আয়',
+            education: 'শিক্ষা',
+            fatherName: 'পিতার নাম',
+            fatherOccupation: 'পিতার পেশা',
+            motherName: 'মাতার নাম',
+            motherOccupation: 'মাতার পেশা',
+            siblings: 'ভাই / বোন',
+            contactPerson: 'যোগাযোগ ব্যক্তি',
+            contactNumber: 'যোগাযোগ নম্বর',
+            residentialAddress: 'বাসস্থানের ঠিকানা',
+            personalDetails: 'ব্যক্তিগত বিবরণ',
+            familyDetails: 'পারিবারিক বিবরণ',
+            contactDetails: 'যোগাযোগের বিবরণ',
+            createYourBiodata: 'আপনার বায়োডাটা তৈরি করুন',
+            changeLanguage: 'বায়োডাটা ভাষা পরিবর্তন করুন',
+            uploadImage: 'ছবি আপলোড করুন',
+            chooseTemplate: 'আপনার টেমপ্লেট নির্বাচন করুন',
+            addNewField: 'নতুন ফিল্ড যোগ করুন',
+            addNewSection: 'নতুন বিভাগ যোগ করুন',
+            resetForm: 'ফর্ম রিসেট করুন',
+            generateBiodata: 'বায়োডাটা তৈরি করুন',
+            enter: 'প্রবেশ করান'
+        },
+        ગુજરાતી: {
+            name: 'નામ',
+            dateOfBirth: 'જન્મ તારીખ',
+            timeOfBirth: 'જન્મ સમય',
+            placeOfBirth: 'જન્મ સ્થળ',
+            complexion: 'રંગ',
+            height: 'ઊંચાઈ',
+            gotraCaste: 'ગોત્ર/જ્ઞાતિ',
+            occupation: 'વ્યવસાય',
+            income: 'આવક',
+            education: 'શિક્ષણ',
+            fatherName: 'પિતાનું નામ',
+            fatherOccupation: 'પિતાનો વ્યવસાય',
+            motherName: 'માતાનું નામ',
+            motherOccupation: 'માતાનો વ્યવસાય',
+            siblings: 'ભાઈ / બહેન',
+            contactPerson: 'સંપર્ક વ્યક્તિ',
+            contactNumber: 'સંપર્ક નંબર',
+            residentialAddress: 'નિવાસ સરનામું',
+            personalDetails: 'વ્યક્તિગત વિગતો',
+            familyDetails: 'કુટુંબ વિગતો',
+            contactDetails: 'સંપર્ક વિગતો',
+            createYourBiodata: 'તમારું બાયોડેટા બનાવો',
+            changeLanguage: 'બાયોડેટા ભાષા બદલો',
+            uploadImage: 'છબી અપલોડ કરો',
+            chooseTemplate: 'તમારું ટેમ્પલેટ પસંદ કરો',
+            addNewField: 'નવું ફીલ્ડ ઉમેરો',
+            addNewSection: 'નવો વિભાગ ઉમેરો',
+            resetForm: 'ફોર્મ રીસેટ કરો',
+            generateBiodata: 'બાયોડેટા જનરેટ કરો',
+            enter: 'દાખલ કરો'
+        },
+        தமிழ்: {
+            name: 'பெயர்',
+            dateOfBirth: 'பிறந்த தேதி',
+            timeOfBirth: 'பிறந்த நேரம்',
+            placeOfBirth: 'பிறந்த இடம்',
+            complexion: 'நிறம்',
+            height: 'உயரம்',
+            gotraCaste: 'கோத்திரம்/சாதி',
+            occupation: 'தொழில்',
+            income: 'வருமானம்',
+            education: 'கல்வி',
+            fatherName: 'தந்தையின் பெயர்',
+            fatherOccupation: 'தந்தையின் தொழில்',
+            motherName: 'தாயின் பெயர்',
+            motherOccupation: 'தாயின் தொழில்',
+            siblings: 'சகோதரர் / சகோதரி',
+            contactPerson: 'தொடர்பு நபர்',
+            contactNumber: 'தொடர்பு எண்',
+            residentialAddress: 'வசிக்கும் முகவரி',
+            personalDetails: 'தனிப்பட்ட விவரங்கள்',
+            familyDetails: 'குடும்ப விவரங்கள்',
+            contactDetails: 'தொடர்பு விவரங்கள்',
+            createYourBiodata: 'உங்கள் உயிரியல் தரவை உருவாக்கவும்',
+            changeLanguage: 'உயிரியல் தரவு மொழியை மாற்றவும்',
+            uploadImage: 'படத்தை பதிவேற்றவும்',
+            chooseTemplate: 'உங்கள் டெம்ப்ளேட்டைத் தேர்ந்தெடுக்கவும்',
+            addNewField: 'புதிய புலத்தைச் சேர்க்கவும்',
+            addNewSection: 'புதிய பிரிவைச் சேர்க்கவும்',
+            resetForm: 'படிவத்தை மீட்டமைக்கவும்',
+            generateBiodata: 'உயிரியல் தரவை உருவாக்கவும்',
+            enter: 'உள்ளிடவும்'
+        },
+        తెలుగు: {
+            name: 'పేరు',
+            dateOfBirth: 'పుట్టిన తేదీ',
+            timeOfBirth: 'పుట్టిన సమయం',
+            placeOfBirth: 'పుట్టిన స్థలం',
+            complexion: 'రంగు',
+            height: 'ఎత్తు',
+            gotraCaste: 'గోత్రం/కులం',
+            occupation: 'వృత్తి',
+            income: 'ఆదాయం',
+            education: 'విద్య',
+            fatherName: 'తండ్రి పేరు',
+            fatherOccupation: 'తండ్రి వృత్తి',
+            motherName: 'తల్లి పేరు',
+            motherOccupation: 'తల్లి వృత్తి',
+            siblings: 'సోదరుడు / సోదరి',
+            contactPerson: 'సంప్రదించే వ్యక్తి',
+            contactNumber: 'సంప్రదించే నంబర్',
+            residentialAddress: 'నివాస సరుకు',
+            personalDetails: 'వ్యక్తిగత వివరాలు',
+            familyDetails: 'కుటుంబ వివరాలు',
+            contactDetails: 'సంప్రదింపు వివరాలు',
+            createYourBiodata: 'మీ బయోడేటాను సృష్టించండి',
+            changeLanguage: 'బయోడేటా భాష మార్చండి',
+            uploadImage: 'చిత్రాన్ని అప్లోడ్ చేయండి',
+            chooseTemplate: 'మీ టెంప్లేట్ ఎంచుకోండి',
+            addNewField: 'కొత్త ఫీల్డ్ జోడించండి',
+            addNewSection: 'కొత్త సెక్షన్ జోడించండి',
+            resetForm: 'ఫారమ్ రీసెట్ చేయండి',
+            generateBiodata: 'బయోడేటా జనరేట్ చేయండి',
+            enter: 'నమోదు చేయండి'
+        }
+
+        // Add translations for other languages similarly
+    });
+
+    const handleLanguageChange = (language) => {
+        setCurrentLanguage(language);
+        setDropdownOpen(false);
+
+        // Update field labels
+        const newFieldLabels = { ...fieldLabels };
+        Object.keys(newFieldLabels).forEach(key => {
+            if (translations[language] && translations[language][key]) {
+                newFieldLabels[key] = translations[language][key];
+            }
+        });
+        setFieldLabels(newFieldLabels);
+    };
+
+    // PDF preview modal state
+    const [showPdfPreview, setShowPdfPreview] = useState(false);
+
+    // State for selected template
+    const [selectedTemplate, setSelectedTemplate] = useState(null);
+
+    useEffect(() => {
+        // Get selected template on initial load
+        const template = localStorage.getItem('selectedTemplate');
+        if (template) {
+            setSelectedTemplate(template);
+        }
+
+        // Listen for storage events (when localStorage changes in another tab)
+        const handleStorageChange = (e) => {
+            if (e.key === 'selectedTemplate') {
+                setSelectedTemplate(e.newValue);
+            }
+        };
+
+        // Listen for our custom template selection event
+        const handleTemplateSelected = (e) => {
+            setSelectedTemplate(e.detail.template);
+        };
+
+        window.addEventListener('storage', handleStorageChange);
+        window.addEventListener('templateSelected', handleTemplateSelected);
+
+        return () => {
+            window.removeEventListener('storage', handleStorageChange);
+            window.removeEventListener('templateSelected', handleTemplateSelected);
+        };
+    }, []);
+
+    // Handle removing the template
+    const removeSelectedTemplate = () => {
+        setSelectedTemplate(null);
+        localStorage.removeItem('selectedTemplate');
+    };
 
     // Handle input changes
     const handleChange = (e) => {
@@ -237,7 +590,6 @@ const BiodataForm = () => {
         setShowAddSectionModal(false);
     };
 
-
     // Validate form
     const validateForm = () => {
         let tempErrors = {};
@@ -262,13 +614,72 @@ const BiodataForm = () => {
         return isValid;
     };
 
+    // Create PDF document component
+
+    // Updated MyDocument component
+    const MyDocument = () => (
+        <Document>
+            <Page size="A4" style={styles.page}>
+                {/* Template background (as watermark) */}
+                {selectedTemplate && (
+                    <View style={styles.templateBackground}>
+                        <Image src={selectedTemplate} />
+                    </View>
+                )}
+
+                {/* Content wrapper with proper margins */}
+                <View style={{ marginHorizontal: 30, marginVertical: 40 }}>
+                    {/* Header with profile image */}
+                    <View style={styles.header}>
+                        {profileImage && (
+                            <Image style={styles.profileImage} src={profileImage} />
+                        )}
+                        <View>
+                            <Text style={styles.name}>{formData.name || 'Your Name'}</Text>
+                            <Text style={styles.subtitle}>Biodata</Text>
+                        </View>
+                    </View>
+
+                    {/* Render all sections */}
+                    {Object.keys(sections).map(section => (
+                        sections[section] && (
+                            <View key={section} style={styles.section}>
+                                <Text style={styles.sectionTitle}>
+                                    {section === 'personal' ? 'Personal Details' :
+                                        section === 'family' ? 'Family Details' :
+                                            section === 'contact' ? 'Contact Details' :
+                                                section.charAt(0).toUpperCase() + section.slice(1)}
+                                </Text>
+
+                                <View style={{ flexDirection: 'column', flexWrap: 'wrap' }}>
+                                    {fieldOrder[section]?.map((fieldName) => (
+                                        <View key={fieldName} style={styles.fieldRow}>
+                                            <Text style={styles.fieldName}>{fieldLabels[fieldName]}:</Text>
+                                            <Text style={styles.fieldValue}>{formData[fieldName] || '-'}</Text>
+                                        </View>
+                                    ))}
+                                </View>
+                            </View>
+                        )
+                    ))}
+                </View>
+            </Page>
+        </Document>
+    );
+
     // Handle form submission
     const handleSubmit = (e) => {
         e.preventDefault();
 
         if (validateForm()) {
-            console.log('Form data:', formData);
-            alert('Form submitted successfully!');
+            if (!selectedTemplate) {
+                alert('Please select a template first');
+                scrollToTemplates();
+                return;
+            }
+
+            // Show preview
+            setShowPdfPreview(true);
         } else {
             console.log('Form validation failed');
         }
@@ -344,7 +755,7 @@ const BiodataForm = () => {
                         name={fieldName}
                         value={formData[fieldName]}
                         onChange={handleChange}
-                        placeholder={`Enter ${fieldLabels[fieldName]}`}
+                        placeholder={`${translations[currentLanguage].enter} ${fieldLabels[fieldName]}`}
                         className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 ${errors[fieldName] ? 'border-red-500 focus:ring-red-200' : 'border-gray-300 focus:ring-blue-200'}`}
                     />
                 );
@@ -379,7 +790,7 @@ const BiodataForm = () => {
                 </div>
                 <button
                     type="button"
-                    className="ml-2 p-1 text-red-500 hover:bg-red-100 rounded"
+                    className="ml-2 p-1 text-[#9E2665] hover:bg-red-100 rounded"
                     onClick={() => deleteField(section, fieldName)}
                 >
                     <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -398,9 +809,14 @@ const BiodataForm = () => {
             <div key={sectionKey} className="mb-8">
                 <div className="flex items-center justify-between mb-4">
                     <h2 className="text-xl font-semibold text-gray-800 flex items-center">
-                        {sectionKey === 'personal' ? 'Personal Details' :
+                        {/* {sectionKey === 'personal' ? 'Personal Details' :
                             sectionKey === 'family' ? 'Family Details' :
-                                sectionKey === 'contact' ? 'Contact Details' : sectionLabel}
+                                sectionKey === 'contact' ? 'Contact Details' : sectionLabel} */}
+                        {translations[currentLanguage][`${sectionKey}Details`] ||
+                            (sectionKey === 'personal' ? translations[currentLanguage].personalDetails :
+                                sectionKey === 'family' ? translations[currentLanguage].familyDetails :
+                                    sectionKey === 'contact' ? translations[currentLanguage].contactDetails :
+                                        sectionLabel)}
                         <button
                             type="button"
                             className="ml-2 text-gray-500 hover:text-gray-700"
@@ -413,7 +829,7 @@ const BiodataForm = () => {
                     <button
                         type="button"
                         onClick={() => removeSection(sectionKey)}
-                        className="text-gray-500 hover:text-red-700"
+                        className="text-gray-500 hover:text-[#9E2665]"
                     >
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
@@ -436,19 +852,50 @@ const BiodataForm = () => {
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                         </svg>
-                        Add New Field
+                        {/* Add New Field */}
+                        {translations[currentLanguage].addNewField}
                     </button>
                 </div>
             </div>
         );
     };
 
-
     return (
         <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
             <div className="max-w-4xl mx-auto">
                 <div className="text-center mb-8">
-                    <h2 className="text-[30px] sm:text-[45px] text-[#B92753] font-bold mb-3 bg-white rounded-lg shadow-2xl inline py-3 px-5">Create Your Biodata</h2>
+                    <h2 className="text-[30px] sm:text-[45px] text-[#B92753] font-bold mb-3 bg-white rounded-lg shadow-2xl inline py-3 px-5">
+                        {/* Create Your Biodata */}
+                        {translations[currentLanguage].createYourBiodata}
+                    </h2>
+                </div>
+
+                <div className='text-center mb-8 relative'> {/* Added relative here */}
+                    <button
+                        className="relative flex items-center bg-white rounded-lg shadow-2xl py-3 px-5"
+                        onClick={() => setDropdownOpen(!isDropdownOpen)}
+                    >
+                        <p className='text-[#B92753] hover:text-[#4649C0] font-medium'>Change Biodata Language</p>
+                        <svg className="size-8 text-[#B92753] hover:text-[#4649C0]" fill="currentColor" role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Translate</title><path d="M21.056 12h-2a1 1 0 000 2v2H17.87a2.965 2.965 0 00.185-1 3 3 0 00-5.598-1.5 1 1 0 101.732 1 1 1 0 01.866-.5 1 1 0 010 2 1 1 0 000 2 1 1 0 110 2 1 1 0 01-.866-.5 1 1 0 10-1.732 1 3 3 0 005.598-1.5 2.965 2.965 0 00-.185-1h1.185v3a1 1 0 002 0v-7a1 1 0 100-2zm-11.97-.757a1 1 0 101.94-.486l-1.757-7.03a2.28 2.28 0 00-4.425 0l-1.758 7.03a1 1 0 101.94.486L5.585 9h2.94zM6.086 7l.697-2.787a.292.292 0 01.546 0L8.026 7zm7.97 0h1a1.001 1.001 0 011 1v1a1 1 0 002 0V8a3.003 3.003 0 00-3-3h-1a1 1 0 000 2zm-4 9h-1a1.001 1.001 0 01-1-1v-1a1 1 0 00-2 0v1a3.003 3.003 0 003 3h1a1 1 0 000-2z"></path></svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[#B92753] hover:text-[#4649C0] lucide lucide-chevron-down relative top-[1px] ml-1 h-3 w-3 transition duration-200 group-data-[state=open]:rotate-180" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg>
+                    </button>
+
+                    {/* Language Dropdown */}
+                    {isDropdownOpen && (
+                        <div className="absolute left-[15%] transform -translate-x-1/2 mt-2 w-48 bg-white shadow-lg rounded-md z-[999]">
+                            <ul className="text-[#B92753] font-medium">
+                                {['English', 'हिंदी', 'मराठी', 'বাংলা', 'ગુજરાતી', 'தமிழ்', 'తెలుగు'].map((lang) => (
+                                    <li
+                                        key={lang}
+                                        className="hover:bg-[#B92753] hover:text-white px-4 py-2 cursor-pointer"
+                                        onClick={() => handleLanguageChange(lang)}
+                                    >
+                                        {lang}
+                                    </li>
+                                ))}
+                            </ul>
+                        </div>
+                    )}
                 </div>
 
                 <div className="bg-white shadow-md rounded-lg p-6 mb-8">
@@ -458,10 +905,11 @@ const BiodataForm = () => {
                                 <img src={profileImage} alt="Profile" className="w-full h-full object-cover" />
                             ) : (
                                 <div className='flex items-center py-10 justify-evenly flex-col'>
-                                    <p className='font-bold'>Upload Image</p>
+                                    {/* <p className='font-bold'>Upload Image</p> */}
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-camera "><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"></path><circle cx="12" cy="13" r="3"></circle></svg>
-                                </div>
+                                    <p className='font-bold text-center'>{translations[currentLanguage].uploadImage}</p>
 
+                                </div>
                             )}
                             <input
                                 type="file"
@@ -471,9 +919,33 @@ const BiodataForm = () => {
                                 onChange={handleImageUpload}
                             />
                         </div>
-
-                        <div className='relative w-32 h-32 bg-gray-100 rounded-2xl overflow-hidden border-2 border-gray-300' >
-
+                        <div
+                            className='relative w-32 h-32 bg-gray-100 rounded-2xl overflow-hidden border-2 border-gray-300 cursor-pointer'
+                        >
+                            {selectedTemplate ? (
+                                <div className="relative w-full h-full">
+                                    <img
+                                        src={selectedTemplate}
+                                        alt="Selected template"
+                                        className="w-full h-full object-cover"
+                                    />
+                                    <button
+                                        className="absolute top-1 right-1 bg-[#B92753] text-white rounded-full p-1 hover:bg-[#4649C0]"
+                                        onClick={removeSelectedTemplate}
+                                    >
+                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            ) : (
+                                <div onClick={scrollToTemplates}>
+                                    {/* <p className='font-bold text-center py-9 px-3'>Choose Your Template</p> */}
+                                    <p className='font-bold text-center py-9 px-3'>
+                                        {translations[currentLanguage].chooseTemplate}
+                                    </p>
+                                </div>
+                            )}
                         </div>
                     </div>
 
@@ -490,7 +962,8 @@ const BiodataForm = () => {
                                 onClick={addNewSection}
                                 className='py-2 px-4 flex items-center bg-[#4649C0] text-white text-base md:text-[14px] font-medium rounded-md hover:bg-[#9E2665]'
                             >
-                                + Add New Section
+                                {/* + Add New Section */}
+                                + {translations[currentLanguage].addNewSection}
                             </button>
                             <div className='flex justify-between gap-12'>
                                 <button
@@ -498,14 +971,16 @@ const BiodataForm = () => {
                                     onClick={resetForm}
                                     className='py-2 px-4 flex items-center bg-[#4649C0] text-white text-base md:text-[14px] font-medium rounded-md hover:bg-[#9E2665]'
                                 >
-                                    Reset Form
+                                    {/* Reset Form */}
+                                    {translations[currentLanguage].resetForm}
                                 </button>
 
                                 <button
                                     type="submit"
                                     className='py-2 px-4 flex items-center bg-[#4649C0] text-white text-base md:text-[14px] font-medium rounded-md hover:bg-[#9E2665]'
                                 >
-                                    Generate Biodata
+                                    {/* Generate Biodata */}
+                                    {translations[currentLanguage].generateBiodata}
                                 </button>
                             </div>
                         </div>
@@ -536,6 +1011,51 @@ const BiodataForm = () => {
                 addSectionField={addSectionField}
                 updateSectionField={updateSectionField}
             />
+
+            {/* PDF Preview Modal */}
+            {showPdfPreview && (
+                <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50">
+                    <div className="bg-white p-6 rounded-lg shadow-xl w-full max-w-4xl max-h-screen overflow-hidden">
+                        <div className="flex justify-between mb-4">
+                            <h3 className="text-lg font-semibold">Biodata Preview</h3>
+                            <button
+                                onClick={() => setShowPdfPreview(false)}
+                                className="text-gray-500 hover:text-gray-700"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                            </button>
+                        </div>
+
+                        {/* PDF Preview Content */}
+                        <div className="border border-gray-200 rounded overflow-hidden">
+                            <PDFPreview
+                                formData={formData}
+                                profileImage={profileImage}
+                                selectedTemplate={selectedTemplate}
+                                fieldLabels={fieldLabels}
+                                fieldOrder={fieldOrder}
+                                sections={sections}
+                            />
+                        </div>
+
+                        <div className="mt-6 flex justify-end">
+                            <PDFDownloadLink
+                                document={<MyDocument />}
+                                fileName={`${formData.name || 'biodata'}.pdf`}
+                                className="py-2 px-6 bg-[#9E2665] text-white font-medium rounded-md hover:bg-[#4649C0]"
+                            >
+                                {({ loading }) => (
+                                    loading ? 'Preparing document...' : 'Download PDF'
+                                )}
+                            </PDFDownloadLink>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+
         </div>
     );
 };

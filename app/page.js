@@ -11,19 +11,34 @@ import { BiSolidQuoteLeft } from "react-icons/bi";
 import "swiper/css";
 import 'swiper/css/navigation';
 import BiodataForm from "@/components/BiodataForm/BiodataForm";
+import { useEffect, useRef } from "react";
 
 
 const design = [
-  "/images/biodata-bg-1.jpg",
-  "/images/biodata-bg-2.jpg",
-  "/images/biodata-bg-3.jpg",
-  "/images/biodata-bg-4.jpg",
-  "/images/biodata-bg-5.jpg",
-  "/images/biodata-bg-6.jpg",
-  "/images/biodata-bg-7.jpg",
-  "/images/biodata-bg-8.jpg",
-  "/images/biodata-bg-9.jpg",
-  "/images/biodata-bg-10.jpg",
+  {
+    id: "1",
+    image: "/images/biodata-bg-1.jpg"
+  },
+  {
+    id: "2",
+    image: "/images/biodata-bg-2.jpg"
+  },
+  {
+    id: "3",
+    image: "/images/biodata-bg-3.jpg"
+  },
+  {
+    id: "4",
+    image: "/images/biodata-bg-4.jpg"
+  },
+  {
+    id: "5",
+    image: "/images/biodata-bg-5.jpg"
+  },
+  {
+    id: "6",
+    image: "/images/biodata-bg-6.jpg"
+  }
 ]
 
 const reviews = [
@@ -53,11 +68,42 @@ const reviews = [
 
 export default function Home() {
 
+  const templatesRef = useRef(null);
+  const biodataFormRef = useRef(null);
+
+  // Function to scroll to templates section
+  const scrollToTemplates = () => {
+    if (templatesRef.current) {
+      templatesRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  };
+
+  // Add this scroll function
+  const scrollToBiodataForm = () => {
+    if (biodataFormRef.current) {
+      biodataFormRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
+  };
+
+  // In your _document.js or root layout
+  useEffect(() => {
+    if (typeof document !== 'undefined') {
+      document.body.removeAttribute('cz-shortcut-listen');
+    }
+  }, []);
+
   return (
     <>
 
       {/* navbar section start */}
-      <Navbar />
+      <Navbar scrollToBiodataForm={scrollToBiodataForm} />
+      {/* <Navbar /> */}
       {/* navbar section end */}
 
       {/* hero section start */}
@@ -82,7 +128,9 @@ export default function Home() {
             fully customizable, elegantly designed marriage biodata formats
           </p>
           <div className="flex justify-center md:justify-start">
-            <button className="py-2 px-4 md:px-10 bg-[#9E2665] text-white text-base md:text-[18px] font-medium rounded-md hover:bg-[#4649C0]">
+            <button className="py-2 px-4 md:px-10 bg-[#9E2665] text-white text-base md:text-[18px] font-medium rounded-md hover:bg-[#4649C0]"
+              onClick={scrollToBiodataForm}
+            >
               Create Biodata
             </button>
           </div>
@@ -103,7 +151,7 @@ export default function Home() {
       {/* hero section end */}
 
       {/* templates slider section start */}
-      <div className="bg-[#B92753]">
+      <div ref={templatesRef} className="bg-[#B92753]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-[60px] mt-[-150px]">
           <h2 className="text-[30px] sm:text-[45px] text-[white]  font-bold mb-5">Popular Marriage Biodata Designs</h2>
           <h6 className="text-[16px] sm:text-[20px] text-[white] mb-5">Take a look at our most downloaded marriage biodata templates! You'll find popular layouts, stylish designs, and creative content ideas to inspire your own biodata. Discover what works best and make yours stand out!</h6>
@@ -145,15 +193,33 @@ export default function Home() {
                 design.map((item) => (
                   <SwiperSlide>
                     <div className="rounded-[20px] overflow-hidden relative still-data">
-                      <Image
-                        src={item}
-                        alt="Template"
-                        width={1000}
-                        height={500}
-                        className="temp-img"
-                      />
+                      <div className="w-[389px] h-[550px]">
+                        <Image
+                          src={item.image}
+                          alt="Template"
+                          width={1000}
+                          height={500}
+                          className="temp-img"
+                        />
+                      </div>
+
                       <div className="back-effect">
-                        <button className="select-btn">Select Template</button>
+                        <button className="select-btn"
+                          // In page.js, modify the onClick handler for the Select Template button
+                          onClick={() => {
+                            // Set selected template in localStorage
+                            localStorage.setItem('selectedTemplate', item.image);
+
+                            // Dispatch a custom event to notify BiodataForm component
+                            const event = new CustomEvent('templateSelected', {
+                              detail: { template: item.image }
+                            });
+                            window.dispatchEvent(event);
+
+                            // Scroll to templates section
+                            scrollToTemplates();
+                          }}
+                        >Select Template</button>
                       </div>
                     </div>
 
@@ -168,7 +234,10 @@ export default function Home() {
       {/* templates slider section end */}
 
       {/* create biodata section start */}
-      <BiodataForm />
+      <div ref={biodataFormRef}>
+        <BiodataForm scrollToTemplates={scrollToTemplates} />
+      </div>
+      {/* <BiodataForm scrollToTemplates={scrollToTemplates} /> */}
       {/* create biodata section end */}
 
       {/* reviews section start */}
