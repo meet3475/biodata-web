@@ -1,15 +1,56 @@
+'use client';
 import React, { useEffect, useState } from 'react';
 import AddFieldModal from '../AddFieldModal/AddFieldModal';
 import AddSectionModal from '../AddSectionModal/AddSectionModal';
-import { PDFDownloadLink, Document, Page, View, Text, Image, StyleSheet } from '@react-pdf/renderer';
+import { PDFDownloadLink, Document, Page, View, Text, Image, StyleSheet, Font } from '@react-pdf/renderer';
 import PDFPreview from '../PDFPreview/PDFPreview';
 
 // Create styles for PDF document
+
+Font.register({
+    family: 'NotoSans',
+    fonts: [
+        { src: '/fonts/NotoSans-Regular.ttf', fontWeight: 'normal' }
+    ]
+});
+
+Font.register({
+    family: 'NotoSansDevanagari',
+    fonts: [
+        { src: '/fonts/NotoSansDevanagari-Regular.ttf', fontWeight: 'normal' }
+    ]
+});
+
+Font.register({
+    family: 'NotoSansGujarati',
+    fonts: [
+        { src: '/fonts/NotoSansGujarati-Regular.ttf', fontWeight: 'normal' }
+    ]
+});
+
+Font.register({
+    family: 'NotoSansTamil',
+    fonts: [
+        { src: '/fonts/NotoSansTamil-Regular.ttf', fontWeight: 'normal' }
+    ]
+});
+
+Font.register({
+    family: 'NotoSansBengali',
+    fonts: [
+        { src: '/fonts/NotoSansBengali-Regular.ttf', fontWeight: 'normal' }
+    ]
+});
+
 // Update the PDF styles in your BiodataForm.jsx file
 const styles = StyleSheet.create({
     page: {
         flexDirection: 'column',
-        backgroundColor: '#FFFFFF'
+        backgroundColor: '#FFFFFF',
+        fontFamily: 'NotoSans'
+    },
+    text: {
+        fontFamily: 'NotoSans'
     },
     header: {
         flexDirection: 'row',
@@ -148,7 +189,6 @@ const BiodataForm = ({ scrollToTemplates }) => {
     // Add to your existing state
     const [currentLanguage, setCurrentLanguage] = useState('English');
     const [translations, setTranslations] = useState({
-
         English: {
             name: 'Name',
             dateOfBirth: 'Date of Birth',
@@ -179,7 +219,18 @@ const BiodataForm = ({ scrollToTemplates }) => {
             addNewSection: 'Add New Section',
             resetForm: 'Reset Form',
             generateBiodata: 'Generate Biodata',
-            enter: 'Enter'
+            enter: 'Enter',
+            addNewField: 'Add New Field',
+            fieldName: 'Field Name',
+            fieldLabel: 'Field Label',
+            sectionName: 'Section Name',
+            sectionFields: 'Section Fields',
+            enterFieldName: 'Enter field name (e.g. Hobbies)',
+            enterFieldLabel: 'Enter field label (e.g. Your Hobbies)',
+            enterSectionName: 'Enter section name (e.g. Education Details)',
+            cancel: 'Cancel',
+            addField: 'Add Field',
+            addSection: 'Add Section'
         },
         हिंदी: {
             name: 'नाम',
@@ -211,7 +262,18 @@ const BiodataForm = ({ scrollToTemplates }) => {
             addNewSection: 'नया सेक्शन जोड़ें',
             resetForm: 'फॉर्म रीसेट करें',
             generateBiodata: 'बायोडाटा जनरेट करें',
-            enter: 'दर्ज करें'
+            enter: 'दर्ज करें',
+            addNewField: 'नया फील्ड जोड़ें',
+            fieldName: 'फील्ड नाम',
+            fieldLabel: 'फील्ड लेबल',
+            sectionName: 'सेक्शन नाम',
+            sectionFields: 'सेक्शन फील्ड्स',
+            enterFieldName: 'फील्ड नाम दर्ज करें (जैसे शौक)',
+            enterFieldLabel: 'फील्ड लेबल दर्ज करें (जैसे आपके शौक)',
+            enterSectionName: 'सेक्शन नाम दर्ज करें (जैसे शिक्षा विवरण)',
+            cancel: 'रद्द करें',
+            addField: 'फील्ड जोड़ें',
+            addSection: 'सेक्शन जोड़ें'
         },
         मराठी: {
             name: 'नाव',
@@ -243,7 +305,18 @@ const BiodataForm = ({ scrollToTemplates }) => {
             addNewSection: 'नवीन विभाग जोडा',
             resetForm: 'फॉर्म रीसेट करा',
             generateBiodata: 'बायोडाटा जनरेट करा',
-            enter: 'प्रविष्ट करा'
+            enter: 'प्रविष्ट करा',
+            addNewField: 'नवीन फील्ड जोडा',
+            fieldName: 'फील्ड नाव',
+            fieldLabel: 'फील्ड लेबल',
+            sectionName: 'विभाग नाव',
+            sectionFields: 'विभाग फील्ड्स',
+            enterFieldName: 'फील्ड नाव प्रविष्ट करा (उदा. छंद)',
+            enterFieldLabel: 'फील्ड लेबल प्रविष्ट करा (उदा. तुमचे छंद)',
+            enterSectionName: 'विभाग नाव प्रविष्ट करा (उदा. शैक्षणिक तपशील)',
+            cancel: 'रद्द करा',
+            addField: 'फील्ड जोडा',
+            addSection: 'विभाग जोडा'
         },
         বাংলা: {
             name: 'নাম',
@@ -275,7 +348,18 @@ const BiodataForm = ({ scrollToTemplates }) => {
             addNewSection: 'নতুন বিভাগ যোগ করুন',
             resetForm: 'ফর্ম রিসেট করুন',
             generateBiodata: 'বায়োডাটা তৈরি করুন',
-            enter: 'প্রবেশ করান'
+            enter: 'প্রবেশ করান',
+            addNewField: 'নতুন ফিল্ড যোগ করুন',
+            fieldName: 'ফিল্ডের নাম',
+            fieldLabel: 'ফিল্ড লেবেল',
+            sectionName: 'বিভাগের নাম',
+            sectionFields: 'বিভাগের ফিল্ডসমূহ',
+            enterFieldName: 'ফিল্ডের নাম লিখুন (যেমন: শখ)',
+            enterFieldLabel: 'ফিল্ড লেবেল লিখুন (যেমন: আপনার শখ)',
+            enterSectionName: 'বিভাগের নাম লিখুন (যেমন: শিক্ষার বিবরণ)',
+            cancel: 'বাতিল',
+            addField: 'ফিল্ড যোগ করুন',
+            addSection: 'বিভাগ যোগ করুন'
         },
         ગુજરાતી: {
             name: 'નામ',
@@ -307,7 +391,18 @@ const BiodataForm = ({ scrollToTemplates }) => {
             addNewSection: 'નવો વિભાગ ઉમેરો',
             resetForm: 'ફોર્મ રીસેટ કરો',
             generateBiodata: 'બાયોડેટા જનરેટ કરો',
-            enter: 'દાખલ કરો'
+            enter: 'દાખલ કરો',
+            addNewField: 'નવું ફીલ્ડ ઉમેરો',
+            fieldName: 'ફીલ્ડ નામ',
+            fieldLabel: 'ફીલ્ડ લેબલ',
+            sectionName: 'સેક્શન નામ',
+            sectionFields: 'સેક્શન ફીલ્ડ્સ',
+            enterFieldName: 'ફીલ્ડ નામ દાખલ કરો (દા.ત. શોખ)',
+            enterFieldLabel: 'ફીલ્ડ લેબલ દાખલ કરો (દા.ત. તમારા શોખ)',
+            enterSectionName: 'સેક્શન નામ દાખલ કરો (દા.ત. શિક્ષણ વિગતો)',
+            cancel: 'રદ કરો',
+            addField: 'ફીલ્ડ ઉમેરો',
+            addSection: 'સેક્શન ઉમેરો'
         },
         தமிழ்: {
             name: 'பெயர்',
@@ -339,39 +434,18 @@ const BiodataForm = ({ scrollToTemplates }) => {
             addNewSection: 'புதிய பிரிவைச் சேர்க்கவும்',
             resetForm: 'படிவத்தை மீட்டமைக்கவும்',
             generateBiodata: 'உயிரியல் தரவை உருவாக்கவும்',
-            enter: 'உள்ளிடவும்'
-        },
-        తెలుగు: {
-            name: 'పేరు',
-            dateOfBirth: 'పుట్టిన తేదీ',
-            timeOfBirth: 'పుట్టిన సమయం',
-            placeOfBirth: 'పుట్టిన స్థలం',
-            complexion: 'రంగు',
-            height: 'ఎత్తు',
-            gotraCaste: 'గోత్రం/కులం',
-            occupation: 'వృత్తి',
-            income: 'ఆదాయం',
-            education: 'విద్య',
-            fatherName: 'తండ్రి పేరు',
-            fatherOccupation: 'తండ్రి వృత్తి',
-            motherName: 'తల్లి పేరు',
-            motherOccupation: 'తల్లి వృత్తి',
-            siblings: 'సోదరుడు / సోదరి',
-            contactPerson: 'సంప్రదించే వ్యక్తి',
-            contactNumber: 'సంప్రదించే నంబర్',
-            residentialAddress: 'నివాస సరుకు',
-            personalDetails: 'వ్యక్తిగత వివరాలు',
-            familyDetails: 'కుటుంబ వివరాలు',
-            contactDetails: 'సంప్రదింపు వివరాలు',
-            createYourBiodata: 'మీ బయోడేటాను సృష్టించండి',
-            changeLanguage: 'బయోడేటా భాష మార్చండి',
-            uploadImage: 'చిత్రాన్ని అప్లోడ్ చేయండి',
-            chooseTemplate: 'మీ టెంప్లేట్ ఎంచుకోండి',
-            addNewField: 'కొత్త ఫీల్డ్ జోడించండి',
-            addNewSection: 'కొత్త సెక్షన్ జోడించండి',
-            resetForm: 'ఫారమ్ రీసెట్ చేయండి',
-            generateBiodata: 'బయోడేటా జనరేట్ చేయండి',
-            enter: 'నమోదు చేయండి'
+            enter: 'உள்ளிடவும்',
+            addNewField: 'புதிய புலத்தைச் சேர்க்கவும்',
+            fieldName: 'புலத்தின் பெயர்',
+            fieldLabel: 'புல லேபிள்',
+            sectionName: 'பிரிவு பெயர்',
+            sectionFields: 'பிரிவு புலங்கள்',
+            enterFieldName: 'புலத்தின் பெயரை உள்ளிடவும் (எ.கா. பொழுதுபோக்குகள்)',
+            enterFieldLabel: 'புல லேபிளை உள்ளிடவும் (எ.கா. உங்கள் பொழுதுபோக்குகள்)',
+            enterSectionName: 'பிரிவு பெயரை உள்ளிடவும் (எ.கா. கல்வி விவரங்கள்)',
+            cancel: 'ரத்து செய்',
+            addField: 'புலத்தைச் சேர்க்கவும்',
+            addSection: 'பிரிவைச் சேர்க்கவும்'
         }
 
         // Add translations for other languages similarly
@@ -614,58 +688,110 @@ const BiodataForm = ({ scrollToTemplates }) => {
         return isValid;
     };
 
-    // Create PDF document component
+    // Updated MyDocument component with proper font handling
+    const MyDocument = ({ formData, profileImage, selectedTemplate, fieldLabels, fieldOrder, sections, currentLanguage, translations }) => {
+        const getFontFamily = () => {
+            switch (currentLanguage) {
+                case 'हिंदी':
+                case 'मराठी':
+                    return 'NotoSansDevanagari';
+                case 'ગુજરાતી':
+                    return 'NotoSansGujarati';
+                case 'தமிழ்':
+                    return 'NotoSansTamil';
+                case 'తెలుగు':
+                    return 'NotoSansTelugu';
+                case 'বাংলা':
+                    return 'NotoSansBengali';
+                default:
+                    return 'NotoSans';
+            }
+        };
 
-    // Updated MyDocument component
-    const MyDocument = () => (
-        <Document>
-            <Page size="A4" style={styles.page}>
-                {/* Template background (as watermark) */}
-                {selectedTemplate && (
-                    <View style={styles.templateBackground}>
-                        <Image src={selectedTemplate} />
-                    </View>
-                )}
+        const fontFamily = getFontFamily();
 
-                {/* Content wrapper with proper margins */}
-                <View style={{ marginHorizontal: 30, marginVertical: 40 }}>
-                    {/* Header with profile image */}
-                    <View style={styles.header}>
-                        {profileImage && (
-                            <Image style={styles.profileImage} src={profileImage} />
-                        )}
-                        <View>
-                            <Text style={styles.name}>{formData.name || 'Your Name'}</Text>
-                            <Text style={styles.subtitle}>Biodata</Text>
+        const dynamicStyles = StyleSheet.create({
+            page: {
+                ...styles.page,
+                fontFamily: fontFamily
+            },
+            text: {
+                fontFamily: fontFamily
+            },
+            header: {
+                ...styles.header,
+                fontFamily: fontFamily
+            },
+            name: {
+                ...styles.name,
+                fontFamily: fontFamily
+            },
+            subtitle: {
+                ...styles.subtitle,
+                fontFamily: fontFamily
+            },
+            sectionTitle: {
+                ...styles.sectionTitle,
+                fontFamily: fontFamily
+            },
+            fieldName: {
+                ...styles.fieldName,
+                fontFamily: fontFamily
+            },
+            fieldValue: {
+                ...styles.fieldValue,
+                fontFamily: fontFamily
+            }
+        });
+
+        return (
+            <Document>
+                <Page size="A4" style={dynamicStyles.page}>
+                    {selectedTemplate && (
+                        <View style={styles.templateBackground}>
+                            <Image src={selectedTemplate} />
                         </View>
-                    </View>
-
-                    {/* Render all sections */}
-                    {Object.keys(sections).map(section => (
-                        sections[section] && (
-                            <View key={section} style={styles.section}>
-                                <Text style={styles.sectionTitle}>
-                                    {section === 'personal' ? 'Personal Details' :
-                                        section === 'family' ? 'Family Details' :
-                                            section === 'contact' ? 'Contact Details' :
-                                                section.charAt(0).toUpperCase() + section.slice(1)}
+                    )}
+                    <View style={{ marginHorizontal: 30, marginVertical: 40 }}>
+                        <View style={styles.header}>
+                            {profileImage && (
+                                <Image style={styles.profileImage} src={profileImage} />
+                            )}
+                            <View>
+                                <Text style={dynamicStyles.name}>
+                                    {formData.name || translations[currentLanguage].name}
                                 </Text>
-
-                                <View style={{ flexDirection: 'column', flexWrap: 'wrap' }}>
-                                    {fieldOrder[section]?.map((fieldName) => (
-                                        <View key={fieldName} style={styles.fieldRow}>
-                                            <Text style={styles.fieldName}>{fieldLabels[fieldName]}:</Text>
-                                            <Text style={styles.fieldValue}>{formData[fieldName] || '-'}</Text>
-                                        </View>
-                                    ))}
-                                </View>
+                                <Text style={dynamicStyles.subtitle}>Biodata</Text>
                             </View>
-                        )
-                    ))}
-                </View>
-            </Page>
-        </Document>
-    );
+                        </View>
+
+                        {Object.keys(sections).map(section => (
+                            sections[section] && (
+                                <View key={section} style={styles.section}>
+                                    <Text style={dynamicStyles.sectionTitle}>
+                                        {translations[currentLanguage][`${section}Details`] ||
+                                            section.charAt(0).toUpperCase() + section.slice(1)}
+                                    </Text>
+                                    <View style={{ flexDirection: 'column', flexWrap: 'wrap' }}>
+                                        {fieldOrder[section]?.map((fieldName) => (
+                                            <View key={fieldName} style={styles.fieldRow}>
+                                                <Text style={dynamicStyles.fieldName}>
+                                                    {translations[currentLanguage][fieldName] || fieldLabels[fieldName]}:
+                                                </Text>
+                                                <Text style={dynamicStyles.fieldValue}>
+                                                    {formData[fieldName] || '-'}
+                                                </Text>
+                                            </View>
+                                        ))}
+                                    </View>
+                                </View>
+                            )
+                        ))}
+                    </View>
+                </Page>
+            </Document>
+        );
+    };
 
     // Handle form submission
     const handleSubmit = (e) => {
@@ -809,9 +935,6 @@ const BiodataForm = ({ scrollToTemplates }) => {
             <div key={sectionKey} className="mb-8">
                 <div className="flex items-center justify-between mb-4">
                     <h2 className="text-xl font-semibold text-gray-800 flex items-center">
-                        {/* {sectionKey === 'personal' ? 'Personal Details' :
-                            sectionKey === 'family' ? 'Family Details' :
-                                sectionKey === 'contact' ? 'Contact Details' : sectionLabel} */}
                         {translations[currentLanguage][`${sectionKey}Details`] ||
                             (sectionKey === 'personal' ? translations[currentLanguage].personalDetails :
                                 sectionKey === 'family' ? translations[currentLanguage].familyDetails :
@@ -864,7 +987,7 @@ const BiodataForm = ({ scrollToTemplates }) => {
         <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
             <div className="max-w-4xl mx-auto">
                 <div className="text-center mb-8">
-                    <h2 className="text-[30px] sm:text-[45px] text-[#B92753] font-bold mb-3 bg-white rounded-lg shadow-2xl inline py-3 px-5">
+                    <h2 className="text-[28px] sm:text-[45px] text-[#B92753] font-bold mb-3 bg-white rounded-lg shadow-2xl inline py-1 px-2 sm:py-3 sm:px-5">
                         {/* Create Your Biodata */}
                         {translations[currentLanguage].createYourBiodata}
                     </h2>
@@ -884,7 +1007,7 @@ const BiodataForm = ({ scrollToTemplates }) => {
                     {isDropdownOpen && (
                         <div className="absolute left-[15%] transform -translate-x-1/2 mt-2 w-48 bg-white shadow-lg rounded-md z-[999]">
                             <ul className="text-[#B92753] font-medium">
-                                {['English', 'हिंदी', 'मराठी', 'বাংলা', 'ગુજરાતી', 'தமிழ்', 'తెలుగు'].map((lang) => (
+                                {['English', 'हिंदी', 'मराठी', 'বাংলা', 'ગુજરાતી', 'தமிழ்'].map((lang) => (
                                     <li
                                         key={lang}
                                         className="hover:bg-[#B92753] hover:text-white px-4 py-2 cursor-pointer"
@@ -900,15 +1023,13 @@ const BiodataForm = ({ scrollToTemplates }) => {
 
                 <div className="bg-white shadow-md rounded-lg p-6 mb-8">
                     <div className="flex justify-between mb-6">
-                        <div className="relative w-32 h-32 bg-gray-100 rounded-full overflow-hidden border-2 border-gray-300">
+                        <div className="relative w-28 h-28 sm:w-32 sm:h-32 bg-gray-100 rounded-full overflow-hidden border-2 border-gray-300">
                             {profileImage ? (
                                 <img src={profileImage} alt="Profile" className="w-full h-full object-cover" />
                             ) : (
                                 <div className='flex items-center py-10 justify-evenly flex-col'>
-                                    {/* <p className='font-bold'>Upload Image</p> */}
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-camera "><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"></path><circle cx="12" cy="13" r="3"></circle></svg>
-                                    <p className='font-bold text-center'>{translations[currentLanguage].uploadImage}</p>
-
+                                    <p className='font-bold text-[13px] sm:text-[16px] text-center'>{translations[currentLanguage].uploadImage}</p>
                                 </div>
                             )}
                             <input
@@ -920,7 +1041,7 @@ const BiodataForm = ({ scrollToTemplates }) => {
                             />
                         </div>
                         <div
-                            className='relative w-32 h-32 bg-gray-100 rounded-2xl overflow-hidden border-2 border-gray-300 cursor-pointer'
+                            className='relative w-28 h-28 sm:w-32 sm:h-32 bg-gray-100 rounded-2xl overflow-hidden border-2 border-gray-300 cursor-pointer'
                         >
                             {selectedTemplate ? (
                                 <div className="relative w-full h-full">
@@ -941,7 +1062,7 @@ const BiodataForm = ({ scrollToTemplates }) => {
                             ) : (
                                 <div onClick={scrollToTemplates}>
                                     {/* <p className='font-bold text-center py-9 px-3'>Choose Your Template</p> */}
-                                    <p className='font-bold text-center py-9 px-3'>
+                                    <p className='font-bold text-[13px] sm:text-[16px] text-center py-9 px-3'>
                                         {translations[currentLanguage].chooseTemplate}
                                     </p>
                                 </div>
@@ -956,20 +1077,20 @@ const BiodataForm = ({ scrollToTemplates }) => {
                         ))}
 
                         {/* Form Buttons */}
-                        <div className="flex justify-between mt-8">
+                        <div className="block sm:flex justify-between mt-8">
                             <button
                                 type="button"
                                 onClick={addNewSection}
-                                className='py-2 px-4 flex items-center bg-[#4649C0] text-white text-base md:text-[14px] font-medium rounded-md hover:bg-[#9E2665]'
+                                className='mb-2 sm:mb-0 py-2 px-4 flex items-center bg-[#4649C0] text-white text-base md:text-[14px] font-medium rounded-md hover:bg-[#9E2665]'
                             >
                                 {/* + Add New Section */}
                                 + {translations[currentLanguage].addNewSection}
                             </button>
-                            <div className='flex justify-between gap-12'>
+                            <div className='block sm:flex justify-between gap-12'>
                                 <button
                                     type="button"
                                     onClick={resetForm}
-                                    className='py-2 px-4 flex items-center bg-[#4649C0] text-white text-base md:text-[14px] font-medium rounded-md hover:bg-[#9E2665]'
+                                    className='mb-2 sm:mb-0 py-2 px-4 flex items-center bg-[#4649C0] text-white text-base md:text-[14px] font-medium rounded-md hover:bg-[#9E2665]'
                                 >
                                     {/* Reset Form */}
                                     {translations[currentLanguage].resetForm}
@@ -997,6 +1118,8 @@ const BiodataForm = ({ scrollToTemplates }) => {
                 setNewFieldName={setNewFieldName}
                 newFieldLabel={newFieldLabel}
                 setNewFieldLabel={setNewFieldLabel}
+                currentLanguage={currentLanguage}
+                translations={translations}
             />
 
             {/* Add Section Modal */}
@@ -1010,6 +1133,8 @@ const BiodataForm = ({ scrollToTemplates }) => {
                 setSectionFields={setSectionFields}
                 addSectionField={addSectionField}
                 updateSectionField={updateSectionField}
+                currentLanguage={currentLanguage}
+                translations={translations}
             />
 
             {/* PDF Preview Modal */}
@@ -1037,12 +1162,25 @@ const BiodataForm = ({ scrollToTemplates }) => {
                                 fieldLabels={fieldLabels}
                                 fieldOrder={fieldOrder}
                                 sections={sections}
+                                translations={translations}
+                                currentLanguage={currentLanguage}
                             />
                         </div>
 
                         <div className="mt-6 flex justify-end">
                             <PDFDownloadLink
-                                document={<MyDocument />}
+                                document={
+                                    <MyDocument
+                                        formData={formData}
+                                        profileImage={profileImage}
+                                        selectedTemplate={selectedTemplate}
+                                        fieldLabels={fieldLabels}
+                                        fieldOrder={fieldOrder}
+                                        sections={sections}
+                                        currentLanguage={currentLanguage}
+                                        translations={translations}
+                                    />
+                                }
                                 fileName={`${formData.name || 'biodata'}.pdf`}
                                 className="py-2 px-6 bg-[#9E2665] text-white font-medium rounded-md hover:bg-[#4649C0]"
                             >
