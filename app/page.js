@@ -154,7 +154,7 @@ export default function Home() {
       <div ref={templatesRef} className="bg-[#B92753]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-[60px] mt-[-150px]">
           <h2 className="text-[30px] sm:text-[45px] text-[white]  font-bold mb-5">Popular Marriage Biodata Designs</h2>
-          <h6 className="text-[16px] sm:text-[20px] text-[white] mb-5">Take a look at our most downloaded marriage biodata templates! You'll find popular layouts, stylish designs, and creative content ideas to inspire your own biodata. Discover what works best and make yours stand out!</h6>
+          <h6 className="text-[16px] sm:text-[20px] text-[white] mb-5">Take a look at our most downloaded marriage biodata templates! You all find popular layouts, stylish designs, and creative content ideas to inspire your own biodata. Discover what works best and make yours stand out!</h6>
           <h6 className="text-[16px] sm:text-[20px] text-[white] mb-[60px]">Select your favourite biodata design to get started</h6>
           <div>
             <Swiper
@@ -190,8 +190,8 @@ export default function Home() {
               }}
             >
               {
-                design.map((item) => (
-                  <SwiperSlide>
+                design.map((item, index) => (
+                  <SwiperSlide key={index}>
                     <div className="rounded-[20px] overflow-hidden relative still-data">
                       <div className="w-[389px] h-[550px]">
                         <Image
@@ -277,8 +277,8 @@ export default function Home() {
               }}
             >
               {
-                reviews.map((item) => (
-                  <SwiperSlide>
+                reviews.map((item, index) => (
+                  <SwiperSlide key={index}>
                     <div className="bg-white shadow-lg rounded-xl p-6 sm:p-8 text-center max-w-md mx-auto border border-gray-200 [border-top:12px_solid_#4649C0] h-[350px]">
                       <div className="flex justify-center text-[#4649C0] text-4xl">
                         <BiSolidQuoteLeft />
