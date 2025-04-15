@@ -122,6 +122,11 @@ const styles = StyleSheet.create({
         opacity: 0.8,
         zIndex: 0
     },
+    templateImage: {
+        width: '100%',
+        height: '100%',
+        objectFit: 'cover',
+    },
     footer: {
         position: 'absolute',
         bottom: 20,
@@ -130,7 +135,7 @@ const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 10,
         color: '#999999',
-        zIndex: 1 // Make sure it stays on top of the background
+        fontFamily: 'NotoSans'
     }
 });
 
@@ -774,7 +779,7 @@ const BiodataForm = ({ scrollToTemplates }) => {
                 <Page size="A4" style={dynamicStyles.page}>
                     {selectedTemplate && (
                         <View style={styles.templateBackground}>
-                            <Image src={selectedTemplate} />
+                            <Image src={selectedTemplate} style={styles.templateImage} />
                         </View>
                     )}
                     <View style={styles.contentContainer}>
@@ -801,7 +806,7 @@ const BiodataForm = ({ scrollToTemplates }) => {
                                         {fieldOrder[section]?.map((fieldName) => (
                                             <View key={fieldName} style={styles.fieldRow}>
                                                 <Text style={dynamicStyles.fieldName}>
-                                                    {translations[currentLanguage][fieldName] || fieldLabels[fieldName]}:
+                                                    {translations[currentLanguage][fieldName] || fieldLabels[fieldName]} :-
                                                 </Text>
                                                 <Text style={dynamicStyles.fieldValue}>
                                                     {formData[fieldName] || '-'}
@@ -814,9 +819,9 @@ const BiodataForm = ({ scrollToTemplates }) => {
                         ))}
                     </View>
 
-                    <View>
-                        <Text style={{...styles.footer, fontFamily: fontFamily}}>COPYRIGHT © 2025 Wedding Biodata, All rights Reserved.</Text>
-                    </View>
+                    <Text style={{ ...styles.footer, fontFamily: fontFamily }}>
+                        COPYRIGHT © 2025 Wedding Biodata, All rights Reserved.
+                    </Text>
                 </Page>
             </Document>
         );
