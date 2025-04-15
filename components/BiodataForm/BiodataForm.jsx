@@ -47,10 +47,18 @@ const styles = StyleSheet.create({
     page: {
         flexDirection: 'column',
         backgroundColor: '#FFFFFF',
-        fontFamily: 'NotoSans'
+        fontFamily: 'NotoSans',
+        padding: 0, // Remove padding to use full page
+        margin: 0  // Remove margins
     },
     text: {
         fontFamily: 'NotoSans'
+    },
+    contentContainer: {
+        marginHorizontal: 30,
+        marginVertical: 20, // Reduced from 40
+        flexGrow: 1, // This will make the content expand
+        justifyContent: 'flex-start' // Align content to top
     },
     header: {
         flexDirection: 'row',
@@ -76,7 +84,7 @@ const styles = StyleSheet.create({
         color: '#666666'
     },
     section: {
-        marginBottom: 25, // Increased margin between sections
+        marginBottom: 15, // Increased margin between sections
         marginHorizontal: 20 // Add horizontal margins
     },
     sectionTitle: {
@@ -91,7 +99,8 @@ const styles = StyleSheet.create({
     fieldRow: {
         flexDirection: 'row',
         marginBottom: 3,
-        width: '100%'
+        width: '100%',
+        minHeight: 14
     },
     fieldName: {
         width: '40%',
@@ -105,9 +114,23 @@ const styles = StyleSheet.create({
     },
     templateBackground: {
         position: 'absolute',
+        top: 0,
+        left: 0,
         width: '100%',
         height: '100%',
-        opacity: 0.8 // Make template slightly transparent so content is more visible
+        objectFit: 'fill', // This ensures the image covers the entire area
+        opacity: 0.8,
+        zIndex: 0
+    },
+    footer: {
+        position: 'absolute',
+        bottom: 20,
+        left: 0,
+        right: 0,
+        textAlign: 'center',
+        fontSize: 10,
+        color: '#999999',
+        zIndex: 1 // Make sure it stays on top of the background
     }
 });
 
@@ -473,7 +496,8 @@ const BiodataForm = ({ scrollToTemplates }) => {
 
     useEffect(() => {
         // Get selected template on initial load
-        const template = localStorage.getItem('selectedTemplate');
+        // const template = localStorage.getItem('selectedTemplate');
+        const template = sessionStorage.getItem('selectedTemplate');
         if (template) {
             setSelectedTemplate(template);
         }
@@ -502,7 +526,8 @@ const BiodataForm = ({ scrollToTemplates }) => {
     // Handle removing the template
     const removeSelectedTemplate = () => {
         setSelectedTemplate(null);
-        localStorage.removeItem('selectedTemplate');
+        // localStorage.removeItem('selectedTemplate');
+        sessionStorage.removeItem('selectedTemplate');
     };
 
     // Handle input changes
@@ -752,7 +777,7 @@ const BiodataForm = ({ scrollToTemplates }) => {
                             <Image src={selectedTemplate} />
                         </View>
                     )}
-                    <View style={{ marginHorizontal: 30, marginVertical: 40 }}>
+                    <View style={styles.contentContainer}>
                         <View style={styles.header}>
                             {profileImage && (
                                 <Image style={styles.profileImage} src={profileImage} />
@@ -787,6 +812,10 @@ const BiodataForm = ({ scrollToTemplates }) => {
                                 </View>
                             )
                         ))}
+                    </View>
+
+                    <View>
+                        <Text style={{...styles.footer, fontFamily: fontFamily}}>COPYRIGHT © 2025 Wedding Biodata, All rights Reserved.</Text>
                     </View>
                 </Page>
             </Document>
@@ -984,10 +1013,10 @@ const BiodataForm = ({ scrollToTemplates }) => {
     };
 
     return (
-        <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
-            <div className="max-w-4xl mx-auto">
-                <div className="text-center mb-8">
-                    <h2 className="text-[28px] sm:text-[45px] text-[#B92753] font-bold mb-3 bg-white rounded-lg shadow-2xl inline py-1 px-2 sm:py-3 sm:px-5">
+        <div className="min-h-screen bg-gray-50 py-8 sm:px-6 lg:px-8">
+            <div className="max-w-5xl mx-auto">
+                <div className="text-center my-8">
+                    <h2 className="text-[28px] sm:text-[45px] text-[#B92753] font-bold mb-3 bg-white rounded-lg shadow-2xl inline py-3 px-2 sm:px-5">
                         {/* Create Your Biodata */}
                         {translations[currentLanguage].createYourBiodata}
                     </h2>
@@ -995,7 +1024,7 @@ const BiodataForm = ({ scrollToTemplates }) => {
 
                 <div className='text-center mb-8 relative'> {/* Added relative here */}
                     <button
-                        className="relative flex items-center bg-white rounded-lg shadow-2xl py-3 px-5"
+                        className="relative flex items-center bg-white rounded-lg shadow-2xl py-3 px-5 ml-2 sm:ml-0"
                         onClick={() => setDropdownOpen(!isDropdownOpen)}
                     >
                         <p className='text-[#B92753] hover:text-[#4649C0] font-medium'>Change Biodata Language</p>
@@ -1005,7 +1034,7 @@ const BiodataForm = ({ scrollToTemplates }) => {
 
                     {/* Language Dropdown */}
                     {isDropdownOpen && (
-                        <div className="absolute left-[15%] transform -translate-x-1/2 mt-2 w-48 bg-white shadow-lg rounded-md z-[999]">
+                        <div className="absolute left-[40%] sm:left-[15%] transform -translate-x-1/2 mt-2 w-48 bg-white shadow-lg rounded-md z-[999]">
                             <ul className="text-[#B92753] font-medium">
                                 {['English', 'हिंदी', 'मराठी', 'বাংলা', 'ગુજરાતી', 'தமிழ்'].map((lang) => (
                                     <li
@@ -1021,7 +1050,7 @@ const BiodataForm = ({ scrollToTemplates }) => {
                     )}
                 </div>
 
-                <div className="bg-white shadow-md rounded-lg p-6 mb-8">
+                <div className="bg-white shadow-md rounded-lg p-6 mb-8 w-fu">
                     <div className="flex justify-between mb-6">
                         <div className="relative w-28 h-28 sm:w-32 sm:h-32 bg-gray-100 rounded-full overflow-hidden border-2 border-gray-300">
                             {profileImage ? (

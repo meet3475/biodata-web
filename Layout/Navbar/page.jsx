@@ -76,8 +76,6 @@ const Navbar = ({ scrollToBiodataForm }) => {
                             ))}
                         </div>
                     </DisclosurePanel>
-
-                    {/* Language Dropdown */}
                    
                 </>
             )}

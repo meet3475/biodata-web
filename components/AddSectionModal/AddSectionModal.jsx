@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+'use client';
+import React from 'react'
 
 const AddSectionModal = ({
     show,
@@ -7,7 +8,6 @@ const AddSectionModal = ({
     newSectionName,
     setNewSectionName,
     sectionFields,
-    setSectionFields,
     addSectionField,
     updateSectionField,
     currentLanguage,  // Add this prop

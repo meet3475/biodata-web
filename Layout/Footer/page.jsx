@@ -19,13 +19,13 @@ const Footer = () => {
                         height={50}
                         className="w-[80px] h-[50px] sm:w-[65px] sm:h-[40px]"
                     />
-                    <p className='text-white hover:text-[#AD346B] hover:font-medium'>
+                    <p className='text-white hover:font-medium'>
                         Welcome to our online matrimonial biodata maker! We are a team of dedicated professionals with a passion for making the process of creating a biodata simple, easy and enjoyable.
                     </p>
                 </div>
 
                 <div className='w-full md:w-[45%] lg:w-[20%]'>
-                    <h2 className='text-white font-bold hover:text-[#9E2665] text-[24px]'>Company</h2>
+                    <h2 className='text-white  hover:font-medium text-[24px]'>Company</h2>
                     <ul>
                         <Link href={"/"} className='block text-white hover:text-[#AD346B] hover:font-medium'>Home</Link>
                         <Link href={"/about-us"} className='block text-white hover:text-[#AD346B] hover:font-medium'>About Us</Link>
@@ -33,14 +33,14 @@ const Footer = () => {
                 </div>
 
                 <div className='w-full md:w-[45%] lg:w-[20%]'>
-                    <h2 className='text-white hover:text-[#9E2665] font-bold text-[24px]'>Customer Service</h2>
+                    <h2 className='text-white hover:font-medium  text-[24px]'>Customer Service</h2>
                     <ul>
                         <Link href={"/contact-us"} className='block text-white hover:text-[#AD346B] hover:font-medium'>Contact Us</Link>
                     </ul>
                 </div>
 
                 <div className='w-full md:w-[45%] lg:w-[20%]'>
-                    <h2 className='text-white hover:text-[#9E2665] font-bold text-[24px]'>Contact With Us</h2>
+                    <h2 className='text-white hover:text-[#9E2665]  text-[24px]'>Contact With Us</h2>
                     <p className='text-white hover:text-[#AD346B] hover:font-medium my-2'>
                         Follow us on :-
                     </p>

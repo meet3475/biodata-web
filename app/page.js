@@ -38,6 +38,18 @@ const design = [
   {
     id: "6",
     image: "/images/biodata-bg-6.jpg"
+  },
+  {
+    id: "7",
+    image: "/images/biodata-bg-7.jpg"
+  },
+  {
+    id: "8",
+    image: "/images/biodata-bg-8.jpg"
+  },
+  {
+    id: "9",
+    image: "/images/biodata-bg-9.jpg"
   }
 ]
 
@@ -171,11 +183,11 @@ export default function Home() {
                   slidesPerView: 1,
                   spaceBetween: 10,
                 },
-                540: {
-                  slidesPerView: 2,
+                450: {
+                  slidesPerView: 1.3,
                   spaceBetween: 15,
                 },
-                940: {
+                585: {
                   slidesPerView: 2,
                   spaceBetween: 20,
                 },
@@ -193,12 +205,10 @@ export default function Home() {
                 design.map((item, index) => (
                   <SwiperSlide key={index}>
                     <div className="rounded-[20px] overflow-hidden relative still-data">
-                      <div className="w-[389px] h-[550px]">
-                        <Image
+                      <div className="w-[425px] h-[550px]">
+                        <img
                           src={item.image}
                           alt="Template"
-                          width={1000}
-                          height={500}
                           className="temp-img"
                         />
                       </div>
@@ -208,7 +218,8 @@ export default function Home() {
                           // In page.js, modify the onClick handler for the Select Template button
                           onClick={() => {
                             // Set selected template in localStorage
-                            localStorage.setItem('selectedTemplate', item.image);
+                            // localStorage.setItem('selectedTemplate', item.image);
+                            sessionStorage.setItem('selectedTemplate', item.image);
 
                             // Dispatch a custom event to notify BiodataForm component
                             const event = new CustomEvent('templateSelected', {
@@ -243,7 +254,7 @@ export default function Home() {
       {/* reviews section start */}
       <div className="bg-[#B92753]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-[60px]">
-          <h2 className="text-[30px] sm:text-[45px] text-[white] font-bold mb-5 text-center mx-0 md:mx-24">What Our Happy Users Say About Our Marriage Biodata Format</h2>
+          <h2 className="text-[30px] sm:text-[48px] text-[white] font-bold mb-5 text-center mx-0 md:mx-24">What Our Happy Users Say About Our Marriage Biodata Format</h2>
           <h6 className="text-[16px] sm:text-[20px] text-[white] mb-[60px] text-center mx-0 md:mx-24">Our goal at My Biodata for Marriage is to assist you in creating the ideal marriage biodata. Hear from some of our happy customers who have successfully used our biodata maker platform to find the right person.</h6>
           <div className="">
             <Swiper
