@@ -10,8 +10,8 @@ const AddSectionModal = ({
     sectionFields,
     addSectionField,
     updateSectionField,
-    currentLanguage,  // Add this prop
-    translations     // Add this prop
+    currentLanguage,
+    translations
 }) => { 
     
     if (!show) return null;
@@ -48,18 +48,11 @@ const AddSectionModal = ({
                                 {translations[currentLanguage]?.sectionFields || 'Section Fields'}
                             </label>
                             {sectionFields.map((field, index) => (
-                                <div key={index} className="mb-2 space-x-2">
-                                    <input
-                                        type="text"
-                                        placeholder={translations[currentLanguage]?.fieldName || 'Field name'}
-                                        className="mb-2 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-200"
-                                        value={field.name}
-                                        onChange={(e) => updateSectionField(index, 'name', e.target.value)}
-                                    />
+                                <div key={index} className="mb-2">
                                     <input
                                         type="text"
                                         placeholder={translations[currentLanguage]?.fieldLabel || 'Field label'}
-                                        className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-200"
+                                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-200"
                                         value={field.label}
                                         onChange={(e) => updateSectionField(index, 'label', e.target.value)}
                                     />

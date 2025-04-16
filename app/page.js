@@ -11,7 +11,8 @@ import { BiSolidQuoteLeft } from "react-icons/bi";
 import "swiper/css";
 import 'swiper/css/navigation';
 import BiodataForm from "@/components/BiodataForm/BiodataForm";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import Loarder from "@/components/Loarder/Loarder";
 
 
 const design = [
@@ -86,6 +87,22 @@ export default function Home() {
 
   const templatesRef = useRef(null);
   const biodataFormRef = useRef(null);
+
+
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate loading time (you can remove this in production)
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (isLoading) {
+    return <Loarder />;
+  }
 
   // Function to scroll to templates section
   const scrollToTemplates = () => {
@@ -212,10 +229,8 @@ export default function Home() {
 
                       <div className="back-effect">
                         <button className="select-btn"
-                          // In page.js, modify the onClick handler for the Select Template button
                           onClick={() => {
-                            // Set selected template in localStorage
-                            // localStorage.setItem('selectedTemplate', item.image);
+                            // Set selected template in sessionStorage
                             sessionStorage.setItem('selectedTemplate', item.image);
 
                             // Dispatch a custom event to notify BiodataForm component
@@ -224,8 +239,8 @@ export default function Home() {
                             });
                             window.dispatchEvent(event);
 
-                            // Scroll to templates section
-                            scrollToTemplates();
+                            // Scroll to biodata form section
+                            scrollToBiodataForm();
                           }}
                         >Select Template</button>
                       </div>

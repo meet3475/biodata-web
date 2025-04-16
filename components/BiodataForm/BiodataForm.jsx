@@ -4,6 +4,7 @@ import AddFieldModal from '../AddFieldModal/AddFieldModal';
 import AddSectionModal from '../AddSectionModal/AddSectionModal';
 import { PDFDownloadLink, Document, Page, View, Text, Image, StyleSheet, Font } from '@react-pdf/renderer';
 import PDFPreview from '../PDFPreview/PDFPreview';
+import Swal from 'sweetalert2';
 
 // Create styles for PDF document
 
@@ -199,7 +200,7 @@ const BiodataForm = ({ scrollToTemplates }) => {
         motherName: 'Mother\'s Name',
         motherOccupation: 'Mother\'s Occupation',
         siblings: 'Brother / Sister',
-        contactPerson: 'Contact Person',
+        contactPerson: 'Contact Person Name',
         contactNumber: 'Contact Number',
         residentialAddress: 'Residential Address'
     });
@@ -213,6 +214,8 @@ const BiodataForm = ({ scrollToTemplates }) => {
     const [newSectionName, setNewSectionName] = useState('');
     const [sectionFields, setSectionFields] = useState([]);
     const [isDropdownOpen, setDropdownOpen] = useState(false);
+
+    console.log(newFieldName)
 
     // Add to your existing state
     const [currentLanguage, setCurrentLanguage] = useState('English');
@@ -233,7 +236,7 @@ const BiodataForm = ({ scrollToTemplates }) => {
             motherName: 'Mother\'s Name',
             motherOccupation: 'Mother\'s Occupation',
             siblings: 'Brother / Sister',
-            contactPerson: 'Contact Person',
+            contactPerson: 'Contact Person Name',
             contactNumber: 'Contact Number',
             residentialAddress: 'Residential Address',
             personalDetails: 'Personal Details',
@@ -276,7 +279,7 @@ const BiodataForm = ({ scrollToTemplates }) => {
             motherName: 'माता का नाम',
             motherOccupation: 'माता का व्यवसाय',
             siblings: 'भाई / बहन',
-            contactPerson: 'संपर्क व्यक्ति',
+            contactPerson: 'संपर्क व्यक्ति नाम',
             contactNumber: 'संपर्क नंबर',
             residentialAddress: 'निवास पता',
             personalDetails: 'व्यक्तिगत विवरण',
@@ -324,7 +327,7 @@ const BiodataForm = ({ scrollToTemplates }) => {
             residentialAddress: 'निवासी पत्ता',
             personalDetails: 'वैयक्तिक तपशील',
             familyDetails: 'कौटुंबिक तपशील',
-            contactDetails: 'संपर्क तपशील',
+            contactDetails: 'संपर्क तपशील नाव',
             createYourBiodata: 'तुमचे बायोडाटा तयार करा',
             changeLanguage: 'बायोडाटा भाषा बदला',
             uploadImage: 'प्रतिमा अपलोड करा',
@@ -362,7 +365,7 @@ const BiodataForm = ({ scrollToTemplates }) => {
             motherName: 'মাতার নাম',
             motherOccupation: 'মাতার পেশা',
             siblings: 'ভাই / বোন',
-            contactPerson: 'যোগাযোগ ব্যক্তি',
+            contactPerson: 'যোগাযোগ ব্যক্তি নাম',
             contactNumber: 'যোগাযোগ নম্বর',
             residentialAddress: 'বাসস্থানের ঠিকানা',
             personalDetails: 'ব্যক্তিগত বিবরণ',
@@ -410,7 +413,7 @@ const BiodataForm = ({ scrollToTemplates }) => {
             residentialAddress: 'નિવાસ સરનામું',
             personalDetails: 'વ્યક્તિગત વિગતો',
             familyDetails: 'કુટુંબ વિગતો',
-            contactDetails: 'સંપર્ક વિગતો',
+            contactDetails: 'સંપર્ક વિગતો નામ',
             createYourBiodata: 'તમારું બાયોડેટા બનાવો',
             changeLanguage: 'બાયોડેટા ભાષા બદલો',
             uploadImage: 'છબી અપલોડ કરો',
@@ -448,7 +451,7 @@ const BiodataForm = ({ scrollToTemplates }) => {
             motherName: 'தாயின் பெயர்',
             motherOccupation: 'தாயின் தொழில்',
             siblings: 'சகோதரர் / சகோதரி',
-            contactPerson: 'தொடர்பு நபர்',
+            contactPerson: 'தொடர்பு நபர் பெயர்',
             contactNumber: 'தொடர்பு எண்',
             residentialAddress: 'வசிக்கும் முகவரி',
             personalDetails: 'தனிப்பட்ட விவரங்கள்',
@@ -501,7 +504,6 @@ const BiodataForm = ({ scrollToTemplates }) => {
 
     useEffect(() => {
         // Get selected template on initial load
-        // const template = localStorage.getItem('selectedTemplate');
         const template = sessionStorage.getItem('selectedTemplate');
         if (template) {
             setSelectedTemplate(template);
@@ -511,12 +513,16 @@ const BiodataForm = ({ scrollToTemplates }) => {
         const handleStorageChange = (e) => {
             if (e.key === 'selectedTemplate') {
                 setSelectedTemplate(e.newValue);
+                // Scroll to form after template selection
+                scrollToTemplates();
             }
         };
 
         // Listen for our custom template selection event
         const handleTemplateSelected = (e) => {
             setSelectedTemplate(e.detail.template);
+            // Scroll to form after template selection
+            scrollToTemplates();
         };
 
         window.addEventListener('storage', handleStorageChange);
@@ -526,9 +532,8 @@ const BiodataForm = ({ scrollToTemplates }) => {
             window.removeEventListener('storage', handleStorageChange);
             window.removeEventListener('templateSelected', handleTemplateSelected);
         };
-    }, []);
+    }, [scrollToTemplates]); // Add scrollToTemplates to dependencies
 
-    // Handle removing the template
     const removeSelectedTemplate = () => {
         setSelectedTemplate(null);
         // localStorage.removeItem('selectedTemplate');
@@ -546,10 +551,41 @@ const BiodataForm = ({ scrollToTemplates }) => {
         return `${hour12}:${minutes} ${period}`;
     };
 
-    // Handle input changes
+    // Update the handleChange function in your BiodataForm.jsx
     const handleChange = (e) => {
         const { name, value } = e.target;
-        console.log(e)
+
+        // List of fields that should only accept text (no numbers)
+        const textOnlyFields = [
+            'name',
+            'placeOfBirth',
+            'complexion',
+            'gotraCaste',
+            'occupation',
+            'education',
+            'fatherName',
+            'fatherOccupation',
+            'motherName',
+            'motherOccupation',
+            'siblings',
+            'contactPerson'
+        ];
+
+        // Validate numeric fields
+        if (name === 'height' || name === 'income' || name === 'contactNumber') {
+            // Only allow numbers (and decimal points for height/income)
+            if (value && !/^[0-9]*\.?[0-9]*$/.test(value)) {
+                return; // Don't update the field if it's not a valid number
+            }
+        }
+
+        // Validate text-only fields
+        if (textOnlyFields.includes(name)) {
+            // Only allow letters, spaces, and common punctuation
+            if (value && !/^[a-zA-Z\s.,'-]*$/.test(value)) {
+                return; // Don't update the field if it contains numbers
+            }
+        }
 
         setFormData({
             ...formData,
@@ -568,13 +604,37 @@ const BiodataForm = ({ scrollToTemplates }) => {
     // Handle profile image upload
     const handleImageUpload = (e) => {
         const file = e.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = () => {
-                setProfileImage(reader.result);
-            };
-            reader.readAsDataURL(file);
+        if (!file) return;
+
+        // Validate file type
+        const validTypes = ['image/jpeg', 'image/png', 'image/jpg'];
+        if (!validTypes.includes(file.type)) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Invalid File Type',
+                text: 'Please upload a JPG or PNG image file',
+                confirmButtonColor: '#d33'
+            });
+            return;
         }
+
+        // Validate file size (2MB max)
+        const maxSize = 2 * 1024 * 1024; // 2MB
+        if (file.size > maxSize) {
+            Swal.fire({
+                icon: 'error',
+                title: 'File Too Large',
+                text: 'Image must be less than 2MB',
+                confirmButtonColor: '#d33'
+            });
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = () => {
+            setProfileImage(reader.result);
+        };
+        reader.readAsDataURL(file);
     };
 
     // Move a field up in order
@@ -627,30 +687,54 @@ const BiodataForm = ({ scrollToTemplates }) => {
 
     // Handle add field form submission
     const handleAddField = () => {
-        if (!newFieldName || !newFieldLabel) return;
+        if (!newFieldLabel) return;
 
-        // Convert to camelCase for field name
-        const fieldKey = newFieldName.toLowerCase().replace(/\s+(.)/g, (match, group) => group.toUpperCase());
+        const formattedFieldName = newFieldLabel
+            .trim()
+            .toLowerCase()
+            .replace(/\s+/g, '');
+
+        if (formData.hasOwnProperty(formattedFieldName)) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Field already exists!',
+                confirmButtonColor: '#d33'
+            });
+            return;
+        }
 
         // Update field labels
         setFieldLabels({
             ...fieldLabels,
-            [fieldKey]: newFieldLabel
+            [newFieldLabel]: newFieldLabel,
         });
 
         // Update form data
         setFormData({
             ...formData,
-            [fieldKey]: ''
+            [formattedFieldName]: '',
         });
 
         // Update field order
         setFieldOrder({
             ...fieldOrder,
-            [currentSection]: [...fieldOrder[currentSection], fieldKey]
+            [currentSection]: [...fieldOrder[currentSection], formattedFieldName],
         });
 
+        // Show success alert
+        Swal.fire({
+            icon: 'success',
+            title: 'Field Added',
+            text: `"${newFieldLabel}" has been added successfully.`,
+            timer: 1500,
+            showConfirmButton: false
+        });
+
+        // Close modal and reset
         setShowAddFieldModal(false);
+        setNewFieldName('');
+        setNewFieldLabel('');
     };
 
     // Open add section modal
@@ -674,25 +758,37 @@ const BiodataForm = ({ scrollToTemplates }) => {
 
     // Handle add section form submission
     const handleAddSection = () => {
-        if (!newSectionName || sectionFields.some(field => !field.name || !field.label)) return;
+        if (!newSectionName || sectionFields.some(field => !field.label)) return;
 
-        // Convert to camelCase for section name
-        const sectionKey = newSectionName.toLowerCase().replace(/\s+(.)/g, (match, group) => group.toUpperCase());
+        const sectionKey = newSectionName
+            .trim()
+            .toLowerCase()
+            .replace(/\s+(.)/g, (match, group) => group.toUpperCase());
 
-        // Process fields
+        if (fieldOrder.hasOwnProperty(sectionKey)) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Section name already exists!',
+                confirmButtonColor: '#d33'
+            });
+            return;
+        }
+
         const fieldKeys = [];
         const newLabels = { ...fieldLabels };
         const newFormDataFields = { ...formData };
 
         sectionFields.forEach(field => {
-            // Convert to camelCase for field name
-            const fieldKey = field.name.toLowerCase().replace(/\s+(.)/g, (match, group) => group.toUpperCase());
+            const fieldKey = field.label
+                .toLowerCase()
+                .replace(/\s+(.)/g, (match, group) => group.toUpperCase());
+
             fieldKeys.push(fieldKey);
             newLabels[fieldKey] = field.label;
             newFormDataFields[fieldKey] = '';
         });
 
-        // Update states
         setFieldLabels(newLabels);
         setFormData(newFormDataFields);
         setFieldOrder({
@@ -705,6 +801,15 @@ const BiodataForm = ({ scrollToTemplates }) => {
         });
 
         setShowAddSectionModal(false);
+
+        // 🎉 Show success alert
+        Swal.fire({
+            icon: 'success',
+            title: 'Section Added!',
+            text: `"${newSectionName}" section has been added successfully.`,
+            timer: 2000,
+            showConfirmButton: false
+        });
     };
 
     // Validate form
@@ -722,7 +827,8 @@ const BiodataForm = ({ scrollToTemplates }) => {
             isValid = false;
         }
 
-        if (!formData.contactNumber && !/^[0-9]{10}$/.test(formData.contactNumber)) {
+        // Updated contact number validation
+        if (!formData.contactNumber || !/^[0-9]{10}$/.test(formData.contactNumber)) {
             tempErrors.contactNumber = 'Please enter a valid 10-digit phone number';
             isValid = false;
         }
@@ -821,7 +927,7 @@ const BiodataForm = ({ scrollToTemplates }) => {
                                             <View key={fieldName} style={styles.fieldRow}>
                                                 <Text style={dynamicStyles.fieldName}>
                                                     {translations[currentLanguage][fieldName] || fieldLabels[fieldName]} :-
-                                                </Text>    
+                                                </Text>
                                                 <Text style={dynamicStyles.fieldValue}>
                                                     {fieldName === 'timeOfBirth'
                                                         ? formatTimeWithAmPm(formData[fieldName])
@@ -849,8 +955,14 @@ const BiodataForm = ({ scrollToTemplates }) => {
 
         if (validateForm()) {
             if (!selectedTemplate) {
-                alert('Please select a template first');
-                scrollToTemplates();
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Template Required',
+                    text: 'Please select a template first!',
+                    confirmButtonColor: '#3085d6'
+                }).then(() => {
+                    scrollToTemplates(); // Scroll after alert is closed
+                });
                 return;
             }
 
@@ -871,47 +983,66 @@ const BiodataForm = ({ scrollToTemplates }) => {
 
     // Reset form
     const resetForm = () => {
-        if (window.confirm('Are you sure you want to reset the form?')) {
-            setFormData({
-                name: '',
-                dateOfBirth: '',
-                timeOfBirth: '',
-                placeOfBirth: '',
-                complexion: '',
-                height: '',
-                gotraCaste: '',
-                occupation: '',
-                income: '',
-                education: '',
-                fatherName: '',
-                fatherOccupation: '',
-                motherName: '',
-                motherOccupation: '',
-                siblings: '',
-                contactPerson: '',
-                contactNumber: '',
-                residentialAddress: ''
-            });
-            setProfileImage(null);
-            setErrors({});
-            setSections({
-                personal: true,
-                family: true,
-                contact: true,
-            });
-            setFieldOrder({
-                personal: ['name', 'dateOfBirth', 'timeOfBirth', 'placeOfBirth', 'complexion', 'height', 'gotraCaste', 'occupation', 'income', 'education'],
-                family: ['fatherName', 'fatherOccupation', 'motherName', 'motherOccupation', 'siblings'],
-                contact: ['contactPerson', 'contactNumber', 'residentialAddress']
-            });
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'Do you really want to reset the form?',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, reset it!',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                setFormData({
+                    name: '',
+                    dateOfBirth: '',
+                    timeOfBirth: '',
+                    placeOfBirth: '',
+                    complexion: '',
+                    height: '',
+                    gotraCaste: '',
+                    occupation: '',
+                    income: '',
+                    education: '',
+                    fatherName: '',
+                    fatherOccupation: '',
+                    motherName: '',
+                    motherOccupation: '',
+                    siblings: '',
+                    contactPerson: '',
+                    contactNumber: '',
+                    residentialAddress: ''
+                });
 
-            // Reset field labels based on current language
-            const defaultLabels = {};
-            Object.keys(initialFormData).forEach(key => {
-                defaultLabels[key] = translations[currentLanguage][key] || key;
-            });
-            setFieldLabels(defaultLabels);
-        }
+                setProfileImage(null);
+                setErrors({});
+                setSections({
+                    personal: true,
+                    family: true,
+                    contact: true,
+                });
+                setFieldOrder({
+                    personal: ['name', 'dateOfBirth', 'timeOfBirth', 'placeOfBirth', 'complexion', 'height', 'gotraCaste', 'occupation', 'income', 'education'],
+                    family: ['fatherName', 'fatherOccupation', 'motherName', 'motherOccupation', 'siblings'],
+                    contact: ['contactPerson', 'contactNumber', 'residentialAddress']
+                });
+
+                const defaultLabels = {};
+                Object.keys(initialFormData).forEach((key) => {
+                    defaultLabels[key] = translations[currentLanguage][key] || key;
+                });
+                setFieldLabels(defaultLabels);
+
+                Swal.fire({
+                    title: 'Reset Successful!',
+                    text: 'The form has been reset.',
+                    icon: 'success',
+                    timer: 2000,
+                    showConfirmButton: false
+                });
+            }
+        });
     };
 
     // Render a form field based on its type
@@ -946,6 +1077,22 @@ const BiodataForm = ({ scrollToTemplates }) => {
                             </span>
                         )}
                     </div>
+                );
+                break;
+            case 'height':
+            case 'income':
+            case 'contactNumber':
+                inputElement = (
+                    <input
+                        type="text"
+                        inputMode="numeric"
+                        pattern="[0-9]*"
+                        name={fieldName}
+                        value={formData[fieldName]}
+                        onChange={handleChange}
+                        placeholder={`${translations[currentLanguage].enter} ${fieldLabels[fieldName]}`}
+                        className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 ${errors[fieldName] ? 'border-red-500 focus:ring-red-200' : 'border-gray-300 focus:ring-blue-200'}`}
+                    />
                 );
                 break;
             default:
@@ -1018,9 +1165,9 @@ const BiodataForm = ({ scrollToTemplates }) => {
                             type="button"
                             className="ml-2 text-gray-500 hover:text-[#4649C0]"
                         >
-                            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            {/* <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-                            </svg>
+                            </svg> */}
                         </button>
                     </h2>
                     <button
@@ -1189,8 +1336,6 @@ const BiodataForm = ({ scrollToTemplates }) => {
                 show={showAddFieldModal}
                 onClose={() => setShowAddFieldModal(false)}
                 onAdd={handleAddField}
-                newFieldName={newFieldName}
-                setNewFieldName={setNewFieldName}
                 newFieldLabel={newFieldLabel}
                 setNewFieldLabel={setNewFieldLabel}
                 currentLanguage={currentLanguage}

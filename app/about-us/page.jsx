@@ -1,9 +1,26 @@
+'use client';
+import Loarder from '@/components/Loarder/Loarder';
 import Footer from '@/Layout/Footer/page'
 import Navbar from '@/Layout/Navbar/page'
 import Link from 'next/link'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 const AboutUs = () => {
+
+    const [isLoading, setIsLoading] = useState(true)
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setIsLoading(false)
+        }, 2000) // 5 seconds
+
+        return () => clearTimeout(timer) // Clean up the timer
+    }, [])
+
+    if (isLoading) {
+        return <Loarder />
+    }
+
     return (
         <>
             <Navbar />

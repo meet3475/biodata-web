@@ -5,12 +5,10 @@ const AddFieldModal = ({
     show,
     onClose,
     onAdd,
-    newFieldName,
-    setNewFieldName,
     newFieldLabel,
     setNewFieldLabel,
-    currentLanguage,  // Add this prop
-    translations     // Add this prop
+    currentLanguage,
+    translations
 }) => {
 
     if (!show) return null;
@@ -30,18 +28,6 @@ const AddFieldModal = ({
                 </div>
                 <div className="px-6 py-4">
                     <div className="space-y-4">
-                        <div>
-                            <label className="block text-sm font-medium text-gray-700 mb-1">
-                                {translations[currentLanguage]?.fieldName || 'Field Name'}
-                            </label>
-                            <input
-                                type="text"
-                                placeholder={translations[currentLanguage]?.enterFieldName || 'Enter field name (e.g. Hobbies)'}
-                                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-200"
-                                value={newFieldName}
-                                onChange={(e) => setNewFieldName(e.target.value)}
-                            />
-                        </div>
                         <div>
                             <label className="block text-sm font-medium text-gray-700 mb-1">
                                 {translations[currentLanguage]?.fieldLabel || 'Field Label'}
