@@ -50,6 +50,10 @@ const design = [
   {
     id: "9",
     image: "/images/biodata-bg-9.jpg"
+  },
+  {
+    id: "10",
+    image: "/images/biodata-bg-10.jpg"
   }
 ]
 
@@ -103,19 +107,12 @@ export default function Home() {
     }
   };
 
-  // In your _document.js or root layout
-  useEffect(() => {
-    if (typeof document !== 'undefined') {
-      document.body.removeAttribute('cz-shortcut-listen');
-    }
-  }, []);
 
   return (
     <>
 
       {/* navbar section start */}
       <Navbar scrollToBiodataForm={scrollToBiodataForm} />
-      {/* <Navbar /> */}
       {/* navbar section end */}
 
       {/* hero section start */}
@@ -248,7 +245,6 @@ export default function Home() {
       <div ref={biodataFormRef}>
         <BiodataForm scrollToTemplates={scrollToTemplates} />
       </div>
-      {/* <BiodataForm scrollToTemplates={scrollToTemplates} /> */}
       {/* create biodata section end */}
 
       {/* reviews section start */}

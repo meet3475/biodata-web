@@ -1,6 +1,17 @@
 import React from 'react';
 
 const PDFPreview = ({ formData, profileImage, selectedTemplate, fieldLabels, fieldOrder, sections, translations, currentLanguage }) => {
+  const formatTimeWithAmPm = (timeString) => {
+    if (!timeString) return '-';
+
+    const [hours, minutes] = timeString.split(':');
+    const hourNum = parseInt(hours, 10);
+    const period = hourNum >= 12 ? 'PM' : 'AM';
+    const hour12 = hourNum % 12 || 12;
+
+    return `${hour12}:${minutes} ${period}`;
+  };
+
   return (
     <div className="relative bg-white w-full" style={{ aspectRatio: '1/1.414', maxHeight: '80vh' }}>
       {/* Template background */}
@@ -36,9 +47,9 @@ const PDFPreview = ({ formData, profileImage, selectedTemplate, fieldLabels, fie
               <h3 className="text-lg font-bold text-[#9E2665] border-b-2 border-[#9E2665] pb-1 mb-3">
                 {translations[currentLanguage][`${section}Details`] ||
                   (section === 'personal' ? translations[currentLanguage].personalDetails :
-                  section === 'family' ? translations[currentLanguage].familyDetails :
-                  section === 'contact' ? translations[currentLanguage].contactDetails :
-                  section.charAt(0).toUpperCase() + section.slice(1))}
+                    section === 'family' ? translations[currentLanguage].familyDetails :
+                      section === 'contact' ? translations[currentLanguage].contactDetails :
+                        section.charAt(0).toUpperCase() + section.slice(1))}
               </h3>
 
               <div className="w-full">
@@ -47,7 +58,12 @@ const PDFPreview = ({ formData, profileImage, selectedTemplate, fieldLabels, fie
                     <div className="w-2/5 font-medium pr-2">
                       {translations[currentLanguage][fieldName] || fieldLabels[fieldName]}:
                     </div>
-                    <div className="w-3/5">{formData[fieldName] || '-'}</div>
+                    <div className="w-3/5">
+                      {fieldName === 'timeOfBirth'
+                        ? formatTimeWithAmPm(formData[fieldName])
+                        : formData[fieldName] || '-'}
+                    </div>
+
                   </div>
                 ))}
               </div>

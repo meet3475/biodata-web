@@ -40,7 +40,7 @@ const Footer = () => {
                 </div>
 
                 <div className='w-full md:w-[45%] lg:w-[20%]'>
-                    <h2 className='text-white hover:text-[#9E2665]  text-[24px]'>Contact With Us</h2>
+                    <h2 className='text-white hover:font-medium text-[24px]'>Contact With Us</h2>
                     <p className='text-white hover:text-[#AD346B] hover:font-medium my-2'>
                         Follow us on :-
                     </p>

@@ -1,6 +1,7 @@
 import Footer from '@/Layout/Footer/page'
 import Navbar from '@/Layout/Navbar/page'
 import Image from 'next/image'
+import Link from 'next/link'
 import React from 'react'
 
 const ContactUs = () => {
@@ -17,7 +18,7 @@ const ContactUs = () => {
                             Welcome to weddingbiodata.in! We're delighted to assist you. Whether you have inquiries about our services, need assistance, or want to provide feedback, our team is here to support you every step of the way.
                         </p>
                         <p className='text-white text-[14px] sm:text-[16px] mb-4 sm:mb-3'>
-                            Please feel free to reach out to us via email at <span className='text-[#181966] font-bold'>admin@weddingbiodata.in</span> with any questions, concerns, or suggestions you may have. We value your input and are committed to providing prompt and helpful responses to ensure your satisfaction.
+                            Please feel free to reach out to us via email at <Link className='text-[#181966] font-bold' href={"/"}>WeddingBiodata.com</Link> with any questions, concerns, or suggestions you may have. We value your input and are committed to providing prompt and helpful responses to ensure your satisfaction.
                         </p>
                         <p className='text-white text-[14px] sm:text-[16px] mb-4 sm:mb-3'>
                             We appreciate your interest in weddingbiodata.in and look forward to assisting you in any way we can. Your satisfaction is our priority, and we're dedicated to ensuring your experience with us is positive and enjoyable.

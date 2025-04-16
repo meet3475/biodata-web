@@ -535,9 +535,22 @@ const BiodataForm = ({ scrollToTemplates }) => {
         sessionStorage.removeItem('selectedTemplate');
     };
 
+    const formatTimeWithAmPm = (timeString) => {
+        if (!timeString) return '-';
+
+        const [hours, minutes] = timeString.split(':');
+        const hourNum = parseInt(hours, 10);
+        const period = hourNum >= 12 ? 'PM' : 'AM';
+        const hour12 = hourNum % 12 || 12;
+
+        return `${hour12}:${minutes} ${period}`;
+    };
+
     // Handle input changes
     const handleChange = (e) => {
         const { name, value } = e.target;
+        console.log(e)
+
         setFormData({
             ...formData,
             [name]: value
@@ -802,14 +815,17 @@ const BiodataForm = ({ scrollToTemplates }) => {
                                         {translations[currentLanguage][`${section}Details`] ||
                                             section.charAt(0).toUpperCase() + section.slice(1)}
                                     </Text>
+
                                     <View style={{ flexDirection: 'column', flexWrap: 'wrap' }}>
                                         {fieldOrder[section]?.map((fieldName) => (
                                             <View key={fieldName} style={styles.fieldRow}>
                                                 <Text style={dynamicStyles.fieldName}>
                                                     {translations[currentLanguage][fieldName] || fieldLabels[fieldName]} :-
-                                                </Text>
+                                                </Text>    
                                                 <Text style={dynamicStyles.fieldValue}>
-                                                    {formData[fieldName] || '-'}
+                                                    {fieldName === 'timeOfBirth'
+                                                        ? formatTimeWithAmPm(formData[fieldName])
+                                                        : formData[fieldName] || '-'}
                                                 </Text>
                                             </View>
                                         ))}
@@ -878,6 +894,23 @@ const BiodataForm = ({ scrollToTemplates }) => {
             });
             setProfileImage(null);
             setErrors({});
+            setSections({
+                personal: true,
+                family: true,
+                contact: true,
+            });
+            setFieldOrder({
+                personal: ['name', 'dateOfBirth', 'timeOfBirth', 'placeOfBirth', 'complexion', 'height', 'gotraCaste', 'occupation', 'income', 'education'],
+                family: ['fatherName', 'fatherOccupation', 'motherName', 'motherOccupation', 'siblings'],
+                contact: ['contactPerson', 'contactNumber', 'residentialAddress']
+            });
+
+            // Reset field labels based on current language
+            const defaultLabels = {};
+            Object.keys(initialFormData).forEach(key => {
+                defaultLabels[key] = translations[currentLanguage][key] || key;
+            });
+            setFieldLabels(defaultLabels);
         }
     };
 
@@ -899,13 +932,20 @@ const BiodataForm = ({ scrollToTemplates }) => {
                 break;
             case 'timeOfBirth':
                 inputElement = (
-                    <input
-                        type="time"
-                        name={fieldName}
-                        value={formData[fieldName]}
-                        onChange={handleChange}
-                        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-200"
-                    />
+                    <div className="flex items-center">
+                        <input
+                            type="time"
+                            name={fieldName}
+                            value={formData[fieldName]}
+                            onChange={handleChange}
+                            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-200"
+                        />
+                        {formData[fieldName] && (
+                            <span className="ml-2 text-gray-600 " style={{ display: "none" }}>
+                                {formatTimeWithAmPm(formData[fieldName])}
+                            </span>
+                        )}
+                    </div>
                 );
                 break;
             default:
@@ -976,7 +1016,7 @@ const BiodataForm = ({ scrollToTemplates }) => {
                                         sectionLabel)}
                         <button
                             type="button"
-                            className="ml-2 text-gray-500 hover:text-gray-700"
+                            className="ml-2 text-gray-500 hover:text-[#4649C0]"
                         >
                             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
@@ -1021,8 +1061,9 @@ const BiodataForm = ({ scrollToTemplates }) => {
         <div className="min-h-screen bg-gray-50 py-8 sm:px-6 lg:px-8">
             <div className="max-w-5xl mx-auto">
                 <div className="text-center my-8">
-                    <h2 className="text-[28px] sm:text-[45px] text-[#B92753] font-bold mb-3 bg-white rounded-lg shadow-2xl inline py-3 px-2 sm:px-5">
-                        {/* Create Your Biodata */}
+                    <h2
+                        className={`text-[28px] ${currentLanguage === 'தமிழ்' ? 'sm:text-[40px]' : 'sm:text-[45px] '} text-[#B92753] font-bold mb-3 bg-white rounded-lg lg:shadow-2xl inline py-3 px-2 sm:px-5`}
+                    >
                         {translations[currentLanguage].createYourBiodata}
                     </h2>
                 </div>
@@ -1055,7 +1096,7 @@ const BiodataForm = ({ scrollToTemplates }) => {
                     )}
                 </div>
 
-                <div className="bg-white shadow-md rounded-lg p-6 mb-8 w-fu">
+                <div className="bg-white shadow-md rounded-lg p-6 mb-8 w-full">
                     <div className="flex justify-between mb-6">
                         <div className="relative w-28 h-28 sm:w-32 sm:h-32 bg-gray-100 rounded-full overflow-hidden border-2 border-gray-300">
                             {profileImage ? (
@@ -1063,7 +1104,7 @@ const BiodataForm = ({ scrollToTemplates }) => {
                             ) : (
                                 <div className='flex items-center py-10 justify-evenly flex-col'>
                                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-camera "><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"></path><circle cx="12" cy="13" r="3"></circle></svg>
-                                    <p className='font-bold text-[13px] sm:text-[16px] text-center'>{translations[currentLanguage].uploadImage}</p>
+                                    <p className={`font-bold ${currentLanguage === 'தமிழ்' ? 'text-[9px] sm:text-[12px]' : 'text-[13px] sm:text-[16px]'}  text-center`}>{translations[currentLanguage].uploadImage}</p>
                                 </div>
                             )}
                             <input
@@ -1096,7 +1137,7 @@ const BiodataForm = ({ scrollToTemplates }) => {
                             ) : (
                                 <div onClick={scrollToTemplates}>
                                     {/* <p className='font-bold text-center py-9 px-3'>Choose Your Template</p> */}
-                                    <p className='font-bold text-[13px] sm:text-[16px] text-center py-9 px-3'>
+                                    <p className={`font-bold ${currentLanguage === 'தமிழ்' ? 'text-[9px] sm:text-[10px]' : 'text-[13px]  sm:text-[15px]'}  text-center py-9 px-3`}>
                                         {translations[currentLanguage].chooseTemplate}
                                     </p>
                                 </div>
