@@ -554,8 +554,8 @@ const BiodataForm = ({ scrollToTemplates }) => {
     // Update the handleChange function in your BiodataForm.jsx
     const handleChange = (e) => {
         const { name, value } = e.target;
-
-        // List of fields that should only accept text (no numbers)
+    
+        // List of fields that should only accept text (letters and spaces)
         const textOnlyFields = [
             'name',
             'placeOfBirth',
@@ -570,7 +570,7 @@ const BiodataForm = ({ scrollToTemplates }) => {
             'siblings',
             'contactPerson'
         ];
-
+    
         // Validate numeric fields
         if (name === 'height' || name === 'income' || name === 'contactNumber') {
             // Only allow numbers (and decimal points for height/income)
@@ -578,20 +578,20 @@ const BiodataForm = ({ scrollToTemplates }) => {
                 return; // Don't update the field if it's not a valid number
             }
         }
-
-        // Validate text-only fields
+    
+        // Validate text-only fields - only allow letters and spaces
         if (textOnlyFields.includes(name)) {
-            // Only allow letters, spaces, and common punctuation
-            if (value && !/^[a-zA-Z\s.,'-]*$/.test(value)) {
-                return; // Don't update the field if it contains numbers
+            // Only allow letters (including Unicode for non-English languages) and spaces
+            if (value && !/^[\p{L}\s]+$/u.test(value)) {
+                return; // Don't update the field if it contains numbers or special characters
             }
         }
-
+    
         setFormData({
             ...formData,
             [name]: value
         });
-
+    
         // Clear error when user starts typing
         if (errors[name]) {
             setErrors({
@@ -677,6 +677,7 @@ const BiodataForm = ({ scrollToTemplates }) => {
         setFormData(newFormData);
     };
 
+
     // Open add field modal
     const addNewField = (section) => {
         setCurrentSection(section);
@@ -686,56 +687,114 @@ const BiodataForm = ({ scrollToTemplates }) => {
     };
 
     // Handle add field form submission
+    // const handleAddField = () => {
+    //     if (!newFieldLabel) return;
+
+    //     const formattedFieldName = newFieldLabel
+    //         .trim()
+    //         .toLowerCase()
+    //         .replace(/\s+/g, '');
+
+    //     if (formData.hasOwnProperty(formattedFieldName)) {
+    //         Swal.fire({
+    //             icon: 'error',
+    //             title: 'Oops...',
+    //             text: 'Field already exists!',
+    //             confirmButtonColor: '#d33'
+    //         });
+    //         return;
+    //     }
+
+    //     // Update field labels
+    //     setFieldLabels({
+    //         ...fieldLabels,
+    //         [formattedFieldName]: newFieldLabel,
+    //     });
+
+    //     // Update form data
+    //     setFormData({
+    //         ...formData,
+    //         [formattedFieldName]: '',
+    //     });
+
+    //     // Update field order
+    //     setFieldOrder({
+    //         ...fieldOrder,
+    //         [currentSection]: [...fieldOrder[currentSection], formattedFieldName],
+    //     });
+
+    //     // Show success alert
+    //     Swal.fire({
+    //         icon: 'success',
+    //         title: 'Field Added',
+    //         text: `"${newFieldLabel}" has been added successfully.`,
+    //         timer: 1500,
+    //         showConfirmButton: false
+    //     });
+
+    //     // Close modal and reset
+    //     setShowAddFieldModal(false);
+    //     setNewFieldName('');
+    //     setNewFieldLabel('');
+    // };
     const handleAddField = () => {
-        if (!newFieldLabel) return;
-
-        const formattedFieldName = newFieldLabel
-            .trim()
-            .toLowerCase()
-            .replace(/\s+/g, '');
-
-        if (formData.hasOwnProperty(formattedFieldName)) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Field already exists!',
-                confirmButtonColor: '#d33'
-            });
-            return;
-        }
-
-        // Update field labels
-        setFieldLabels({
-            ...fieldLabels,
-            [newFieldLabel]: newFieldLabel,
-        });
-
-        // Update form data
-        setFormData({
-            ...formData,
-            [formattedFieldName]: '',
-        });
-
-        // Update field order
-        setFieldOrder({
-            ...fieldOrder,
-            [currentSection]: [...fieldOrder[currentSection], formattedFieldName],
-        });
-
-        // Show success alert
+    if (!newFieldLabel) {
         Swal.fire({
-            icon: 'success',
-            title: 'Field Added',
-            text: `"${newFieldLabel}" has been added successfully.`,
-            timer: 1500,
-            showConfirmButton: false
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Field label is required!',
+            confirmButtonColor: '#d33'
         });
+        return;
+    }
 
-        // Close modal and reset
-        setShowAddFieldModal(false);
-        setNewFieldName('');
-        setNewFieldLabel('');
-    };
+    const formattedFieldName = newFieldLabel
+        .trim()
+        .toLowerCase()
+        .replace(/\s+/g, '');
+
+    if (formData.hasOwnProperty(formattedFieldName)) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Field already exists!',
+            confirmButtonColor: '#d33'
+        });
+        return;
+    }
+
+    // Update field labels with correct key-value pair
+    setFieldLabels({
+        ...fieldLabels,
+        [formattedFieldName]: newFieldLabel,
+    });
+
+    // Update form data
+    setFormData({
+        ...formData,
+        [formattedFieldName]: '',
+    });
+
+    // Update field order
+    setFieldOrder({
+        ...fieldOrder,
+        [currentSection]: [...fieldOrder[currentSection], formattedFieldName],
+    });
+
+    // Show success alert
+    Swal.fire({
+        icon: 'success',
+        title: 'Field Added',
+        text: `"${newFieldLabel}" has been added successfully.`,
+        timer: 1500,
+        showConfirmButton: false
+    });
+
+    // Close modal and reset
+    setShowAddFieldModal(false);
+    setNewFieldName('');
+    setNewFieldLabel('');
+};
 
     // Open add section modal
     const addNewSection = () => {
