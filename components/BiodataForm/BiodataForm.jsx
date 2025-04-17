@@ -1100,6 +1100,75 @@ const BiodataForm = ({ scrollToTemplates }) => {
     };
 
     // Reset form
+    // const resetForm = () => {
+    //     Swal.fire({
+    //         title: translations[currentLanguage].confirmResetTitle || 'Are you sure?',
+    //         text: translations[currentLanguage].confirmResetText || 'Do you really want to reset the form?',
+    //         icon: 'warning',
+    //         showCancelButton: true,
+    //         confirmButtonColor: '#3085d6',
+    //         cancelButtonColor: '#d33',
+    //         confirmButtonText: translations[currentLanguage].yesReset || 'Yes, reset it!',
+    //         cancelButtonText: translations[currentLanguage].cancel || 'Cancel'
+    //     }).then((result) => {
+    //         if (result.isConfirmed) {
+    //             // Save the current template before resetting
+    //             const currentTemplate = selectedTemplate;
+
+    //             // Reset all form data
+    //             setFormData({
+    //                 name: '',
+    //                 dateOfBirth: '',
+    //                 timeOfBirth: '',
+    //                 placeOfBirth: '',
+    //                 complexion: '',
+    //                 height: '',
+    //                 gotraCaste: '',
+    //                 occupation: '',
+    //                 income: '',
+    //                 education: '',
+    //                 fatherName: '',
+    //                 fatherOccupation: '',
+    //                 motherName: '',
+    //                 motherOccupation: '',
+    //                 siblings: '',
+    //                 contactPerson: '',
+    //                 contactNumber: '',
+    //                 residentialAddress: ''
+    //             });
+
+    //             setProfileImage(null);
+    //             setErrors({});
+    //             setSections({
+    //                 personal: true,
+    //                 family: true,
+    //                 contact: true,
+    //             });
+    //             setFieldOrder({
+    //                 personal: ['name', 'dateOfBirth', 'timeOfBirth', 'placeOfBirth', 'complexion', 'height', 'gotraCaste', 'occupation', 'income', 'education'],
+    //                 family: ['fatherName', 'fatherOccupation', 'motherName', 'motherOccupation', 'siblings'],
+    //                 contact: ['contactPerson', 'contactNumber', 'residentialAddress']
+    //             });
+
+    //             const defaultLabels = {};
+    //             Object.keys(initialFormData).forEach((key) => {
+    //                 defaultLabels[key] = translations[currentLanguage][key] || key;
+    //             });
+    //             setFieldLabels(defaultLabels);
+
+    //             // Restore the template after reset
+    //             setSelectedTemplate(currentTemplate);
+
+    //             Swal.fire({
+    //                 title: translations[currentLanguage].resetSuccessful || 'Reset Successful!',
+    //                 text: translations[currentLanguage].formReset || 'The form has been reset.',
+    //                 icon: 'success',
+    //                 timer: 2000,
+    //                 showConfirmButton: false
+    //             });
+    //         }
+    //     });
+    // };
     const resetForm = () => {
         Swal.fire({
             title: translations[currentLanguage].confirmResetTitle || 'Are you sure?',
@@ -1112,10 +1181,8 @@ const BiodataForm = ({ scrollToTemplates }) => {
             cancelButtonText: translations[currentLanguage].cancel || 'Cancel'
         }).then((result) => {
             if (result.isConfirmed) {
-                // Save the current template before resetting
-                const currentTemplate = selectedTemplate;
-
-                // Reset all form data
+    
+                // Form reset
                 setFormData({
                     name: '',
                     dateOfBirth: '',
@@ -1136,7 +1203,7 @@ const BiodataForm = ({ scrollToTemplates }) => {
                     contactNumber: '',
                     residentialAddress: ''
                 });
-
+    
                 setProfileImage(null);
                 setErrors({});
                 setSections({
@@ -1144,21 +1211,27 @@ const BiodataForm = ({ scrollToTemplates }) => {
                     family: true,
                     contact: true,
                 });
+    
                 setFieldOrder({
                     personal: ['name', 'dateOfBirth', 'timeOfBirth', 'placeOfBirth', 'complexion', 'height', 'gotraCaste', 'occupation', 'income', 'education'],
                     family: ['fatherName', 'fatherOccupation', 'motherName', 'motherOccupation', 'siblings'],
                     contact: ['contactPerson', 'contactNumber', 'residentialAddress']
                 });
-
+    
+                // Reset labels
                 const defaultLabels = {};
-                Object.keys(initialFormData).forEach((key) => {
+                Object.keys(formData).forEach((key) => {
                     defaultLabels[key] = translations[currentLanguage][key] || key;
                 });
                 setFieldLabels(defaultLabels);
-
-                // Restore the template after reset
-                setSelectedTemplate(currentTemplate);
-
+    
+                // ❗ Remove selected template from sessionStorage & state
+                sessionStorage.removeItem('selectedTemplate');
+                setSelectedTemplate(null);
+    
+                // Scroll back to template section
+                scrollToTemplates();
+    
                 Swal.fire({
                     title: translations[currentLanguage].resetSuccessful || 'Reset Successful!',
                     text: translations[currentLanguage].formReset || 'The form has been reset.',
@@ -1169,6 +1242,7 @@ const BiodataForm = ({ scrollToTemplates }) => {
             }
         });
     };
+    
 
     // Render a form field based on its type
     const renderField = (section, fieldName, index) => {
@@ -1334,7 +1408,7 @@ const BiodataForm = ({ scrollToTemplates }) => {
             <div className="max-w-5xl mx-auto">
                 <div className="text-center my-8">
                     <h2
-                        className={`text-[28px] ${currentLanguage === 'தமிழ்' ? 'sm:text-[40px]' : 'sm:text-[45px] '} text-[#B92753] font-bold mb-3 bg-white rounded-lg lg:shadow-2xl inline py-3 px-2 sm:px-5`}
+                        className={`text-[28px] ${currentLanguage === 'தமிழ்' ? 'sm:text-[40px]' : 'sm:text-[45px]'} text-[#B92753] font-bold mb-3 bg-white rounded-lg lg:shadow-2xl inline py-3 px-2 sm:px-5`}
                     >
                         {translations[currentLanguage].createYourBiodata}
                     </h2>

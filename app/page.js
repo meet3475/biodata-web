@@ -13,6 +13,7 @@ import 'swiper/css/navigation';
 import BiodataForm from "@/components/BiodataForm/BiodataForm";
 import { useEffect, useRef, useState } from "react";
 import Loarder from "@/components/Loarder/Loarder";
+import { useSearchParams } from "next/navigation";
 
 
 const design = [
@@ -90,6 +91,16 @@ export default function Home() {
 
 
   const [isLoading, setIsLoading] = useState(true);
+
+
+  // const biodataRef = useRef(null);
+  // const searchParams = useSearchParams();
+
+  // useEffect(() => {
+  //   if (biodataRef.current) {
+  //     biodataRef.current.scrollIntoView({ behavior: 'smooth' });
+  //   }
+  // }, []);
 
   useEffect(() => {
     // Simulate loading time (you can remove this in production)
@@ -257,16 +268,46 @@ export default function Home() {
       {/* templates slider section end */}
 
       {/* create biodata section start */}
-      <div ref={biodataFormRef}>
+      <div ref={biodataFormRef} id="create-biodata">
         <BiodataForm scrollToTemplates={scrollToTemplates} />
       </div>
       {/* create biodata section end */}
 
-      {/* reviews section start */}
+      {/* How to Create biodata section start */}
       <div className="bg-[#B92753]">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-[80px]">
+          <div className="text-center">
+            <h2 className="text-[28px] sm:text-[45px] text-[#B92753] font-bold mb-3 bg-white rounded-lg lg:shadow-2xl block lg:inline py-3 px-2 sm:px-5">How to Create Free Marriage Biodata?</h2>
+          </div>
+          <div className="flex flex-col items-center lg:items-stretch lg:flex-row mt-14 sm:gap-14">
+            <div className="w-[300px] md:w-[500px] h-[450px] mb-5 sm:mb-0">
+              <img
+                src="/images/biodata.png"
+                alt="biodata"
+                className="rounded-lg w-[100%] h-[100%]"
+              />
+            </div>
+
+            <div className="bg-[white] py-8 px-8 rounded-lg flex flex-col justify-center">
+              <h4 className="font-bold text-[22px]">Step 1. Choose the Free Template</h4>
+              <p className="mt-3 mb-7">Click on the <span className="font-semibold">Choose Your Template</span> at Now choose the  <span className="font-semibold">Free template</span> from our Popular Marriage Biodata Designs.</p>
+
+              <h4 className="font-bold text-[22px]">Step 2. Fill all your details in the language of your choice</h4>
+              <p className="mt-3 mb-7">Click on the <span className="font-semibold">Create Biodata</span> Button. In the biodata form, select the language in which you want to create your biodata. Add your <span className="font-semibold">Profile Photho</span> and fill in your <span className="font-semibold">personal, family, and contact</span> details.</p>
+
+              <h4 className="font-bold text-[22px]">Step 3. Download Free Marriage Biodata</h4>
+              <p className="mt-3 mb-7">Click on the <span className="font-semibold"> Generate Biodata</span> button. You will be directed to the Privews page. <span className="font-semibold">Download</span> your biodata by clicking on the Download Biodata button.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      {/* How to Create biodata section end */}
+
+      {/* reviews section start */}
+      <div className="bg-[white]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-[60px]">
-          <h2 className="text-[30px] sm:text-[48px] text-[white] font-bold mb-5 text-center mx-0 md:mx-24">What Our Happy Users Say About Our Marriage Biodata Format</h2>
-          <h6 className="text-[16px] sm:text-[20px] text-[white] mb-[60px] text-center mx-0 md:mx-24">Our goal at My Biodata for Marriage is to assist you in creating the ideal marriage biodata. Hear from some of our happy customers who have successfully used our biodata maker platform to find the right person.</h6>
+          <h2 className="text-[30px] sm:text-[48px] text-[#181966] font-bold mb-5 text-center mx-0 md:mx-24">What Our Happy Users Say About Our Marriage Biodata Format</h2>
+          <h6 className="text-[16px] sm:text-[20px] text-[#181966] mb-[60px] text-center mx-0 md:mx-24">Our goal at My Biodata for Marriage is to assist you in creating the ideal marriage biodata. Hear from some of our happy customers who have successfully used our biodata maker platform to find the right person.</h6>
           <div className="">
             <Swiper
               slidesPerView={3}

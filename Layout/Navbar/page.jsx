@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 import { Disclosure, DisclosureButton, DisclosurePanel } from '@headlessui/react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import Image from 'next/image';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 const navigation = [
     { name: 'Home', href: '/', current: false },
@@ -17,25 +19,31 @@ function classNames(...classes) {
 const Navbar = ({ scrollToBiodataForm }) => {
 
 
+    const pathname = usePathname();
+    console.log(pathname)
+
+
     return (
         <Disclosure as="nav" className="bg-white shadow-md">
             {({ open }) => (
                 <>
                     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                   
+
                         <div className="flex justify-between h-16 items-center">
-                        
+
                             <div className="flex items-center">
-                                <Image
-                                    src="/images/logo.png"
-                                    alt="Logo"
-                                    width={80}
-                                    height={50}
-                                    className="w-[80px] h-[50px] sm:w-[65px] sm:h-[40px]"
-                                />
-                                <span className="ml-2 text-lg font-bold text-[#9E2665] hover:text-[+] hidden sm:block">
-                                    Wedding Biodata
-                                </span>
+                                <Link href="/" className='flex items-center'>
+                                    <Image
+                                        src="/images/logo.png"
+                                        alt="Logo"
+                                        width={80}
+                                        height={50}
+                                        className="w-[80px] h-[50px] sm:w-[65px] sm:h-[40px]"
+                                    />
+                                    <span className="ml-2 text-lg font-bold text-[#9E2665] hover:text-[+] hidden sm:block">
+                                        Wedding Biodata
+                                    </span>
+                                </Link>
                             </div>
 
 
@@ -48,13 +56,23 @@ const Navbar = ({ scrollToBiodataForm }) => {
                             </div>
 
                             <div className="flex items-center gap-4">
-                              
+                                {pathname === '/' ? (
+                                    <button className="py-1 sm:py-2 px-2 sm:px-4 bg-[#9E2665] text-white text-[14px] sm:text-[16px] font-medium rounded-md hover:bg-[#4649C0]"
+                                        onClick={scrollToBiodataForm}
+                                    >
+                                        Create Biodata
+                                    </button>
+                                ) : (
 
-                                <button className="py-1 sm:py-2 px-2 sm:px-4 bg-[#9E2665] text-white text-[14px] sm:text-[16px] font-medium rounded-md hover:bg-[#4649C0]"
-                                onClick={scrollToBiodataForm}
-                                >
-                                    Create Biodata
-                                </button>
+                                    <Link href="/">
+                                        <button className="py-1 sm:py-2 px-2 sm:px-4 bg-[#9E2665] text-white text-[14px] sm:text-[16px] font-medium rounded-md hover:bg-[#4649C0]"
+                                            onClick={scrollToBiodataForm}
+                                        >
+                                            Create Biodata
+                                        </button>
+                                    </Link>
+                                )
+                                }
                             </div>
 
                             {/* Mobile Menu Button */}
@@ -76,7 +94,7 @@ const Navbar = ({ scrollToBiodataForm }) => {
                             ))}
                         </div>
                     </DisclosurePanel>
-                   
+
                 </>
             )}
         </Disclosure>
