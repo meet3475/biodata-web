@@ -261,7 +261,19 @@ const BiodataForm = ({ scrollToTemplates }) => {
             enterSectionName: 'Enter section name (e.g. Education Details)',
             cancel: 'Cancel',
             addField: 'Add Field',
-            addSection: 'Add Section'
+            addSection: 'Add Section',
+            confirmDeleteTitle: 'Are you sure?',
+            confirmDeleteFieldText: 'Do you want to delete this field?',
+            confirmDeleteSectionText: 'Do you want to delete this section?',
+            yesDelete: 'Yes, delete it!',
+            deleted: 'Deleted!',
+            fieldDeleted: 'The field has been deleted.',
+            sectionDeleted: 'The section has been deleted.',
+            confirmResetTitle: 'Are you sure?',
+            confirmResetText: 'Do you really want to reset the form?',
+            yesReset: 'Yes, reset it!',
+            resetSuccessful: 'Reset Successful!',
+            formReset: 'The form has been reset.'
         },
         हिंदी: {
             name: 'नाम',
@@ -304,7 +316,19 @@ const BiodataForm = ({ scrollToTemplates }) => {
             enterSectionName: 'सेक्शन नाम दर्ज करें (जैसे शिक्षा विवरण)',
             cancel: 'रद्द करें',
             addField: 'फील्ड जोड़ें',
-            addSection: 'सेक्शन जोड़ें'
+            addSection: 'सेक्शन जोड़ें',
+            confirmDeleteTitle: 'क्या आप सुनिश्चित हैं?',
+            confirmDeleteFieldText: 'क्या आप इस फील्ड को हटाना चाहते हैं?',
+            confirmDeleteSectionText: 'क्या आप इस सेक्शन को हटाना चाहते हैं?',
+            yesDelete: 'हाँ, हटाएँ!',
+            deleted: 'हटा दिया गया!',
+            fieldDeleted: 'फील्ड हटा दिया गया है।',
+            sectionDeleted: 'सेक्शन हटा दिया गया है।',
+            confirmResetTitle: 'क्या आप सुनिश्चित हैं?',
+            confirmResetText: 'क्या आप वास्तव में फॉर्म रीसेट करना चाहते हैं?',
+            yesReset: 'हाँ, रीसेट करें!',
+            resetSuccessful: 'रीसेट सफल!',
+            formReset: 'फॉर्म रीसेट हो गया है।'
         },
         मराठी: {
             name: 'नाव',
@@ -347,7 +371,19 @@ const BiodataForm = ({ scrollToTemplates }) => {
             enterSectionName: 'विभाग नाव प्रविष्ट करा (उदा. शैक्षणिक तपशील)',
             cancel: 'रद्द करा',
             addField: 'फील्ड जोडा',
-            addSection: 'विभाग जोडा'
+            addSection: 'विभाग जोडा',
+            confirmDeleteTitle: 'तुम्हाला खात्री आहे?',
+            confirmDeleteFieldText: 'तुम्ही हे फील्ड हटवू इच्छिता?',
+            confirmDeleteSectionText: 'तुम्ही हा विभाग हटवू इच्छिता?',
+            yesDelete: 'होय, हटवा!',
+            deleted: 'हटवले!',
+            fieldDeleted: 'फील्ड हटवले गेले आहे.',
+            sectionDeleted: 'विभाग हटवला गेला आहे.',
+            confirmResetTitle: 'तुम्हाला खात्री आहे?',
+            confirmResetText: 'तुम्हाला खरोखर फॉर्म रीसेट करायचे आहे?',
+            yesReset: 'होय, रीसेट करा!',
+            resetSuccessful: 'रीसेट यशस्वी!',
+            formReset: 'फॉर्म रीसेट झाले आहे.'
         },
         বাংলা: {
             name: 'নাম',
@@ -390,7 +426,19 @@ const BiodataForm = ({ scrollToTemplates }) => {
             enterSectionName: 'বিভাগের নাম লিখুন (যেমন: শিক্ষার বিবরণ)',
             cancel: 'বাতিল',
             addField: 'ফিল্ড যোগ করুন',
-            addSection: 'বিভাগ যোগ করুন'
+            addSection: 'বিভাগ যোগ করুন',
+            confirmDeleteTitle: 'আপনি কি নিশ্চিত?',
+            confirmDeleteFieldText: 'আপনি কি এই ফিল্ডটি মুছে ফেলতে চান?',
+            confirmDeleteSectionText: 'আপনি কি এই বিভাগটি মুছে ফেলতে চান?',
+            yesDelete: 'হ্যাঁ, মুছে দিন!',
+            deleted: 'মুছে ফেলা হয়েছে!',
+            fieldDeleted: 'ফিল্ডটি মুছে ফেলা হয়েছে।',
+            sectionDeleted: 'বিভাগটি মুছে ফেলা হয়েছে।',
+            confirmResetTitle: 'আপনি কি নিশ্চিত?',
+            confirmResetText: 'আপনি কি সত্যিই ফর্ম রিসেট করতে চান?',
+            yesReset: 'হ্যাঁ, রিসেট করুন!',
+            resetSuccessful: 'রিসেট সফল!',
+            formReset: 'ফর্ম রিসেট করা হয়েছে।'
         },
         ગુજરાતી: {
             name: 'નામ',
@@ -433,7 +481,19 @@ const BiodataForm = ({ scrollToTemplates }) => {
             enterSectionName: 'સેક્શન નામ દાખલ કરો (દા.ત. શિક્ષણ વિગતો)',
             cancel: 'રદ કરો',
             addField: 'ફીલ્ડ ઉમેરો',
-            addSection: 'સેક્શન ઉમેરો'
+            addSection: 'સેક્શન ઉમેરો',
+            confirmDeleteTitle: 'શું તમને ખાતરી છે?',
+            confirmDeleteFieldText: 'શું તમે આ ફીલ્ડ ડિલીટ કરવા માંગો છો?',
+            confirmDeleteSectionText: 'શું તમે આ સેક્શન ડિલીટ કરવા માંગો છો?',
+            yesDelete: 'હા, ડિલીટ કરો!',
+            deleted: 'ડિલીટ થઈ ગયું!',
+            fieldDeleted: 'ફીલ્ડ ડિલીટ થઈ ગયું છે.',
+            sectionDeleted: 'સેક્શન ડિલીટ થઈ ગયું છે.',
+            confirmResetTitle: 'શું તમને ખાતરી છે?',
+            confirmResetText: 'શું તમે ખરેખર ફોર્મ રીસેટ કરવા માંગો છો?',
+            yesReset: 'હા, રીસેટ કરો!',
+            resetSuccessful: 'રીસેટ સફળ!',
+            formReset: 'ફોર્મ રીસેટ થઈ ગયું છે.'
         },
         தமிழ்: {
             name: 'பெயர்',
@@ -476,7 +536,19 @@ const BiodataForm = ({ scrollToTemplates }) => {
             enterSectionName: 'பிரிவு பெயரை உள்ளிடவும் (எ.கா. கல்வி விவரங்கள்)',
             cancel: 'ரத்து செய்',
             addField: 'புலத்தைச் சேர்க்கவும்',
-            addSection: 'பிரிவைச் சேர்க்கவும்'
+            addSection: 'பிரிவைச் சேர்க்கவும்',
+            confirmDeleteTitle: 'நீங்கள் உறுதியாக இருக்கிறீர்களா?',
+            confirmDeleteFieldText: 'இந்த புலத்தை நீக்க விரும்புகிறீர்களா?',
+            confirmDeleteSectionText: 'இந்த பிரிவை நீக்க விரும்புகிறீர்களா?',
+            yesDelete: 'ஆம், நீக்குக!',
+            deleted: 'நீக்கப்பட்டது!',
+            fieldDeleted: 'புலம் நீக்கப்பட்டது.',
+            sectionDeleted: 'பிரிவு நீக்கப்பட்டது.',
+            confirmResetTitle: 'நீங்கள் உறுதியாக இருக்கிறீர்களா?',
+            confirmResetText: 'நீங்கள் உண்மையில் படிவத்தை மீட்டமைக்க விரும்புகிறீர்களா?',
+            yesReset: 'ஆம், மீட்டமைக்க!',
+            resetSuccessful: 'மீட்டமைப்பு வெற்றிகரமாக!',
+            formReset: 'படிவம் மீட்டமைக்கப்பட்டது.'
         }
 
         // Add translations for other languages similarly
@@ -554,7 +626,7 @@ const BiodataForm = ({ scrollToTemplates }) => {
     // Update the handleChange function in your BiodataForm.jsx
     const handleChange = (e) => {
         const { name, value } = e.target;
-    
+
         // List of fields that should only accept text (letters and spaces)
         const textOnlyFields = [
             'name',
@@ -570,7 +642,7 @@ const BiodataForm = ({ scrollToTemplates }) => {
             'siblings',
             'contactPerson'
         ];
-    
+
         // Validate numeric fields
         if (name === 'height' || name === 'income' || name === 'contactNumber') {
             // Only allow numbers (and decimal points for height/income)
@@ -578,7 +650,7 @@ const BiodataForm = ({ scrollToTemplates }) => {
                 return; // Don't update the field if it's not a valid number
             }
         }
-    
+
         // Validate text-only fields - only allow letters and spaces
         if (textOnlyFields.includes(name)) {
             // Only allow letters (including Unicode for non-English languages) and spaces
@@ -586,12 +658,12 @@ const BiodataForm = ({ scrollToTemplates }) => {
                 return; // Don't update the field if it contains numbers or special characters
             }
         }
-    
+
         setFormData({
             ...formData,
             [name]: value
         });
-    
+
         // Clear error when user starts typing
         if (errors[name]) {
             setErrors({
@@ -663,20 +735,38 @@ const BiodataForm = ({ scrollToTemplates }) => {
 
     // Delete a field
     const deleteField = (section, fieldName) => {
-        const newOrder = fieldOrder[section].filter(field => field !== fieldName);
+        Swal.fire({
+            title: translations[currentLanguage].confirmDeleteTitle || 'Are you sure?',
+            text: translations[currentLanguage].confirmDeleteFieldText || `Do you want to delete the "${fieldLabels[fieldName]}" field?`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: translations[currentLanguage].yesDelete || 'Yes, delete it!',
+            cancelButtonText: translations[currentLanguage].cancel || 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const newOrder = fieldOrder[section].filter(field => field !== fieldName);
 
-        // Also remove from formData (optional)
-        const newFormData = { ...formData };
-        delete newFormData[fieldName];
+                // Also remove from formData (optional)
+                const newFormData = { ...formData };
+                delete newFormData[fieldName];
 
-        setFieldOrder({
-            ...fieldOrder,
-            [section]: newOrder
+                setFieldOrder({
+                    ...fieldOrder,
+                    [section]: newOrder
+                });
+
+                setFormData(newFormData);
+
+                Swal.fire(
+                    translations[currentLanguage].deleted || 'Deleted!',
+                    translations[currentLanguage].fieldDeleted || 'The field has been deleted.',
+                    'success'
+                );
+            }
         });
-
-        setFormData(newFormData);
     };
-
 
     // Open add field modal
     const addNewField = (section) => {
@@ -687,114 +777,64 @@ const BiodataForm = ({ scrollToTemplates }) => {
     };
 
     // Handle add field form submission
-    // const handleAddField = () => {
-    //     if (!newFieldLabel) return;
-
-    //     const formattedFieldName = newFieldLabel
-    //         .trim()
-    //         .toLowerCase()
-    //         .replace(/\s+/g, '');
-
-    //     if (formData.hasOwnProperty(formattedFieldName)) {
-    //         Swal.fire({
-    //             icon: 'error',
-    //             title: 'Oops...',
-    //             text: 'Field already exists!',
-    //             confirmButtonColor: '#d33'
-    //         });
-    //         return;
-    //     }
-
-    //     // Update field labels
-    //     setFieldLabels({
-    //         ...fieldLabels,
-    //         [formattedFieldName]: newFieldLabel,
-    //     });
-
-    //     // Update form data
-    //     setFormData({
-    //         ...formData,
-    //         [formattedFieldName]: '',
-    //     });
-
-    //     // Update field order
-    //     setFieldOrder({
-    //         ...fieldOrder,
-    //         [currentSection]: [...fieldOrder[currentSection], formattedFieldName],
-    //     });
-
-    //     // Show success alert
-    //     Swal.fire({
-    //         icon: 'success',
-    //         title: 'Field Added',
-    //         text: `"${newFieldLabel}" has been added successfully.`,
-    //         timer: 1500,
-    //         showConfirmButton: false
-    //     });
-
-    //     // Close modal and reset
-    //     setShowAddFieldModal(false);
-    //     setNewFieldName('');
-    //     setNewFieldLabel('');
-    // };
     const handleAddField = () => {
-    if (!newFieldLabel) {
-        Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Field label is required!',
-            confirmButtonColor: '#d33'
+        if (!newFieldLabel) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Field label is required!',
+                confirmButtonColor: '#d33'
+            });
+            return;
+        }
+
+        const formattedFieldName = newFieldLabel
+            .trim()
+            .toLowerCase()
+            .replace(/\s+/g, '');
+
+        if (formData.hasOwnProperty(formattedFieldName)) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Field already exists!',
+                confirmButtonColor: '#d33'
+            });
+            return;
+        }
+
+        // Update field labels with correct key-value pair
+        setFieldLabels({
+            ...fieldLabels,
+            [formattedFieldName]: newFieldLabel,
         });
-        return;
-    }
 
-    const formattedFieldName = newFieldLabel
-        .trim()
-        .toLowerCase()
-        .replace(/\s+/g, '');
-
-    if (formData.hasOwnProperty(formattedFieldName)) {
-        Swal.fire({
-            icon: 'error',
-            title: 'Oops...',
-            text: 'Field already exists!',
-            confirmButtonColor: '#d33'
+        // Update form data
+        setFormData({
+            ...formData,
+            [formattedFieldName]: '',
         });
-        return;
-    }
 
-    // Update field labels with correct key-value pair
-    setFieldLabels({
-        ...fieldLabels,
-        [formattedFieldName]: newFieldLabel,
-    });
+        // Update field order
+        setFieldOrder({
+            ...fieldOrder,
+            [currentSection]: [...fieldOrder[currentSection], formattedFieldName],
+        });
 
-    // Update form data
-    setFormData({
-        ...formData,
-        [formattedFieldName]: '',
-    });
+        // Show success alert
+        Swal.fire({
+            icon: 'success',
+            title: 'Field Added',
+            text: `"${newFieldLabel}" has been added successfully.`,
+            timer: 1500,
+            showConfirmButton: false
+        });
 
-    // Update field order
-    setFieldOrder({
-        ...fieldOrder,
-        [currentSection]: [...fieldOrder[currentSection], formattedFieldName],
-    });
-
-    // Show success alert
-    Swal.fire({
-        icon: 'success',
-        title: 'Field Added',
-        text: `"${newFieldLabel}" has been added successfully.`,
-        timer: 1500,
-        showConfirmButton: false
-    });
-
-    // Close modal and reset
-    setShowAddFieldModal(false);
-    setNewFieldName('');
-    setNewFieldLabel('');
-};
+        // Close modal and reset
+        setShowAddFieldModal(false);
+        setNewFieldName('');
+        setNewFieldLabel('');
+    };
 
     // Open add section modal
     const addNewSection = () => {
@@ -1034,25 +1074,48 @@ const BiodataForm = ({ scrollToTemplates }) => {
 
     // Remove section
     const removeSection = (section) => {
-        setSections({
-            ...sections,
-            [section]: false,
+        Swal.fire({
+            title: translations[currentLanguage].confirmDeleteTitle || 'Are you sure?',
+            text: translations[currentLanguage].confirmDeleteSectionText || `Do you want to delete the "${translations[currentLanguage][`${section}Details`] || section}" section?`,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: translations[currentLanguage].yesDelete || 'Yes, delete it!',
+            cancelButtonText: translations[currentLanguage].cancel || 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                setSections({
+                    ...sections,
+                    [section]: false,
+                });
+
+                Swal.fire(
+                    translations[currentLanguage].deleted || 'Deleted!',
+                    translations[currentLanguage].sectionDeleted || 'The section has been deleted.',
+                    'success'
+                );
+            }
         });
     };
 
     // Reset form
     const resetForm = () => {
         Swal.fire({
-            title: 'Are you sure?',
-            text: 'Do you really want to reset the form?',
+            title: translations[currentLanguage].confirmResetTitle || 'Are you sure?',
+            text: translations[currentLanguage].confirmResetText || 'Do you really want to reset the form?',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, reset it!',
-            cancelButtonText: 'Cancel'
+            confirmButtonText: translations[currentLanguage].yesReset || 'Yes, reset it!',
+            cancelButtonText: translations[currentLanguage].cancel || 'Cancel'
         }).then((result) => {
             if (result.isConfirmed) {
+                // Save the current template before resetting
+                const currentTemplate = selectedTemplate;
+
+                // Reset all form data
                 setFormData({
                     name: '',
                     dateOfBirth: '',
@@ -1093,9 +1156,12 @@ const BiodataForm = ({ scrollToTemplates }) => {
                 });
                 setFieldLabels(defaultLabels);
 
+                // Restore the template after reset
+                setSelectedTemplate(currentTemplate);
+
                 Swal.fire({
-                    title: 'Reset Successful!',
-                    text: 'The form has been reset.',
+                    title: translations[currentLanguage].resetSuccessful || 'Reset Successful!',
+                    text: translations[currentLanguage].formReset || 'The form has been reset.',
                     icon: 'success',
                     timer: 2000,
                     showConfirmButton: false
