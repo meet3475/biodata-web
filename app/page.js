@@ -60,7 +60,6 @@ const design = [
   }
 ]
 
-// Replace these review descriptions:
 const reviews = [
   {
     name: "Yukta Shukla",
@@ -295,8 +294,8 @@ export default function Home() {
               <Image
                 src="/images/biodata.png"
                 alt="biodata"
-                width={500}
-                height={1000}
+                width={1000}
+                height={500}
                 className="rounded-lg w-[100%] h-[100%]"
               />
             </div>
