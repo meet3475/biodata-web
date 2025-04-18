@@ -273,10 +273,7 @@ const BiodataForm = ({ scrollToTemplates }) => {
             confirmResetText: 'Do you really want to reset the form?',
             yesReset: 'Yes, reset it!',
             resetSuccessful: 'Reset Successful!',
-            formReset: 'The form has been reset.',
-            confirmLanguageChangeTitle: 'Change Language?',
-            confirmLanguageChangeText: 'Changing language will reset the form. Do you want to continue?',
-            yesChange: 'Yes, change it!'
+            formReset: 'The form has been reset.'
         },
         हिंदी: {
             name: 'नाम',
@@ -330,10 +327,7 @@ const BiodataForm = ({ scrollToTemplates }) => {
             confirmResetText: 'क्या आप वास्तव में फॉर्म रीसेट करना चाहते हैं?',
             yesReset: 'हाँ, रीसेट करें!',
             resetSuccessful: 'रीसेट सफल!',
-            formReset: 'फॉर्म रीसेट हो गया है।',
-            confirmLanguageChangeTitle: 'भाषा बदलें?',
-            confirmLanguageChangeText: 'भाषा बदलने से फॉर्म रीसेट हो जाएगा। क्या आप आगे बढ़ना चाहते हैं?',
-            yesChange: 'हाँ, बदलें!'
+            formReset: 'फॉर्म रीसेट हो गया है।'
         },
         मराठी: {
             name: 'नाव',
@@ -387,10 +381,7 @@ const BiodataForm = ({ scrollToTemplates }) => {
             confirmResetText: 'तुम्हाला खरोखर फॉर्म रीसेट करायचे आहे?',
             yesReset: 'होय, रीसेट करा!',
             resetSuccessful: 'रीसेट यशस्वी!',
-            formReset: 'फॉर्म रीसेट झाले आहे.',
-            confirmLanguageChangeTitle: 'भाषा बदला?',
-            confirmLanguageChangeText: 'भाषा बदलल्यास फॉर्म रीसेट होईल. तुम्ही पुढे जाऊ इच्छिता?',
-            yesChange: 'होय, बदला!'
+            formReset: 'फॉर्म रीसेट झाले आहे.'
         },
         বাংলা: {
             name: 'নাম',
@@ -444,10 +435,7 @@ const BiodataForm = ({ scrollToTemplates }) => {
             confirmResetText: 'আপনি কি সত্যিই ফর্ম রিসেট করতে চান?',
             yesReset: 'হ্যাঁ, রিসেট করুন!',
             resetSuccessful: 'রিসেট সফল!',
-            formReset: 'ফর্ম রিসেট করা হয়েছে।',
-            confirmLanguageChangeTitle: 'ভাষা পরিবর্তন করুন?',
-            confirmLanguageChangeText: 'ভাষা পরিবর্তন করলে ফর্ম রিসেট হয়ে যাবে। আপনি কি চালিয়ে যেতে চান?',
-            yesChange: 'হ্যাঁ, পরিবর্তন করুন!'
+            formReset: 'ফর্ম রিসেট করা হয়েছে।'
         },
         ગુજરાતી: {
             name: 'નામ',
@@ -500,10 +488,7 @@ const BiodataForm = ({ scrollToTemplates }) => {
             confirmResetTitle: 'શું તમને ખાતરી છે?',
             confirmResetText: 'શું તમે ખરેખર ફોર્મ રીસેટ કરવા માંગો છો?',
             yesReset: 'હા, રીસેટ કરો!',
-            resetSuccessful: 'રીસેટ સફળ!',
-            formReset: 'ફોર્મ રીસેટ થઈ ગયું છે.',
-            confirmLanguageChangeText: 'ભાષા બદલવાથી ફોર્મ રીસેટ થઈ જશે. શું તમે આગળ વધવા માંગો છો?',
-            yesChange: 'હા, બદલો!'
+            resetSuccessful: 'રીસેટ સફળ!'
         },
         தமிழ்: {
             name: 'பெயர்',
@@ -557,91 +542,23 @@ const BiodataForm = ({ scrollToTemplates }) => {
             confirmResetText: 'நீங்கள் உண்மையில் படிவத்தை மீட்டமைக்க விரும்புகிறீர்களா?',
             yesReset: 'ஆம், மீட்டமைக்க!',
             resetSuccessful: 'மீட்டமைப்பு வெற்றிகரமாக!',
-            formReset: 'படிவம் மீட்டமைக்கப்பட்டது.',
-            confirmLanguageChangeTitle: 'மொழியை மாற்றவா?',
-            confirmLanguageChangeText: 'மொழியை மாற்றினால் படிவம் மீட்டமைக்கப்படும். தொடர விரும்புகிறீர்களா?',
-            yesChange: 'ஆம், மாற்று!'
+            formReset: 'படிவம் மீட்டமைக்கப்பட்டது.'
         }
         // Add translations for other languages similarly
     });
 
     const handleLanguageChange = (language) => {
-        // Show confirmation dialog before changing language and resetting form
-        Swal.fire({
-            title: translations[currentLanguage].confirmLanguageChangeTitle || 'Change Language?',
-            text: translations[currentLanguage].confirmLanguageChangeText || 'Changing language will reset the form. Do you want to continue?',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#4649C0',
-            cancelButtonColor: '#9E2665',
-            confirmButtonText: translations[currentLanguage].yesChange || 'Yes, change it!',
-            cancelButtonText: translations[currentLanguage].cancel || 'Cancel'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // Set the new language
-                setCurrentLanguage(language);
-                setDropdownOpen(false);
+        setCurrentLanguage(language);
+        setDropdownOpen(false);
 
-                // Reset form data
-                setFormData({
-                    name: '',
-                    dateOfBirth: '',
-                    timeOfBirth: '',
-                    placeOfBirth: '',
-                    complexion: '',
-                    height: '',
-                    gotraCaste: '',
-                    occupation: '',
-                    income: '',
-                    education: '',
-                    fatherName: '',
-                    fatherOccupation: '',
-                    motherName: '',
-                    motherOccupation: '',
-                    siblings: '',
-                    contactPerson: '',
-                    contactNumber: '',
-                    residentialAddress: ''
-                });
-
-                setProfileImage(null);
-                setErrors({});
-                setSections({
-                    personal: true,
-                    family: true,
-                    contact: true,
-                });
-
-                setFieldOrder({
-                    personal: ['name', 'dateOfBirth', 'timeOfBirth', 'placeOfBirth', 'complexion', 'height', 'gotraCaste', 'occupation', 'income', 'education'],
-                    family: ['fatherName', 'fatherOccupation', 'motherName', 'motherOccupation', 'siblings'],
-                    contact: ['contactPerson', 'contactNumber', 'residentialAddress']
-                });
-
-                // Update field labels with new language
-                const newFieldLabels = {};
-                Object.keys(formData).forEach((key) => {
-                    newFieldLabels[key] = translations[language][key] || key;
-                });
-                setFieldLabels(newFieldLabels);
-
-                // // Remove selected template from sessionStorage & state
-                // sessionStorage.removeItem('selectedTemplate');
-                // setSelectedTemplate(null);
-
-                // // Scroll back to template section
-                // scrollToTemplates();
-
-                // Show success message
-                Swal.fire({
-                    title: translations[language].languageChangedTitle || 'Language Changed!',
-                    text: translations[language].languageChangedText || 'The form has been reset with the new language.',
-                    icon: 'success',
-                    timer: 2000,
-                    showConfirmButton: false
-                });
+        // Update field labels
+        const newFieldLabels = { ...fieldLabels };
+        Object.keys(newFieldLabels).forEach(key => {
+            if (translations[language] && translations[language][key]) {
+                newFieldLabels[key] = translations[language][key];
             }
         });
+        setFieldLabels(newFieldLabels);
     };
 
     // PDF preview modal state
