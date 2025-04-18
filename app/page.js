@@ -14,6 +14,7 @@ import BiodataForm from "@/components/BiodataForm/BiodataForm";
 import { useEffect, useRef, useState } from "react";
 import Loarder from "@/components/Loarder/Loarder";
 import { useSearchParams } from "next/navigation";
+import DataLoader from "@/components/Loarder/DataLoader";
 
 
 const design = [
@@ -89,18 +90,7 @@ export default function Home() {
   const templatesRef = useRef(null);
   const biodataFormRef = useRef(null);
 
-
   const [isLoading, setIsLoading] = useState(true);
-
-
-  // const biodataRef = useRef(null);
-  // const searchParams = useSearchParams();
-
-  // useEffect(() => {
-  //   if (biodataRef.current) {
-  //     biodataRef.current.scrollIntoView({ behavior: 'smooth' });
-  //   }
-  // }, []);
 
   useEffect(() => {
     // Simulate loading time (you can remove this in production)
@@ -109,6 +99,20 @@ export default function Home() {
     }, 2000);
 
     return () => clearTimeout(timer);
+  }, []);
+
+
+  const [designSliderLoading, setDesignSliderLoading] = useState(true);
+  const [reviewSliderLoading, setReviewSliderLoading] = useState(true);
+
+  useEffect(() => {
+    const designTimer = setTimeout(() => setDesignSliderLoading(false), 3000);
+    const reviewTimer = setTimeout(() => setReviewSliderLoading(false), 3000);
+
+    return () => {
+      clearTimeout(designTimer);
+      clearTimeout(reviewTimer);
+    };
   }, []);
 
   if (isLoading) {
@@ -134,6 +138,8 @@ export default function Home() {
       });
     }
   };
+
+
 
 
   return (
@@ -194,74 +200,80 @@ export default function Home() {
           <h6 className="text-[16px] sm:text-[20px] text-[white] mb-5">Take a look at our most downloaded marriage biodata templates! You all find popular layouts, stylish designs, and creative content ideas to inspire your own biodata. Discover what works best and make yours stand out!</h6>
           <h6 className="text-[16px] sm:text-[20px] text-[white] mb-[60px]">Select your favourite biodata design to get started</h6>
           <div>
-            <Swiper
-              slidesPerView={3}
-              spaceBetween={30}
-              className="mySwiper"
-              autoplay={{
-                delay: 2500,
-                disableOnInteraction: false,
-              }}
-              modules={[Autoplay]}
-              breakpoints={{
-                310: {
-                  slidesPerView: 1,
-                  spaceBetween: 10,
-                },
-                450: {
-                  slidesPerView: 1.3,
-                  spaceBetween: 15,
-                },
-                585: {
-                  slidesPerView: 2,
-                  spaceBetween: 20,
-                },
-                1024: {
-                  slidesPerView: 3,
-                  spaceBetween: 30,
-                },
-                1600: {
-                  slidesPerView: 3,
-                  spaceBetween: 30,
-                },
-              }}
-            >
-              {
-                design.map((item, index) => (
-                  <SwiperSlide key={index}>
-                    <div className="rounded-[20px] overflow-hidden relative still-data">
-                      <div className="w-[425px] h-[550px]">
-                        <img
-                          src={item.image}
-                          alt="Template"
-                          className="temp-img"
-                        />
-                      </div>
+            {
+              designSliderLoading ? (
+                <DataLoader />
+              ) : (
+                <Swiper
+                  slidesPerView={3}
+                  spaceBetween={30}
+                  className="mySwiper"
+                  autoplay={{
+                    delay: 2500,
+                    disableOnInteraction: false,
+                  }}
+                  modules={[Autoplay]}
+                  breakpoints={{
+                    310: {
+                      slidesPerView: 1,
+                      spaceBetween: 10,
+                    },
+                    450: {
+                      slidesPerView: 1.3,
+                      spaceBetween: 15,
+                    },
+                    585: {
+                      slidesPerView: 2,
+                      spaceBetween: 20,
+                    },
+                    1024: {
+                      slidesPerView: 3,
+                      spaceBetween: 30,
+                    },
+                    1600: {
+                      slidesPerView: 3,
+                      spaceBetween: 30,
+                    },
+                  }}
+                >
+                  {
+                    design.map((item, index) => (
+                      <SwiperSlide key={index}>
+                        <div className="rounded-[20px] overflow-hidden relative still-data">
+                          <div className="w-[425px] h-[550px]">
+                            <img
+                              src={item.image}
+                              alt="Template"
+                              className="temp-img"
+                            />
+                          </div>
 
-                      <div className="back-effect">
-                        <button className="select-btn"
-                          onClick={() => {
-                            // Set selected template in sessionStorage
-                            sessionStorage.setItem('selectedTemplate', item.image);
+                          <div className="back-effect">
+                            <button className="select-btn"
+                              onClick={() => {
+                                // Set selected template in sessionStorage
+                                sessionStorage.setItem('selectedTemplate', item.image);
 
-                            // Dispatch a custom event to notify BiodataForm component
-                            const event = new CustomEvent('templateSelected', {
-                              detail: { template: item.image }
-                            });
-                            window.dispatchEvent(event);
+                                // Dispatch a custom event to notify BiodataForm component
+                                const event = new CustomEvent('templateSelected', {
+                                  detail: { template: item.image }
+                                });
+                                window.dispatchEvent(event);
 
-                            // Scroll to biodata form section
-                            scrollToBiodataForm();
-                          }}
-                        >Select Template</button>
-                      </div>
-                    </div>
+                                // Scroll to biodata form section
+                                scrollToBiodataForm();
+                              }}
+                            >Select Template</button>
+                          </div>
+                        </div>
 
 
-                  </SwiperSlide>
-                ))
-              }
-            </Swiper>
+                      </SwiperSlide>
+                    ))
+                  }
+                </Swiper>
+              )
+            }
           </div>
         </div>
       </div>
@@ -309,62 +321,67 @@ export default function Home() {
           <h2 className="text-[30px] sm:text-[48px] text-[#181966] font-bold mb-5 text-center mx-0 md:mx-24">What Our Happy Users Say About Our Marriage Biodata Format</h2>
           <h6 className="text-[16px] sm:text-[20px] text-[#181966] mb-[60px] text-center mx-0 md:mx-24">Our goal at My Biodata for Marriage is to assist you in creating the ideal marriage biodata. Hear from some of our happy customers who have successfully used our biodata maker platform to find the right person.</h6>
           <div className="">
-            <Swiper
-              slidesPerView={3}
-              spaceBetween={30}
-              freeMode={true}
-              navigation={true}
-              modules={[FreeMode, Navigation]}
-              className="mySwiper"
-              breakpoints={{
-                310: {
-                  slidesPerView: 1,
-                  spaceBetween: 10,
-                },
-                540: {
-                  slidesPerView: 1.5,
-                  spaceBetween: 15,
-                },
-                940: {
-                  slidesPerView: 2,
-                  spaceBetween: 20,
-                },
-                1024: {
-                  slidesPerView: 2.5,
-                  spaceBetween: 30,
-                },
-                1600: {
-                  slidesPerView: 3,
-                  spaceBetween: 30,
-                },
-              }}
-            >
-              {
-                reviews.map((item, index) => (
-                  <SwiperSlide key={index}>
-                    <div className="bg-white shadow-lg rounded-xl p-6 sm:p-8 text-center max-w-md mx-auto border border-gray-200 [border-top:12px_solid_#4649C0] h-[350px]">
-                      <div className="flex justify-center text-[#4649C0] text-4xl">
-                        <BiSolidQuoteLeft />
-                      </div>
-                      <p className="text-gray-700 mt-4 text-[12px] sm:text-[14px]">
-                        {item.description}
-                      </p>
-                      <div className="mt-5">
-                        <Image
-                          src={item.image}
-                          alt="profile"
-                          width={60}
-                          height={60}
-                          className="rounded-full mx-auto border-2 border-gray-300"
-                        />
-                      </div>
-                      <h4 className="text-[16px] sm:text-[18px] font-semibold text-gray-900 mt-3">{item.name}</h4>
-                    </div>
-                  </SwiperSlide>
-                ))
-              }
-
-            </Swiper>
+            {
+              reviewSliderLoading ? (
+                <DataLoader />
+              ) : (
+                <Swiper
+                  slidesPerView={3}
+                  spaceBetween={30}
+                  freeMode={true}
+                  navigation={true}
+                  modules={[FreeMode, Navigation]}
+                  className="mySwiper"
+                  breakpoints={{
+                    310: {
+                      slidesPerView: 1,
+                      spaceBetween: 10,
+                    },
+                    540: {
+                      slidesPerView: 1.5,
+                      spaceBetween: 15,
+                    },
+                    940: {
+                      slidesPerView: 2,
+                      spaceBetween: 20,
+                    },
+                    1024: {
+                      slidesPerView: 2.5,
+                      spaceBetween: 30,
+                    },
+                    1600: {
+                      slidesPerView: 3,
+                      spaceBetween: 30,
+                    },
+                  }}
+                >
+                  {
+                    reviews.map((item, index) => (
+                      <SwiperSlide key={index}>
+                        <div className="bg-white shadow-lg rounded-xl p-6 sm:p-8 text-center max-w-md mx-auto border border-gray-200 [border-top:12px_solid_#4649C0] h-[350px]">
+                          <div className="flex justify-center text-[#4649C0] text-4xl">
+                            <BiSolidQuoteLeft />
+                          </div>
+                          <p className="text-gray-700 mt-4 text-[12px] sm:text-[14px]">
+                            {item.description}
+                          </p>
+                          <div className="mt-5">
+                            <Image
+                              src={item.image}
+                              alt="profile"
+                              width={60}
+                              height={60}
+                              className="rounded-full mx-auto border-2 border-gray-300"
+                            />
+                          </div>
+                          <h4 className="text-[16px] sm:text-[18px] font-semibold text-gray-900 mt-3">{item.name}</h4>
+                        </div>
+                      </SwiperSlide>
+                    ))
+                  }
+                </Swiper>
+              )
+            }
           </div>
         </div>
 

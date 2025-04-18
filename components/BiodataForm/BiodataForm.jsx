@@ -73,7 +73,8 @@ const styles = StyleSheet.create({
         borderRadius: 50,
         borderWidth: 3,
         borderColor: '#9E2665',
-        marginRight: 20
+        marginRight: 20,
+        objectFit: 'fill'
     },
     name: {
         fontSize: 22,
@@ -677,37 +678,53 @@ const BiodataForm = ({ scrollToTemplates }) => {
     const handleImageUpload = (e) => {
         const file = e.target.files[0];
         if (!file) return;
-
-        // Validate file type
+    
         const validTypes = ['image/jpeg', 'image/png', 'image/jpg'];
         if (!validTypes.includes(file.type)) {
             Swal.fire({
                 icon: 'error',
                 title: 'Invalid File Type',
                 text: 'Please upload a JPG or PNG image file',
-                confirmButtonColor: '#d33'
+                confirmButtonColor: '#4649C0'
             });
             return;
         }
-
-        // Validate file size (2MB max)
+    
         const maxSize = 2 * 1024 * 1024; // 2MB
         if (file.size > maxSize) {
             Swal.fire({
                 icon: 'error',
                 title: 'File Too Large',
                 text: 'Image must be less than 2MB',
-                confirmButtonColor: '#d33'
+                confirmButtonColor: '#4649C0'
             });
             return;
         }
-
-        const reader = new FileReader();
-        reader.onload = () => {
-            setProfileImage(reader.result);
-        };
-        reader.readAsDataURL(file);
+    
+        // This check ensures it only runs in the browser
+        if (typeof window !== 'undefined') {
+            const reader = new FileReader();
+            reader.onload = () => {
+                const img = new window.Image(); // For SSR-safe
+                img.onload = () => {
+                    if (img.width > 1600 || img.height > 1600) {
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Invalid Image Dimensions',
+                            text: 'Image must be 1600x1600 pixels or smaller',
+                            confirmButtonColor: '#4649C0'
+                        });
+                        return;
+                    }
+                    setProfileImage(reader.result);
+                };
+                img.src = reader.result;
+            };
+            reader.readAsDataURL(file);
+        }
+        
     };
+    
 
     // Move a field up in order
     const moveFieldUp = (section, index) => {
@@ -740,8 +757,8 @@ const BiodataForm = ({ scrollToTemplates }) => {
             text: translations[currentLanguage].confirmDeleteFieldText || `Do you want to delete the "${fieldLabels[fieldName]}" field?`,
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
+            confirmButtonColor: '#4649C0',
+            cancelButtonColor: '#9E2665',
             confirmButtonText: translations[currentLanguage].yesDelete || 'Yes, delete it!',
             cancelButtonText: translations[currentLanguage].cancel || 'Cancel'
         }).then((result) => {
@@ -783,7 +800,7 @@ const BiodataForm = ({ scrollToTemplates }) => {
                 icon: 'error',
                 title: 'Oops...',
                 text: 'Field label is required!',
-                confirmButtonColor: '#d33'
+                confirmButtonColor: '#4649C0'
             });
             return;
         }
@@ -798,7 +815,7 @@ const BiodataForm = ({ scrollToTemplates }) => {
                 icon: 'error',
                 title: 'Oops...',
                 text: 'Field already exists!',
-                confirmButtonColor: '#d33'
+                confirmButtonColor: '#4649C0'
             });
             return;
         }
@@ -869,7 +886,7 @@ const BiodataForm = ({ scrollToTemplates }) => {
                 icon: 'error',
                 title: 'Oops...',
                 text: 'Section name already exists!',
-                confirmButtonColor: '#d33'
+                confirmButtonColor: '#4649C0'
             });
             return;
         }
@@ -929,6 +946,11 @@ const BiodataForm = ({ scrollToTemplates }) => {
         // Updated contact number validation
         if (!formData.contactNumber || !/^[0-9]{10}$/.test(formData.contactNumber)) {
             tempErrors.contactNumber = 'Please enter a valid 10-digit phone number';
+            isValid = false;
+        }
+
+        if (!profileImage) {
+            tempErrors.profileImage = 'Profile image is required';
             isValid = false;
         }
 
@@ -1058,7 +1080,7 @@ const BiodataForm = ({ scrollToTemplates }) => {
                     icon: 'warning',
                     title: 'Template Required',
                     text: 'Please select a template first!',
-                    confirmButtonColor: '#3085d6'
+                    confirmButtonColor: '#4649C0'
                 }).then(() => {
                     scrollToTemplates(); // Scroll after alert is closed
                 });
@@ -1079,8 +1101,8 @@ const BiodataForm = ({ scrollToTemplates }) => {
             text: translations[currentLanguage].confirmDeleteSectionText || `Do you want to delete the "${translations[currentLanguage][`${section}Details`] || section}" section?`,
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
+            confirmButtonColor: '#4649C0',
+            cancelButtonColor: '#9E2665',
             confirmButtonText: translations[currentLanguage].yesDelete || 'Yes, delete it!',
             cancelButtonText: translations[currentLanguage].cancel || 'Cancel'
         }).then((result) => {
@@ -1100,88 +1122,19 @@ const BiodataForm = ({ scrollToTemplates }) => {
     };
 
     // Reset form
-    // const resetForm = () => {
-    //     Swal.fire({
-    //         title: translations[currentLanguage].confirmResetTitle || 'Are you sure?',
-    //         text: translations[currentLanguage].confirmResetText || 'Do you really want to reset the form?',
-    //         icon: 'warning',
-    //         showCancelButton: true,
-    //         confirmButtonColor: '#3085d6',
-    //         cancelButtonColor: '#d33',
-    //         confirmButtonText: translations[currentLanguage].yesReset || 'Yes, reset it!',
-    //         cancelButtonText: translations[currentLanguage].cancel || 'Cancel'
-    //     }).then((result) => {
-    //         if (result.isConfirmed) {
-    //             // Save the current template before resetting
-    //             const currentTemplate = selectedTemplate;
-
-    //             // Reset all form data
-    //             setFormData({
-    //                 name: '',
-    //                 dateOfBirth: '',
-    //                 timeOfBirth: '',
-    //                 placeOfBirth: '',
-    //                 complexion: '',
-    //                 height: '',
-    //                 gotraCaste: '',
-    //                 occupation: '',
-    //                 income: '',
-    //                 education: '',
-    //                 fatherName: '',
-    //                 fatherOccupation: '',
-    //                 motherName: '',
-    //                 motherOccupation: '',
-    //                 siblings: '',
-    //                 contactPerson: '',
-    //                 contactNumber: '',
-    //                 residentialAddress: ''
-    //             });
-
-    //             setProfileImage(null);
-    //             setErrors({});
-    //             setSections({
-    //                 personal: true,
-    //                 family: true,
-    //                 contact: true,
-    //             });
-    //             setFieldOrder({
-    //                 personal: ['name', 'dateOfBirth', 'timeOfBirth', 'placeOfBirth', 'complexion', 'height', 'gotraCaste', 'occupation', 'income', 'education'],
-    //                 family: ['fatherName', 'fatherOccupation', 'motherName', 'motherOccupation', 'siblings'],
-    //                 contact: ['contactPerson', 'contactNumber', 'residentialAddress']
-    //             });
-
-    //             const defaultLabels = {};
-    //             Object.keys(initialFormData).forEach((key) => {
-    //                 defaultLabels[key] = translations[currentLanguage][key] || key;
-    //             });
-    //             setFieldLabels(defaultLabels);
-
-    //             // Restore the template after reset
-    //             setSelectedTemplate(currentTemplate);
-
-    //             Swal.fire({
-    //                 title: translations[currentLanguage].resetSuccessful || 'Reset Successful!',
-    //                 text: translations[currentLanguage].formReset || 'The form has been reset.',
-    //                 icon: 'success',
-    //                 timer: 2000,
-    //                 showConfirmButton: false
-    //             });
-    //         }
-    //     });
-    // };
     const resetForm = () => {
         Swal.fire({
             title: translations[currentLanguage].confirmResetTitle || 'Are you sure?',
             text: translations[currentLanguage].confirmResetText || 'Do you really want to reset the form?',
             icon: 'warning',
             showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
+            confirmButtonColor: '#4649C0',
+            cancelButtonColor: '#9E2665',
             confirmButtonText: translations[currentLanguage].yesReset || 'Yes, reset it!',
             cancelButtonText: translations[currentLanguage].cancel || 'Cancel'
         }).then((result) => {
             if (result.isConfirmed) {
-    
+
                 // Form reset
                 setFormData({
                     name: '',
@@ -1203,7 +1156,7 @@ const BiodataForm = ({ scrollToTemplates }) => {
                     contactNumber: '',
                     residentialAddress: ''
                 });
-    
+
                 setProfileImage(null);
                 setErrors({});
                 setSections({
@@ -1211,27 +1164,27 @@ const BiodataForm = ({ scrollToTemplates }) => {
                     family: true,
                     contact: true,
                 });
-    
+
                 setFieldOrder({
                     personal: ['name', 'dateOfBirth', 'timeOfBirth', 'placeOfBirth', 'complexion', 'height', 'gotraCaste', 'occupation', 'income', 'education'],
                     family: ['fatherName', 'fatherOccupation', 'motherName', 'motherOccupation', 'siblings'],
                     contact: ['contactPerson', 'contactNumber', 'residentialAddress']
                 });
-    
+
                 // Reset labels
                 const defaultLabels = {};
                 Object.keys(formData).forEach((key) => {
                     defaultLabels[key] = translations[currentLanguage][key] || key;
                 });
                 setFieldLabels(defaultLabels);
-    
+
                 // ❗ Remove selected template from sessionStorage & state
                 sessionStorage.removeItem('selectedTemplate');
                 setSelectedTemplate(null);
-    
+
                 // Scroll back to template section
                 scrollToTemplates();
-    
+
                 Swal.fire({
                     title: translations[currentLanguage].resetSuccessful || 'Reset Successful!',
                     text: translations[currentLanguage].formReset || 'The form has been reset.',
@@ -1242,7 +1195,6 @@ const BiodataForm = ({ scrollToTemplates }) => {
             }
         });
     };
-    
 
     // Render a form field based on its type
     const renderField = (section, fieldName, index) => {
@@ -1278,8 +1230,6 @@ const BiodataForm = ({ scrollToTemplates }) => {
                     </div>
                 );
                 break;
-            case 'height':
-            case 'income':
             case 'contactNumber':
                 inputElement = (
                     <input
@@ -1446,11 +1396,23 @@ const BiodataForm = ({ scrollToTemplates }) => {
                     <div className="flex justify-between mb-6">
                         <div className="relative w-28 h-28 sm:w-32 sm:h-32 bg-gray-100 rounded-full overflow-hidden border-2 border-gray-300">
                             {profileImage ? (
-                                <img src={profileImage} alt="Profile" className="w-full h-full object-cover" />
+                                <img src={profileImage} alt="Profile" className="w-full h-full object-fill" />
                             ) : (
+
                                 <div className='flex items-center py-10 justify-evenly flex-col'>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-camera "><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"></path><circle cx="12" cy="13" r="3"></circle></svg>
-                                    <p className={`font-bold ${currentLanguage === 'தமிழ்' ? 'text-[9px] sm:text-[12px]' : 'text-[13px] sm:text-[16px]'}  text-center`}>{translations[currentLanguage].uploadImage}</p>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-camera">
+                                        <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"></path>
+                                        <circle cx="12" cy="13" r="3"></circle>
+                                    </svg>
+
+                                    {/* Label or Error */}
+                                    {errors.profileImage ? (
+                                        <p className="text-red-500 text-[8px] sm:text-[14px] mt-2 text-center">{errors.profileImage}</p>
+                                    ) : (
+                                        <p className={`font-bold ${currentLanguage === 'தமிழ்' ? 'text-[9px] sm:text-[12px]' : 'text-[13px] sm:text-[16px]'} text-center`}>
+                                            {translations[currentLanguage].uploadImage}
+                                        </p>
+                                    )}
                                 </div>
                             )}
                             <input
@@ -1461,6 +1423,7 @@ const BiodataForm = ({ scrollToTemplates }) => {
                                 onChange={handleImageUpload}
                             />
                         </div>
+
                         <div
                             className='relative w-28 h-28 sm:w-32 sm:h-32 bg-gray-100 rounded-2xl overflow-hidden border-2 border-gray-300 cursor-pointer'
                         >
@@ -1469,7 +1432,7 @@ const BiodataForm = ({ scrollToTemplates }) => {
                                     <img
                                         src={selectedTemplate}
                                         alt="Selected template"
-                                        className="w-full h-full object-cover"
+                                        className="w-full h-full object-fill"
                                     />
                                     <button
                                         className="absolute top-1 right-1 bg-[#B92753] text-white rounded-full p-1 hover:bg-[#4649C0]"
