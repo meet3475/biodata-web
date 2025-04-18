@@ -330,7 +330,7 @@ export default function Home() {
 
               </div>
               <h3 className="text-[20px] sm:text-[24px] font-bold my-2">Easy to use</h3>
-              <p className="text-[#707070]">"No Sign up / Registration required. Enter your details, choose template and voila!! Your biodata in PDF format is ready."</p>
+              <p className="text-[#707070]">No Sign up / Registration required. Enter your details, choose template and voila!! Your biodata in PDF format is ready.</p>
             </div>
 
             <div className="bg-[white] w-[300px] sm:w-[380px] py-8 px-8 rounded-lg shadow-xl flex flex-col items-center">
@@ -339,7 +339,7 @@ export default function Home() {
 
               </div>
               <h3 className="text-[20px] sm:text-[24px] font-bold my-2">Customization made simple</h3>
-              <p className="text-[#707070]">"You have full control of what you want in your marriage biodata. You can add new fields and delete or rename the existing fields."</p>
+              <p className="text-[#707070]">You have full control of what you want in your marriage biodata. You can add new fields and delete or rename the existing fields.</p>
             </div>
 
             <div className="bg-[white] w-[300px] sm:w-[380px] py-8 px-8 rounded-lg shadow-xl flex flex-col items-center">
@@ -348,7 +348,7 @@ export default function Home() {
 
               </div>
               <h3 className="text-[20px] sm:text-[24px] font-bold my-2">Great Looking Templates</h3>
-              <p className="text-[#707070]">"We have designed these templates which are unique, clean and perfect for a matrimonial biodata."</p>
+              <p className="text-[#707070]">We have designed these templates which are unique, clean and perfect for a matrimonial biodata.</p>
             </div>
 
           </div>
@@ -361,7 +361,7 @@ export default function Home() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-[60px]">
           <h2 className="text-[30px] sm:text-[48px] text-[white] font-bold mb-5 text-center mx-0 md:mx-24">What Our Happy Users Say About Our Marriage Biodata Format</h2>
           <h6 className="text-[16px] sm:text-[20px] text-[white] mb-[60px] text-center mx-0 md:mx-24">Our goal at My Biodata for Marriage is to assist you in creating the ideal marriage biodata. Hear from some of our happy customers who have successfully used our biodata maker platform to find the right person.</h6>
-          <div className="">
+          <div>
             {
               reviewSliderLoading ? (
                 <DataLoader />
