@@ -252,7 +252,6 @@ const BiodataForm = ({ scrollToTemplates }) => {
             resetForm: 'Reset Form',
             generateBiodata: 'Generate Biodata',
             enter: 'Enter',
-            addNewField: 'Add New Field',
             fieldName: 'Field Name',
             fieldLabel: 'Field Label',
             sectionName: 'Section Name',
@@ -307,7 +306,6 @@ const BiodataForm = ({ scrollToTemplates }) => {
             resetForm: 'फॉर्म रीसेट करें',
             generateBiodata: 'बायोडाटा जनरेट करें',
             enter: 'दर्ज करें',
-            addNewField: 'नया फील्ड जोड़ें',
             fieldName: 'फील्ड नाम',
             fieldLabel: 'फील्ड लेबल',
             sectionName: 'सेक्शन नाम',
@@ -362,7 +360,6 @@ const BiodataForm = ({ scrollToTemplates }) => {
             resetForm: 'फॉर्म रीसेट करा',
             generateBiodata: 'बायोडाटा जनरेट करा',
             enter: 'प्रविष्ट करा',
-            addNewField: 'नवीन फील्ड जोडा',
             fieldName: 'फील्ड नाव',
             fieldLabel: 'फील्ड लेबल',
             sectionName: 'विभाग नाव',
@@ -417,7 +414,6 @@ const BiodataForm = ({ scrollToTemplates }) => {
             resetForm: 'ফর্ম রিসেট করুন',
             generateBiodata: 'বায়োডাটা তৈরি করুন',
             enter: 'প্রবেশ করান',
-            addNewField: 'নতুন ফিল্ড যোগ করুন',
             fieldName: 'ফিল্ডের নাম',
             fieldLabel: 'ফিল্ড লেবেল',
             sectionName: 'বিভাগের নাম',
@@ -472,7 +468,6 @@ const BiodataForm = ({ scrollToTemplates }) => {
             resetForm: 'ફોર્મ રીસેટ કરો',
             generateBiodata: 'બાયોડેટા જનરેટ કરો',
             enter: 'દાખલ કરો',
-            addNewField: 'નવું ફીલ્ડ ઉમેરો',
             fieldName: 'ફીલ્ડ નામ',
             fieldLabel: 'ફીલ્ડ લેબલ',
             sectionName: 'સેક્શન નામ',
@@ -527,7 +522,6 @@ const BiodataForm = ({ scrollToTemplates }) => {
             resetForm: 'படிவத்தை மீட்டமைக்கவும்',
             generateBiodata: 'உயிரியல் தரவை உருவாக்கவும்',
             enter: 'உள்ளிடவும்',
-            addNewField: 'புதிய புலத்தைச் சேர்க்கவும்',
             fieldName: 'புலத்தின் பெயர்',
             fieldLabel: 'புல லேபிள்',
             sectionName: 'பிரிவு பெயர்',
@@ -551,7 +545,6 @@ const BiodataForm = ({ scrollToTemplates }) => {
             resetSuccessful: 'மீட்டமைப்பு வெற்றிகரமாக!',
             formReset: 'படிவம் மீட்டமைக்கப்பட்டது.'
         }
-
         // Add translations for other languages similarly
     });
 
@@ -725,7 +718,6 @@ const BiodataForm = ({ scrollToTemplates }) => {
         
     };
     
-
     // Move a field up in order
     const moveFieldUp = (section, index) => {
         if (index === 0) return; // Already at the top

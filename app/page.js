@@ -290,9 +290,11 @@ export default function Home() {
           </div>
           <div className="flex flex-col items-center lg:items-stretch lg:flex-row mt-14 sm:gap-14">
             <div className="w-[300px] md:w-[500px] h-[450px] mb-5 sm:mb-0">
-              <img
+              <Image
                 src="/images/biodata.png"
                 alt="biodata"
+                width={500}
+                height={1000}
                 className="rounded-lg w-[100%] h-[100%]"
               />
             </div>
