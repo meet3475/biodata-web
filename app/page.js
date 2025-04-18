@@ -238,8 +238,10 @@ export default function Home() {
                       <SwiperSlide key={index}>
                         <div className="rounded-[20px] overflow-hidden relative still-data">
                           <div className="w-[425px] h-[550px]">
-                            <img
+                            <Image
                               src={item.image}
+                              width={500}
+                              height={1000}
                               alt="Template"
                               className="temp-img"
                             />
