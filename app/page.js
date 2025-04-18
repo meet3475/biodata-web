@@ -60,6 +60,7 @@ const design = [
   }
 ]
 
+// Replace these review descriptions:
 const reviews = [
   {
     name: "Yukta Shukla",
@@ -73,7 +74,7 @@ const reviews = [
   },
   {
     name: "Santosh Mishra",
-    description: "This platform made the entire process of creating my biodata so much easier. The Hindu biodata template was exactly what I needed, and I could add all the important details. It was hassle-free and professional, and I’m grateful for this marriage biodata maker online.",
+    description: "This platform made the entire process of creating my biodata so much easier. The Hindu biodata template was exactly what I needed, and I could add all the important details. It was hassle-free and professional, and I'm grateful for this marriage biodata maker online.",
     image: "/images/reviwes3.png"
   },
   {
@@ -81,7 +82,6 @@ const reviews = [
     description: "Nice place with a huge variety of collections, would recommend people who are starting their own business to visit this place and start with the products they offer and this web is easy and quick way to create and download marriage biodata.",
     image: "/images/reviwes4.png"
   }
-
 ]
 
 
