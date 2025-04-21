@@ -332,7 +332,7 @@ export default function Home() {
             <p className="text-[#707070] text-[14px] sm:text-[16px] my-1">With our online biodata maker for marriage, creating a matrimonial profile is hassle-free. The bio data for marriage format is designed to cover all aspects that are important for finding the right match.</p>
 
             <h4 className="text-[#4649c0] text-[16px] sm:text-[20px] font-bold mt-6">4. Time-Saving Tool :-</h4>
-            <p className="text-[#707070] text-[14px] sm:text-[16px] my-1">Our free online biodata maker for marriage streamlines the process of creating a marriage profile. It’s a time-efficient way to prepare biodata for marriage without compromising on the quality or details.</p>
+            <p className="text-[#707070] text-[14px] sm:text-[16px] my-1">Our free online biodata maker for marriage streamlines the process of creating a marriage profile. It is a time-efficient way to prepare biodata for marriage without compromising on the quality or details.</p>
 
             <h4 className="text-[#4649c0] text-[16px] sm:text-[20px] font-bold mt-6">5. Wide Range of Choices :-</h4>
             <p className="text-[#707070] text-[14px] sm:text-[16px] my-1">Whether you choose a simple shadi biodata format or an elaborate marriage biodata design, our free biodata maker offers a variety of templates to suit your needs.</p>
