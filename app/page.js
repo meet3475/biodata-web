@@ -13,9 +13,7 @@ import 'swiper/css/navigation';
 import BiodataForm from "@/components/BiodataForm/BiodataForm";
 import { useEffect, useRef, useState } from "react";
 import Loarder from "@/components/Loarder/Loarder";
-import { useSearchParams } from "next/navigation";
 import DataLoader from "@/components/Loarder/DataLoader";
-
 
 const design = [
   {
@@ -315,11 +313,46 @@ export default function Home() {
       </div>
       {/* How to Create biodata section end */}
 
-      {/* Essential features biodata section start */}
+      {/* What is Marriage Biodata section start */}
       <div className="bg-[white]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-[80px]">
+          <div className="text-left">
+            <h2 className="text-[28px] sm:text-[45px] text-[#B92753] font-bold mb-3">What is Marriage Biodata?</h2>
+            <p className="text-[14px] sm:text-[16px] text-[#707070]">Many cultures have arranged marriages. A marriage biodata is a quick and clear way to introduce yourself to potential partners and their families. A good online biodata can help you make a strong first impression and increase your chances of finding a suitable match.</p>
+
+            <h3 className="text-[20px] sm:text-[30px] my-[30px] text-[#B92753] font-bold">Importance of Biodata in Matrimonial Search</h3>
+
+            <h4 className="text-[#4649c0] text-[16px] sm:text-[20px] font-bold mt-6">1. A Personal Snapshot :-</h4>
+            <p className="text-[#707070] text-[14px] sm:text-[16px] my-1">Your marriage biodata format showcases a snapshot of your life, encapsulating your morals, education, career, and family values. It is the marriage resume that speaks volumes before the first hello.</p>
+
+            <h4 className="text-[#4649c0] text-[16px] sm:text-[20px] font-bold mt-6">2. Cultural Relevance :-</h4>
+            <p className="text-[#707070]  text-[14px] sm:text-[16px] my-1">In cultures where arranged marriages are prevalent, matrimonial biodata holds immense significance. The biodata for marriage proposal contains details that reflect one's social and cultural background, which is essential for traditional matchmaking.</p>
+
+            <h4 className="text-[#4649c0] text-[16px] sm:text-[20px] font-bold mt-6">3. Matchmaking Made Easy :-</h4>
+            <p className="text-[#707070] text-[14px] sm:text-[16px] my-1">With our online biodata maker for marriage, creating a matrimonial profile is hassle-free. The bio data for marriage format is designed to cover all aspects that are important for finding the right match.</p>
+
+            <h4 className="text-[#4649c0] text-[16px] sm:text-[20px] font-bold mt-6">4. Time-Saving Tool :-</h4>
+            <p className="text-[#707070] text-[14px] sm:text-[16px] my-1">Our free online biodata maker for marriage streamlines the process of creating a marriage profile. It’s a time-efficient way to prepare biodata for marriage without compromising on the quality or details.</p>
+
+            <h4 className="text-[#4649c0] text-[16px] sm:text-[20px] font-bold mt-6">5. Wide Range of Choices :-</h4>
+            <p className="text-[#707070] text-[14px] sm:text-[16px] my-1">Whether you choose a simple shadi biodata format or an elaborate marriage biodata design, our free biodata maker offers a variety of templates to suit your needs.</p>
+
+            <h4 className="text-[#4649c0] text-[16px] sm:text-[20px] font-bold mt-6">6. Accessibility :-</h4>
+            <p className="text-[#707070] text-[14px] sm:text-[16px] my-1">Whether you choose a simple shadi biodata format or an elaborate marriage biodata design, our free biodata maker offers a variety of templates to suit your needs.</p>
+
+            <h4 className="text-[#4649c0] text-[16px] sm:text-[20px] font-bold mt-6">7. First Step to a Lifelong Journey :-</h4>
+            <p className="text-[#707070] text-[14px] sm:text-[16px] my-1">Whether you choose a simple shadi biodata format or an elaborate marriage biodata design, our free biodata maker offers a variety of templates to suit your needs.</p>
+          </div>
+
+        </div>
+      </div>
+      {/* What is Marriage Biodata section end */}
+
+      {/* Essential features biodata section start */}
+      <div className="bg-[#B92753]">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-[80px]">
           <div className="text-center">
-            <h2 className="text-[30px] sm:text-[45px] text-[#B92753] font-bold">Essential Features Of Our Biodata Maker</h2>
+            <h2 className="text-[30px] sm:text-[45px] text-[white] font-bold">Essential Features Of Our Biodata Maker</h2>
           </div>
           <div className="flex flex-col lg:flex-row items-center lg:items-stretch justify-between gap-10 mt-20">
 
@@ -354,6 +387,42 @@ export default function Home() {
         </div>
       </div>
       {/* Essential features biodata section end */}
+
+      {/*Why Choose MyBiodataforMarriage section start */}
+      <div className="bg-[white]">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-[80px]">
+          <div className="text-left">
+            <h2 className="text-[28px] sm:text-[45px] text-[#B92753] font-bold mb-3">Why Choose Wedding Biodata?</h2>
+            <p className="text-[14px] sm:text-[18px] text-[#707070] mb-6">At My Biodata for Marriage, we understand that your matrimonial biodata for a wedding is a key part of your journey to finding a life partner. Heres why you should trust us:</p>
+
+            <h5 className="text-[14px] sm:text-[16px] text-[#4649c0] ml-10 mb-2">
+             * Easy-to-Use Platform: Our Marriage Bio data Maker is designed for simplicity, allowing anyone to create a customized biodata without any hassle.
+            </h5>
+
+            <h5 className="text-[14px] sm:text-[16px] text-[#4649c0] ml-10 mb-2">
+              * Wide Variety of Templates: We offer a range of Customizable Biodata Templates and Marriage Biodata Formats suitable for every need.
+            </h5>
+
+            <h5 className="text-[14px] sm:text-[16px] text-[#4649c0] ml-10 mb-2">
+              * Personalized Designs: Choose from a selection of stylish and professional Biodata designs that fit your personality and preferences.
+            </h5>
+
+            <h5 className="text-[14px] sm:text-[16px] text-[#4649c0] ml-10 mb-2">
+              * Instant Download: Get your personalized Bio-data ready for download in PDF format or any other file format that suits your needs.
+            </h5>
+
+            <p className="text-[14px] sm:text-[18px] text-[#707070] mt-6 mb-3">
+              Start your journey towards finding the perfect partner today with My Biodata for Marriage. Create a Perfect Marriage Biodata that truly reflects who you are.
+            </p>
+
+            <p className="text-[14px] sm:text-[18px] text-[#707070]">
+            By following these simple steps, you all have a professionally designed, personalized Marriage Biodata that is sure to impress. Whether you are looking for a Marriage Biodata Sample for reference or a customized biodata, our platform makes it easier than ever to create a marriage biodata tailored just for you.
+            </p>
+          </div>
+
+        </div>
+      </div>
+      {/*Why Choose MyBiodataforMarriage section end */}
 
       {/* reviews section start */}
       <div className="bg-[#B92753]">
