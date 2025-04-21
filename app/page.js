@@ -326,7 +326,7 @@ export default function Home() {
             <p className="text-[#707070] text-[14px] sm:text-[16px] my-1">Your marriage biodata format showcases a snapshot of your life, encapsulating your morals, education, career, and family values. It is the marriage resume that speaks volumes before the first hello.</p>
 
             <h4 className="text-[#4649c0] text-[16px] sm:text-[20px] font-bold mt-6">2. Cultural Relevance :-</h4>
-            <p className="text-[#707070]  text-[14px] sm:text-[16px] my-1">In cultures where arranged marriages are prevalent, matrimonial biodata holds immense significance. The biodata for marriage proposal contains details that reflect one's social and cultural background, which is essential for traditional matchmaking.</p>
+            <p className="text-[#707070]  text-[14px] sm:text-[16px] my-1">In cultures where arranged marriages are prevalent, matrimonial biodata holds immense significance. The biodata for marriage proposal contains details that reflect ones social and cultural background, which is essential for traditional matchmaking.</p>
 
             <h4 className="text-[#4649c0] text-[16px] sm:text-[20px] font-bold mt-6">3. Matchmaking Made Easy :-</h4>
             <p className="text-[#707070] text-[14px] sm:text-[16px] my-1">With our online biodata maker for marriage, creating a matrimonial profile is hassle-free. The bio data for marriage format is designed to cover all aspects that are important for finding the right match.</p>
