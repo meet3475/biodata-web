@@ -14,6 +14,8 @@ import BiodataForm from "@/components/BiodataForm/BiodataForm";
 import { useEffect, useRef, useState } from "react";
 import Loarder from "@/components/Loarder/Loarder";
 import DataLoader from "@/components/Loarder/DataLoader";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 const design = [
   {
@@ -71,7 +73,7 @@ const reviews = [
   },
   {
     name: "Santosh Mishra",
-    description: "This platform made the entire process of creating my biodata so much easier. The Hindu biodata template was exactly what I needed, and I could add all the important details. It was hassle-free and professional, and I'm grateful for this marriage biodata maker online.",
+    description: "This platform made the entire process of creating my biodata so much easier. The Hindu biodata template was exactly what I needed, and I could add all the important details. It was hassle-free and professional, and I am grateful for this marriage biodata maker online.",
     image: "/images/reviwes3.png"
   },
   {
@@ -80,7 +82,6 @@ const reviews = [
     image: "/images/reviwes4.png"
   }
 ]
-
 
 export default function Home() {
 
@@ -98,6 +99,31 @@ export default function Home() {
     return () => clearTimeout(timer);
   }, []);
 
+
+  useEffect(() => {
+    AOS.init({
+      duration: 2000,
+      once: false // Changed to false to allow repeated animations
+    });
+
+    // Refresh AOS when route changes
+    return () => {
+      AOS.refresh();
+    };
+  }, []);
+
+  // Add scroll event listener to refresh AOS
+  useEffect(() => {
+    const handleScroll = () => {
+      AOS.refresh();
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
 
   const [designSliderLoading, setDesignSliderLoading] = useState(true);
   const [reviewSliderLoading, setReviewSliderLoading] = useState(true);
@@ -135,6 +161,7 @@ export default function Home() {
       });
     }
   };
+
 
   return (
     <>
@@ -288,7 +315,7 @@ export default function Home() {
             <h2 className="text-[28px] sm:text-[45px] text-[#B92753] font-bold mb-3 bg-white rounded-lg lg:shadow-2xl block lg:inline py-3 px-2 sm:px-5">How to Create Free Marriage Biodata?</h2>
           </div>
           <div className="flex flex-col items-center lg:items-stretch lg:flex-row mt-14 sm:gap-14">
-            <div className="w-[300px] md:w-[500px] h-[450px] mb-5 sm:mb-0">
+            <div className="w-[300px] md:w-[500px] h-[450px] mb-5 sm:mb-0" data-aos="zoom-in">
               <Image
                 src="/images/biodata.png"
                 alt="biodata"
@@ -298,7 +325,7 @@ export default function Home() {
               />
             </div>
 
-            <div className="bg-[white] py-8 px-8 rounded-lg flex flex-col justify-center">
+            <div className="bg-[white] py-8 px-8 rounded-lg flex flex-col justify-center" data-aos="zoom-in">
               <h4 className="font-bold text-[22px]">Step 1. Choose the Free Template</h4>
               <p className="mt-3 mb-7">Click on the <span className="font-semibold">Choose Your Template</span> at Now choose the  <span className="font-semibold">Free template</span> from our Popular Marriage Biodata Designs.</p>
 
@@ -322,26 +349,41 @@ export default function Home() {
 
             <h3 className="text-[20px] sm:text-[30px] my-[30px] text-[#B92753] font-bold">Importance of Biodata in Matrimonial Search</h3>
 
-            <h4 className="text-[#4649c0] text-[16px] sm:text-[20px] font-bold mt-6">1. A Personal Snapshot :-</h4>
-            <p className="text-[#707070] text-[14px] sm:text-[16px] my-1">Your marriage biodata format showcases a snapshot of your life, encapsulating your morals, education, career, and family values. It is the marriage resume that speaks volumes before the first hello.</p>
+            <div data-aos="fade-up">
+              <h4 className="text-[#4649c0] text-[16px] sm:text-[20px] font-bold mt-6">1. A Personal Snapshot :-</h4>
+              <p className="text-[#707070] text-[14px] sm:text-[16px] my-1">Your marriage biodata format showcases a snapshot of your life, encapsulating your morals, education, career, and family values. It is the marriage resume that speaks volumes before the first hello.</p>
+            </div>
 
-            <h4 className="text-[#4649c0] text-[16px] sm:text-[20px] font-bold mt-6">2. Cultural Relevance :-</h4>
-            <p className="text-[#707070]  text-[14px] sm:text-[16px] my-1">In cultures where arranged marriages are prevalent, matrimonial biodata holds immense significance. The biodata for marriage proposal contains details that reflect ones social and cultural background, which is essential for traditional matchmaking.</p>
+            <div data-aos="fade-up">
+              <h4 className="text-[#4649c0] text-[16px] sm:text-[20px] font-bold mt-6">2. Cultural Relevance :-</h4>
+              <p className="text-[#707070]  text-[14px] sm:text-[16px] my-1">In cultures where arranged marriages are prevalent, matrimonial biodata holds immense significance. The biodata for marriage proposal contains details that reflect ones social and cultural background, which is essential for traditional matchmaking.</p>
+            </div>
 
-            <h4 className="text-[#4649c0] text-[16px] sm:text-[20px] font-bold mt-6">3. Matchmaking Made Easy :-</h4>
-            <p className="text-[#707070] text-[14px] sm:text-[16px] my-1">With our online biodata maker for marriage, creating a matrimonial profile is hassle-free. The bio data for marriage format is designed to cover all aspects that are important for finding the right match.</p>
+            <div data-aos="fade-up">
+              <h4 className="text-[#4649c0] text-[16px] sm:text-[20px] font-bold mt-6">3. Matchmaking Made Easy :-</h4>
+              <p className="text-[#707070] text-[14px] sm:text-[16px] my-1">With our online biodata maker for marriage, creating a matrimonial profile is hassle-free. The bio data for marriage format is designed to cover all aspects that are important for finding the right match.</p>
+            </div>
 
-            <h4 className="text-[#4649c0] text-[16px] sm:text-[20px] font-bold mt-6">4. Time-Saving Tool :-</h4>
-            <p className="text-[#707070] text-[14px] sm:text-[16px] my-1">Our free online biodata maker for marriage streamlines the process of creating a marriage profile. It is a time-efficient way to prepare biodata for marriage without compromising on the quality or details.</p>
+            <div data-aos="fade-up">
+              <h4 className="text-[#4649c0] text-[16px] sm:text-[20px] font-bold mt-6">4. Time-Saving Tool :-</h4>
+              <p className="text-[#707070] text-[14px] sm:text-[16px] my-1">Our free online biodata maker for marriage streamlines the process of creating a marriage profile. It is a time-efficient way to prepare biodata for marriage without compromising on the quality or details.</p>
+            </div>
 
-            <h4 className="text-[#4649c0] text-[16px] sm:text-[20px] font-bold mt-6">5. Wide Range of Choices :-</h4>
-            <p className="text-[#707070] text-[14px] sm:text-[16px] my-1">Whether you choose a simple shadi biodata format or an elaborate marriage biodata design, our free biodata maker offers a variety of templates to suit your needs.</p>
+            <div data-aos="fade-up">
+              <h4 className="text-[#4649c0] text-[16px] sm:text-[20px] font-bold mt-6">5. Wide Range of Choices :-</h4>
+              <p className="text-[#707070] text-[14px] sm:text-[16px] my-1">Whether you choose a simple shadi biodata format or an elaborate marriage biodata design, our free biodata maker offers a variety of templates to suit your needs.</p>
+            </div>
 
-            <h4 className="text-[#4649c0] text-[16px] sm:text-[20px] font-bold mt-6">6. Accessibility :-</h4>
-            <p className="text-[#707070] text-[14px] sm:text-[16px] my-1">Whether you choose a simple shadi biodata format or an elaborate marriage biodata design, our free biodata maker offers a variety of templates to suit your needs.</p>
+            <div data-aos="fade-up">
+              <h4 className="text-[#4649c0] text-[16px] sm:text-[20px] font-bold mt-6">6. Accessibility :-</h4>
+              <p className="text-[#707070] text-[14px] sm:text-[16px] my-1">Whether you choose a simple shadi biodata format or an elaborate marriage biodata design, our free biodata maker offers a variety of templates to suit your needs.</p>
+            </div>
 
-            <h4 className="text-[#4649c0] text-[16px] sm:text-[20px] font-bold mt-6">7. First Step to a Lifelong Journey :-</h4>
-            <p className="text-[#707070] text-[14px] sm:text-[16px] my-1">Whether you choose a simple shadi biodata format or an elaborate marriage biodata design, our free biodata maker offers a variety of templates to suit your needs.</p>
+            <div data-aos="fade-up">
+              <h4 className="text-[#4649c0] text-[16px] sm:text-[20px] font-bold mt-6">7. First Step to a Lifelong Journey :-</h4>
+              <p className="text-[#707070] text-[14px] sm:text-[16px] my-1">Whether you choose a simple shadi biodata format or an elaborate marriage biodata design, our free biodata maker offers a variety of templates to suit your needs.</p>
+            </div>
+
           </div>
 
         </div>
@@ -356,7 +398,7 @@ export default function Home() {
           </div>
           <div className="flex flex-col lg:flex-row items-center lg:items-stretch justify-between gap-10 mt-20">
 
-            <div className="bg-[white] w-[300px] sm:w-[380px] py-8 px-8 rounded-lg shadow-xl flex flex-col items-center">
+            <div className="bg-[white] w-[300px] sm:w-[380px] py-8 px-8 rounded-lg shadow-xl flex flex-col items-center" data-aos="flip-up">
               <div className="w-[50px] h-[50px] bg-[#f5b2c6] rounded-[50%] flex justify-center items-center">
                 <svg width={28} height={28} viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3.98.827C2.007.827.41 2.397.41 4.333v24.544c0 1.937 1.597 3.506 3.57 3.506h24.99c1.973 0 3.57-1.569 3.57-3.506V4.333c0-1.937-1.599-3.506-3.57-3.506H3.98ZM27.185 7.84c.457 0 .913.17 1.262.513a1.73 1.73 0 0 1 0 2.48L14.952 24.086a1.8 1.8 0 0 1-1.263.514c-.473 0-.928-.184-1.262-.514l-6.164-6.054a1.73 1.73 0 0 1 0-2.479 1.806 1.806 0 0 1 2.525 0l4.901 4.814L25.923 8.353a1.796 1.796 0 0 1 1.262-.513Zm8.926 0v21.037c0 3.873-3.197 7.013-7.14 7.013H7.55c0 1.937 1.597 3.506 3.57 3.506h24.99c1.973 0 3.57-1.57 3.57-3.506V11.346c0-1.937-1.599-3.506-3.57-3.506Z" fill="#B92753" /></svg>
 
@@ -365,7 +407,7 @@ export default function Home() {
               <p className="text-[#707070]">No Sign up / Registration required. Enter your details, choose template and voila!! Your biodata in PDF format is ready.</p>
             </div>
 
-            <div className="bg-[white] w-[300px] sm:w-[380px] py-8 px-8 rounded-lg shadow-xl flex flex-col items-center">
+            <div className="bg-[white] w-[300px] sm:w-[380px] py-8 px-8 rounded-lg shadow-xl flex flex-col items-center" data-aos="flip-up">
               <div className="w-[50px] h-[50px] bg-[#f5b2c6] rounded-[50%] flex justify-center items-center">
                 <svg width={28} height={28} viewBox="0 0 45 43" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M29.564 8.358 31.044 0H12.763l1.48 8.358h15.32Zm-8.787 16.57a2.741 2.741 0 0 1-1.685-2.524c0-1.523 1.26-2.76 2.811-2.76 1.55 0 2.811 1.238 2.811 2.76a2.741 2.741 0 0 1-1.685 2.524v11.21l9.77-16.598-4.934-8.977h-11.93l-4.928 8.976 9.778 16.605V24.93h-.008Z" fill="var(--medium-vermilion)" /><path d="M42.078 24.085h1.72a.408.408 0 0 0 .411-.404v-5.117a.407.407 0 0 0-.41-.404h-5.211c-.227 0-.41.18-.41.404v5.117c0 .223.183.404.41.404h1.21c-1.253 7.078-6.973 12.697-14.188 13.928v-1.176a.407.407 0 0 0-.41-.403h-5.212c-.226 0-.41.18-.41.403v1.182c-7.222-1.244-12.943-6.856-14.196-13.934h1.21a.408.408 0 0 0 .412-.404v-5.117a.407.407 0 0 0-.411-.404H1.375c-.227 0-.41.18-.41.404v5.117c0 .223.183.404.41.404h1.72c.963 6.167 4.928 11.403 10.38 14.206h-6.69c-.539-1.315-2.019-2.17-3.619-1.753a2.962 2.962 0 0 0-2.088 2.052c-.61 2.252 1.437 4.262 3.73 3.664a2.94 2.94 0 0 0 1.983-1.752h12.78v1.453c0 .223.184.403.41.403h5.211c.227 0 .41-.18.41-.403v-1.453H38.39c.539 1.314 2.018 2.17 3.618 1.752a2.962 2.962 0 0 0 2.09-2.051c.608-2.253-1.438-4.263-3.732-3.665a2.94 2.94 0 0 0-1.983 1.753h-6.69c5.451-2.81 9.416-8.039 10.386-14.206Z" fill="#B92753" /></svg>
 
@@ -374,7 +416,7 @@ export default function Home() {
               <p className="text-[#707070]">You have full control of what you want in your marriage biodata. You can add new fields and delete or rename the existing fields.</p>
             </div>
 
-            <div className="bg-[white] w-[300px] sm:w-[380px] py-8 px-8 rounded-lg shadow-xl flex flex-col items-center">
+            <div className="bg-[white] w-[300px] sm:w-[380px] py-8 px-8 rounded-lg shadow-xl flex flex-col items-center" data-aos="flip-up">
               <div className="w-[50px] h-[50px] bg-[#f5b2c6] rounded-[50%] flex justify-center items-center">
                 <svg width={28} height={28} viewBox="0 0 42 42" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M.333 9.143c0-4.58 3.782-8.294 8.445-8.294h24.395c4.664 0 8.445 3.714 8.445 8.294v23.96c0 4.58-3.781 8.293-8.445 8.293H8.778c-4.663 0-8.445-3.714-8.445-8.294V9.142Zm6.396 2.01a.708.708 0 0 0 0 1.353 5.036 5.036 0 0 1 3.237 3.18c.22.652 1.16.652 1.377 0a5.036 5.036 0 0 1 3.237-3.18.708.708 0 0 0 0-1.353 5.036 5.036 0 0 1-3.237-3.179c-.22-.652-1.16-.652-1.377 0a5.032 5.032 0 0 1-3.237 3.18Zm21.085-1.105c-.259-.774-1.376-.774-1.635 0l-1.212 3.623a5.967 5.967 0 0 1-3.837 3.77l-3.69 1.19a.84.84 0 0 0 0 1.605l3.69 1.19a5.967 5.967 0 0 1 3.837 3.77l1.212 3.623c.26.774 1.376.774 1.635 0l1.214-3.623a5.962 5.962 0 0 1 3.838-3.77l3.689-1.19a.84.84 0 0 0 0-1.605l-3.69-1.193a5.962 5.962 0 0 1-3.837-3.769l-1.214-3.621ZM14.912 25.253c-.259-.774-1.375-.774-1.634 0l-.148.444a5.962 5.962 0 0 1-3.838 3.769l-.452.145a.84.84 0 0 0 0 1.606l.452.145a5.962 5.962 0 0 1 3.838 3.77l.148.444c.259.774 1.375.774 1.634 0l.149-.445a5.967 5.967 0 0 1 3.837-3.769l.453-.145a.84.84 0 0 0 0-1.605l-.453-.146a5.967 5.967 0 0 1-3.837-3.77l-.149-.443Z" fill="#B92753" /></svg>
 
@@ -395,19 +437,19 @@ export default function Home() {
             <h2 className="text-[28px] sm:text-[45px] text-[#B92753] font-bold mb-3">Why Choose Wedding Biodata?</h2>
             <p className="text-[14px] sm:text-[18px] text-[#707070] mb-6">At My Biodata for Marriage, we understand that your matrimonial biodata for a wedding is a key part of your journey to finding a life partner. Heres why you should trust us:</p>
 
-            <h5 className="text-[14px] sm:text-[16px] text-[#4649c0] ml-10 mb-2">
-             * Easy-to-Use Platform: Our Marriage Bio data Maker is designed for simplicity, allowing anyone to create a customized biodata without any hassle.
+            <h5 className="text-[14px] sm:text-[16px] text-[#4649c0] font-semibold ml-10 mb-4" data-aos="flip-down">
+              * Easy-to-Use Platform: Our Marriage Bio data Maker is designed for simplicity, allowing anyone to create a customized biodata without any hassle.
             </h5>
 
-            <h5 className="text-[14px] sm:text-[16px] text-[#4649c0] ml-10 mb-2">
+            <h5 className="text-[14px] sm:text-[16px] text-[#4649c0] font-semibold ml-10 mb-4" data-aos="flip-down">
               * Wide Variety of Templates: We offer a range of Customizable Biodata Templates and Marriage Biodata Formats suitable for every need.
             </h5>
 
-            <h5 className="text-[14px] sm:text-[16px] text-[#4649c0] ml-10 mb-2">
+            <h5 className="text-[14px] sm:text-[16px] text-[#4649c0] font-semibold ml-10 mb-4" data-aos="flip-down">
               * Personalized Designs: Choose from a selection of stylish and professional Biodata designs that fit your personality and preferences.
             </h5>
 
-            <h5 className="text-[14px] sm:text-[16px] text-[#4649c0] ml-10 mb-2">
+            <h5 className="text-[14px] sm:text-[16px] text-[#4649c0] font-semibold ml-10 mb-4" data-aos="flip-down">
               * Instant Download: Get your personalized Bio-data ready for download in PDF format or any other file format that suits your needs.
             </h5>
 
@@ -416,7 +458,7 @@ export default function Home() {
             </p>
 
             <p className="text-[14px] sm:text-[18px] text-[#707070]">
-            By following these simple steps, you all have a professionally designed, personalized Marriage Biodata that is sure to impress. Whether you are looking for a Marriage Biodata Sample for reference or a customized biodata, our platform makes it easier than ever to create a marriage biodata tailored just for you.
+              By following these simple steps, you all have a professionally designed, personalized Marriage Biodata that is sure to impress. Whether you are looking for a Marriage Biodata Sample for reference or a customized biodata, our platform makes it easier than ever to create a marriage biodata tailored just for you.
             </p>
           </div>
 
@@ -435,6 +477,7 @@ export default function Home() {
                 <DataLoader />
               ) : (
                 <Swiper
+                data-aos="zoom-in"
                   slidesPerView={3}
                   spaceBetween={30}
                   freeMode={true}
