@@ -8,7 +8,7 @@ import { Tooltip } from 'react-tooltip';
 const Footer = () => {
     return (
 
-        <div className='bg-[white]' style={{ boxShadow: '0px -5px 35px rgba(0,0,0,0.2)' }}>
+        <div className='bg-[white] shadow-[-0px_-5px_35px_rgba(0,0,0,0.3)]'>
             <div className='mx-auto max-w-7xl px-4 py-5 sm:px-6 lg:px-8 flex flex-wrap md:grid md:grid-cols-2 lg:flex lg:justify-between gap-6'>
 
                 <div className='w-full md:w-[75%] lg:w-[30%]'>
