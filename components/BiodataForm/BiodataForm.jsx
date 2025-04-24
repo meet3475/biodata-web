@@ -1199,7 +1199,7 @@ const BiodataForm = ({ scrollToTemplates }) => {
                         name={fieldName}
                         value={formData[fieldName]}
                         onChange={handleChange}
-                        className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 ${errors[fieldName] ? 'border-red-500 focus:ring-red-200' : 'border-gray-300 focus:ring-blue-200'}`}
+                        className={`w-full sm:w-[48%] px-4 py-2 border rounded-md focus:outline-none focus:ring-2 ${errors[fieldName] ? 'border-red-500 focus:ring-red-200' : 'border-gray-300 focus:ring-blue-200'}`}
                     />
                 );
                 break;
@@ -1211,7 +1211,7 @@ const BiodataForm = ({ scrollToTemplates }) => {
                             name={fieldName}
                             value={formData[fieldName]}
                             onChange={handleChange}
-                            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-200"
+                            className="w-full sm:w-[48%] px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-200"
                         />
                         {formData[fieldName] && (
                             <span className="ml-2 text-gray-600 " style={{ display: "none" }}>
@@ -1231,7 +1231,7 @@ const BiodataForm = ({ scrollToTemplates }) => {
                         value={formData[fieldName]}
                         onChange={handleChange}
                         placeholder={`${translations[currentLanguage].enter} ${fieldLabels[fieldName]}`}
-                        className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 ${errors[fieldName] ? 'border-red-500 focus:ring-red-200' : 'border-gray-300 focus:ring-blue-200'}`}
+                        className={`w-full sm:w-[48%] px-4 py-2 border rounded-md focus:outline-none focus:ring-2 ${errors[fieldName] ? 'border-red-500 focus:ring-red-200' : 'border-gray-300 focus:ring-blue-200'}`}
                     />
                 );
                 break;
@@ -1243,7 +1243,7 @@ const BiodataForm = ({ scrollToTemplates }) => {
                         value={formData[fieldName]}
                         onChange={handleChange}
                         placeholder={`${translations[currentLanguage].enter} ${fieldLabels[fieldName]}`}
-                        className={`w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 ${errors[fieldName] ? 'border-red-500 focus:ring-red-200' : 'border-gray-300 focus:ring-blue-200'}`}
+                        className={`w-full sm:w-[48%] px-4 py-2 border rounded-md focus:outline-none focus:ring-2 ${errors[fieldName] ? 'border-red-500 focus:ring-red-200' : 'border-gray-300 focus:ring-blue-200'}`}
                     />
                 );
         }
@@ -1251,39 +1251,40 @@ const BiodataForm = ({ scrollToTemplates }) => {
         return (
             <div key={fieldName} className="relative flex items-center mb-4">
                 <div className="flex-grow">
-                    <label className="block text-sm font-medium text-gray-700 mb-1">{fieldLabels[fieldName]}</label>
+                    <label className="w-full sm:w-[48%] inline-block px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-200 mb-1 mr-3">{fieldLabels[fieldName]}</label>
                     {inputElement}
                     {errors[fieldName] && <p className="text-red-500 text-xs mt-1">{errors[fieldName]}</p>}
                 </div>
-                <div className="flex flex-col ml-2">
+
+                <div className="flex flex-col ml-2 gap-1">
+                    {/* Up Button */}
                     <button
                         type="button"
-                        className="mb-1 p-1 bg-gray-100 hover:bg-gray-200 rounded"
+                        className="w-7 h-7 flex items-center justify-center rounded-full bg-transparent text-black hover:text-white hover:bg-[#9E2665] active:bg-[#9E2665] transition duration-200 group"
                         onClick={() => moveFieldUp(section, index)}
                     >
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-7 7 7" />
-                        </svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-play size-4 -rotate-90 fill-current"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
                     </button>
+
+                    {/* Down Button */}
                     <button
                         type="button"
-                        className="p-1 bg-gray-100 hover:bg-gray-200 rounded"
+                        className="w-7 h-7 flex items-center justify-center rounded-full bg-transparent text-black hover:text-white hover:bg-[#9E2665] active:bg-[#9E2665] transition duration-200 group"
                         onClick={() => moveFieldDown(section, index)}
                     >
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                        </svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-play size-4 rotate-90 fill-current"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
                     </button>
                 </div>
+
+                {/* Delete Button */}
                 <button
                     type="button"
-                    className="ml-2 p-1 text-[#9E2665] hover:bg-red-100 rounded"
+                    className="ml-2 w-9 h-9 rounded-full border border-[#9E2665] flex items-center justify-center text-black hover:text-white hover:bg-[#9E2665] transition-colors duration-200"
                     onClick={() => deleteField(section, fieldName)}
                 >
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-trash2 "><path d="M3 6h18"></path><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path><line x1="10" x2="10" y1="11" y2="17"></line><line x1="14" x2="14" y1="11" y2="17"></line></svg>
                 </button>
+
             </div>
         );
     };
@@ -1313,11 +1314,9 @@ const BiodataForm = ({ scrollToTemplates }) => {
                     <button
                         type="button"
                         onClick={() => removeSection(sectionKey)}
-                        className="text-gray-500 hover:text-[#9E2665]"
+                        className="ml-2 w-9 h-9 rounded-full border border-[#9E2665] flex items-center justify-center text-black hover:text-white hover:bg-[#9E2665] transition-colors duration-200"
                     >
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                        </svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-trash2 "><path d="M3 6h18"></path><path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path><path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path><line x1="10" x2="10" y1="11" y2="17"></line><line x1="14" x2="14" y1="11" y2="17"></line></svg>
                     </button>
                 </div>
 
@@ -1345,8 +1344,8 @@ const BiodataForm = ({ scrollToTemplates }) => {
     };
 
     return (
-        <div className="min-h-screen bg-gray-50 py-8 sm:px-6 lg:px-8">
-            <div className="max-w-5xl mx-auto">
+        <div className="min-h-screen bg-[#B92753] py-8 sm:px-6 lg:px-8">
+            <div>
                 <div className="text-center my-8">
                     <h2
                         className={`text-[28px] ${currentLanguage === 'தமிழ்' ? 'sm:text-[40px]' : 'sm:text-[45px]'} text-[#B92753] font-bold mb-3 bg-white rounded-lg lg:shadow-2xl inline py-3 px-2 sm:px-5`}
@@ -1367,7 +1366,7 @@ const BiodataForm = ({ scrollToTemplates }) => {
 
                     {/* Language Dropdown */}
                     {isDropdownOpen && (
-                        <div className="absolute left-[40%] sm:left-[15%] transform -translate-x-1/2 mt-2 w-48 bg-white shadow-lg rounded-md z-[999]">
+                        <div className="absolute left-[40%] sm:left-[8%] transform -translate-x-1/2 mt-2 w-48 bg-white shadow-lg rounded-md z-[999]">
                             <ul className="text-[#B92753] font-medium">
                                 {['English', 'हिंदी', 'मराठी', 'বাংলা', 'ગુજરાતી', 'தமிழ்'].map((lang) => (
                                     <li
@@ -1383,40 +1382,82 @@ const BiodataForm = ({ scrollToTemplates }) => {
                     )}
                 </div>
 
-                <div className="bg-white shadow-md rounded-lg p-6 mb-8 w-full">
-                    <div className="flex justify-between mb-6">
-                        <div className="relative w-28 h-28 sm:w-32 sm:h-32 bg-gray-100 rounded-full overflow-hidden border-2 border-gray-300">
-                            {profileImage ? (
-                                <img src={profileImage} alt="Profile" className="w-full h-full object-fill" />
-                            ) : (
+                <div className='flex flex-col-reverse lg:flex-row justify-between'>
 
-                                <div className='flex items-center py-10 justify-evenly flex-col'>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-camera">
-                                        <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"></path>
-                                        <circle cx="12" cy="13" r="3"></circle>
-                                    </svg>
+                    <div className="bg-white shadow-md rounded-lg p-6 mb-8 w-full lg:w-[65%]">
+                        <div className="flex justify-between mb-6">
+                            <div className="relative w-28 h-28 sm:w-32 sm:h-32 bg-gray-100 rounded-full overflow-hidden border-2 border-gray-300">
+                                {profileImage ? (
+                                    <img src={profileImage} alt="Profile" className="w-full h-full object-fill" />
+                                ) : (
 
-                                    {/* Label or Error */}
-                                    {errors.profileImage ? (
-                                        <p className="text-red-500 text-[8px] sm:text-[14px] mt-2 text-center">{errors.profileImage}</p>
-                                    ) : (
-                                        <p className={`font-bold ${currentLanguage === 'தமிழ்' ? 'text-[9px] sm:text-[12px]' : 'text-[13px] sm:text-[16px]'} text-center`}>
-                                            {translations[currentLanguage].uploadImage}
-                                        </p>
-                                    )}
-                                </div>
-                            )}
-                            <input
-                                type="file"
-                                id="profileImage"
-                                accept="image/*"
-                                className="absolute inset-0 opacity-0 cursor-pointer"
-                                onChange={handleImageUpload}
-                            />
+                                    <div className='flex items-center py-10 justify-evenly flex-col'>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-camera">
+                                            <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"></path>
+                                            <circle cx="12" cy="13" r="3"></circle>
+                                        </svg>
+
+                                        {/* Label or Error */}
+                                        {errors.profileImage ? (
+                                            <p className="text-red-500 text-[8px] sm:text-[14px] mt-2 text-center">{errors.profileImage}</p>
+                                        ) : (
+                                            <p className={`font-bold ${currentLanguage === 'தமிழ்' ? 'text-[9px] sm:text-[12px]' : 'text-[13px] sm:text-[16px]'} text-center`}>
+                                                {translations[currentLanguage].uploadImage}
+                                            </p>
+                                        )}
+                                    </div>
+                                )}
+                                <input
+                                    type="file"
+                                    id="profileImage"
+                                    accept="image/*"
+                                    className="absolute inset-0 opacity-0 cursor-pointer"
+                                    onChange={handleImageUpload}
+                                />
+                            </div>
                         </div>
 
+                        <form onSubmit={handleSubmit}>
+                            {/* Render all visible sections */}
+                            {Object.keys(sections).map(section => (
+                                sections[section] && renderSection(section)
+                            ))}
+
+                            {/* Form Buttons */}
+                            <div className="block sm:flex justify-between mt-8">
+                                <button
+                                    type="button"
+                                    onClick={addNewSection}
+                                    className='mb-2 sm:mb-0 py-2 px-4 flex items-center bg-[#9E2665] text-white text-base md:text-[14px] font-medium rounded-md hover:bg-[#4649C0]'
+                                >
+                                    {/* + Add New Section */}
+                                    + {translations[currentLanguage].addNewSection}
+                                </button>
+                                <div className='block sm:flex justify-between gap-12'>
+                                    <button
+                                        type="button"
+                                        onClick={resetForm}
+                                        className='mb-2 sm:mb-0 py-2 px-4 flex items-center bg-[#9E2665] text-white text-base md:text-[14px] font-medium rounded-md hover:bg-[#4649C0]'
+                                    >
+                                        {/* Reset Form */}
+                                        {translations[currentLanguage].resetForm}
+                                    </button>
+
+                                    <button
+                                        type="submit"
+                                        className='py-2 px-4 flex items-center bg-[#9E2665] text-white text-base md:text-[14px] font-medium rounded-md hover:bg-[#4649C0]'
+                                    >
+                                        {/* Generate Biodata */}
+                                        {translations[currentLanguage].generateBiodata}
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div className='w-full lg:w-[28%] relative'>
                         <div
-                            className='relative w-28 h-28 sm:w-32 sm:h-32 bg-gray-100 rounded-2xl overflow-hidden border-2 border-gray-300 cursor-pointer'
+                            className='sticky top-[20px] mb-[30px] w-[320px] h-[400px] sm:w-[420px] sm:h-[600px] bg-gray-100 rounded-2xl overflow-hidden border-2 border-gray-300 cursor-pointer'
                         >
                             {selectedTemplate ? (
                                 <div className="relative w-full h-full">
@@ -1437,50 +1478,13 @@ const BiodataForm = ({ scrollToTemplates }) => {
                             ) : (
                                 <div onClick={scrollToTemplates}>
                                     {/* <p className='font-bold text-center py-9 px-3'>Choose Your Template</p> */}
-                                    <p className={`font-bold ${currentLanguage === 'தமிழ்' ? 'text-[9px] sm:text-[10px]' : 'text-[13px]  sm:text-[15px]'}  text-center py-9 px-3`}>
+                                    <p className={`font-bold ${currentLanguage === 'தமிழ்' ? 'text-[9px] sm:text-[10px]' : 'text-[13px]  sm:text-[30px]'} flex items-center h-[600] justify-center py-9 px-3`}>
                                         {translations[currentLanguage].chooseTemplate}
                                     </p>
                                 </div>
                             )}
                         </div>
                     </div>
-
-                    <form onSubmit={handleSubmit}>
-                        {/* Render all visible sections */}
-                        {Object.keys(sections).map(section => (
-                            sections[section] && renderSection(section)
-                        ))}
-
-                        {/* Form Buttons */}
-                        <div className="block sm:flex justify-between mt-8">
-                            <button
-                                type="button"
-                                onClick={addNewSection}
-                                className='mb-2 sm:mb-0 py-2 px-4 flex items-center bg-[#4649C0] text-white text-base md:text-[14px] font-medium rounded-md hover:bg-[#9E2665]'
-                            >
-                                {/* + Add New Section */}
-                                + {translations[currentLanguage].addNewSection}
-                            </button>
-                            <div className='block sm:flex justify-between gap-12'>
-                                <button
-                                    type="button"
-                                    onClick={resetForm}
-                                    className='mb-2 sm:mb-0 py-2 px-4 flex items-center bg-[#4649C0] text-white text-base md:text-[14px] font-medium rounded-md hover:bg-[#9E2665]'
-                                >
-                                    {/* Reset Form */}
-                                    {translations[currentLanguage].resetForm}
-                                </button>
-
-                                <button
-                                    type="submit"
-                                    className='py-2 px-4 flex items-center bg-[#4649C0] text-white text-base md:text-[14px] font-medium rounded-md hover:bg-[#9E2665]'
-                                >
-                                    {/* Generate Biodata */}
-                                    {translations[currentLanguage].generateBiodata}
-                                </button>
-                            </div>
-                        </div>
-                    </form>
                 </div>
             </div>
 

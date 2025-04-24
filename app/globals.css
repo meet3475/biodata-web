@@ -1,5 +1,14 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'DM';
+  src: url('../public/fonts/DMSans-Regular.ttf');
+}
+
+*{
+  font-family: 'DM', 'sans-sarif';
+}
+
 :root {
   --background: #ffffff;
   --foreground: #171717;
@@ -215,7 +224,7 @@ data-styled.g1[id="Aurora__OuterWrapper-sc-8038013e-0"] {
 /*reviews swiper slider style start */
 
 .swiper-button-prev, .swiper-button-next {
-  background-color: #4649C0 !important;
+  background-color: #B92753 !important;
   border-radius: 50% !important;
   width: 30px !important; /* Adjusted width */
   height: 30px !important; /* Adjusted height */

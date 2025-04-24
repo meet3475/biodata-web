@@ -83,12 +83,73 @@ const reviews = [
   }
 ]
 
+const step = [
+  {
+    number: "1",
+    title: "Add Your Details",
+    description: "Enter all your Personal, Professional and Family details that you want to show on the Biodata."
+  },
+  {
+    number: "2",
+    title: "Choose a Template",
+    description: "Select a biodata design from our curated list of templates."
+  },
+  {
+    number: "3",
+    title: "Get Biodata on Whatsapp",
+    description: "Enter your Number and get your Biodata PDF on Whatsapp."
+  },
+  // {
+  //   number: "4",
+  //   title: "Get Biodata on Whatsapp",
+  //   description: "Enter your Number and get your Biodata PDF on Whatsapp."
+  // },
+]
+
+const problem = [
+  {
+    title: '1. A Personal Snapshot :-',
+    description: 'Your marriage biodata format showcases a snapshot of your life, encapsulating your morals, education, career, and family values. It is the marriage resume that speaks volumes before the first hello.'
+  },
+  {
+    title: '2. Cultural Relevance :-',
+    description: 'In cultures where arranged marriages are prevalent, matrimonial biodata holds immense significance. The biodata for marriage proposal contains details that reflect ones social and cultural background, which is essential for traditional matchmaking.'
+  },
+  {
+    title: '3. Matchmaking Made Easy :-',
+    description: 'With our online biodata maker for marriage, creating a matrimonial profile is hassle-free. The bio data for marriage format is designed to cover all aspects that are important for finding the right match.'
+  },
+  {
+    title: '4. Time-Saving Tool :-',
+    description: 'Our free online biodata maker for marriage streamlines the process of creating a marriage profile. It is a time-efficient way to prepare biodata for marriage without compromising on the quality or details.'
+  },
+  {
+    title: '5. Wide Range of Choices :-',
+    description: 'Whether you choose a simple shadi biodata format or an elaborate marriage biodata design, our free biodata maker offers a variety of templates to suit your needs.'
+  },
+  {
+    title: '6. Accessibility :-',
+    description: 'Whether you choose a simple shadi biodata format or an elaborate marriage biodata design, our free biodata maker offers a variety of templates to suit your needs.'
+  },
+  {
+    title: '7. First Step to a Lifelong Journey :-',
+    description: 'Whether you choose a simple shadi biodata format or an elaborate marriage biodata design, our free biodata maker offers a variety of templates to suit your needs.'
+  }
+
+]
+
 export default function Home() {
 
   const templatesRef = useRef(null);
   const biodataFormRef = useRef(null);
 
   const [isLoading, setIsLoading] = useState(true);
+
+  const [openIndex, setOpenIndex] = useState(null);
+
+  const toggleIndex = (index) => {
+    setOpenIndex(prevIndex => (prevIndex === index ? null : index));
+  };
 
   useEffect(() => {
     // Simulate loading time (you can remove this in production)
@@ -119,7 +180,7 @@ export default function Home() {
     };
 
     window.addEventListener('scroll', handleScroll);
-    
+
     return () => {
       window.removeEventListener('scroll', handleScroll);
     };
@@ -183,8 +244,8 @@ export default function Home() {
       </div>
 
       <div className="relative w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row justify-between top-[-230px]">
-        <div className="w-full md:w-[40%] order-2 md:order-1">
-          <h1 className="text-3xl md:text-[48px] font-bold mb-4 md:mb-8 text-center md:text-left hero-title">
+        <div className="w-full md:w-[38%] order-2 md:order-1">
+          <h1 className="text-3xl md:text-[48px] font-bold mt-2 mb-4 md:mb-8 text-center md:text-left hero-title">
             The Ultimate Marriage Biodata Maker
           </h1>
           <p className="text-base md:text-[18px] mb-4 md:mb-8 text-center md:text-left hero-text">
@@ -201,13 +262,13 @@ export default function Home() {
         </div>
 
         <div className="relative overflow-hidden w-full md:w-[60%] order-1 md:order-2 mb-4 md:mb-0">
-          <div className="cursor-pointer transition-transform duration-500 ease-in-out hover:scale-105 hover:translate-y-[-10px]">
+          <div className="w-[750px] h-[550px] transition-transform duration-500 ease-in-out hover:scale-105 hover:translate-y-[-10px]">
             <Image
               src="/images/hero.png"
               alt="Hero"
               width={1000}
               height={500}
-              className="w-full h-auto"
+              className="w-[100%] h-[100%]"
             />
           </div>
         </div>
@@ -302,6 +363,71 @@ export default function Home() {
       </div>
       {/* templates slider section end */}
 
+      {/* Steps to Create Biodata section start */}
+      <div className="bg-[white]">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-[80px]">
+          <div className="text-center mb-20">
+            <h2 className="text-[28px] sm:text-[45px] text-[#B92753] font-bold mb-3 bg-white rounded-lg lg:shadow-2xl block lg:inline py-3 px-2 sm:px-5">Steps to Create Biodata</h2>
+          </div>
+          <div>
+            <Swiper
+              slidesPerView={3}
+              spaceBetween={30}
+              className="mySwiper"
+              autoplay={{
+                delay: 2500,
+                disableOnInteraction: false,
+              }}
+              modules={[Autoplay]}
+              breakpoints={{
+                310: {
+                  slidesPerView: 1,
+                  spaceBetween: 10,
+                },
+                540: {
+                  slidesPerView: 1,
+                  spaceBetween: 15,
+                },
+                940: {
+                  slidesPerView: 2,
+                  spaceBetween: 20,
+                },
+                1024: {
+                  slidesPerView: 2,
+                  spaceBetween: 30,
+                },
+                1600: {
+                  slidesPerView: 3,
+                  spaceBetween: 30,
+                },
+              }}
+            >
+              {
+                step.map((item, index) => (
+                  <SwiperSlide key={index}>
+                    <div className="bg-white shadow-lg rounded-xl p-6 sm:p-8 text-center max-w-md mx-auto border border-[#B92753]">
+                      <div className="flext justify-items-center">
+                        <div className="w-[40px] h-[40px] bg-[#B92753] rounded-[50%] flex justify-center items-center text-[white] font-bold mb-4">
+                          {item.number}
+                        </div>
+                      </div>
+                      <div className="flext justify-items-cente">
+                        <h3 className="text-[black] font-bold text-[24px]">
+                          {item.title}
+                        </h3>
+                        <p className="text-[#B92753] text-[14px]">{item.description}</p>
+                      </div>
+                    </div>
+
+                  </SwiperSlide>
+                ))
+              }
+            </Swiper>
+          </div>
+        </div>
+      </div>
+      {/* Steps to Create Biodata section end */}
+
       {/* create biodata section start */}
       <div ref={biodataFormRef} id="create-biodata">
         <BiodataForm scrollToTemplates={scrollToTemplates} />
@@ -309,13 +435,13 @@ export default function Home() {
       {/* create biodata section end */}
 
       {/* How to Create biodata section start */}
-      <div className="bg-[#B92753]">
+      <div className="bg-[white]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-[80px]">
           <div className="text-center">
             <h2 className="text-[28px] sm:text-[45px] text-[#B92753] font-bold mb-3 bg-white rounded-lg lg:shadow-2xl block lg:inline py-3 px-2 sm:px-5">How to Create Free Marriage Biodata?</h2>
           </div>
           <div className="flex flex-col items-center lg:items-stretch lg:flex-row mt-14 sm:gap-14">
-            <div className="w-[300px] md:w-[500px] h-[450px] mb-5 sm:mb-0" data-aos="zoom-in">
+            <div className="w-[300px] md:w-[500px] h-[450px] shadow-2xl mb-5 sm:mb-0" data-aos="zoom-in">
               <Image
                 src="/images/biodata.png"
                 alt="biodata"
@@ -325,7 +451,7 @@ export default function Home() {
               />
             </div>
 
-            <div className="bg-[white] py-8 px-8 rounded-lg flex flex-col justify-center" data-aos="zoom-in">
+            <div className="bg-[white] shadow-2xl py-8 px-8 rounded-lg flex flex-col justify-center" data-aos="zoom-in">
               <h4 className="font-bold text-[22px]">Step 1. Choose the Free Template</h4>
               <p className="mt-3 mb-7">Click on the <span className="font-semibold">Choose Your Template</span> at Now choose the  <span className="font-semibold">Free template</span> from our Popular Marriage Biodata Designs.</p>
 
@@ -341,57 +467,44 @@ export default function Home() {
       {/* How to Create biodata section end */}
 
       {/* What is Marriage Biodata section start */}
-      <div className="bg-[white]">
+      <div className="bg-[#B92753]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-[80px]">
-          <div className="text-left">
-            <h2 className="text-[28px] sm:text-[45px] text-[#B92753] font-bold mb-3">What is Marriage Biodata?</h2>
-            <p className="text-[14px] sm:text-[16px] text-[#707070]">Many cultures have arranged marriages. A marriage biodata is a quick and clear way to introduce yourself to potential partners and their families. A good online biodata can help you make a strong first impression and increase your chances of finding a suitable match.</p>
-
-            <h3 className="text-[20px] sm:text-[30px] my-[30px] text-[#B92753] font-bold">Importance of Biodata in Matrimonial Search</h3>
-
-            <div data-aos="fade-up">
-              <h4 className="text-[#4649c0] text-[16px] sm:text-[20px] font-bold mt-6">1. A Personal Snapshot :-</h4>
-              <p className="text-[#707070] text-[14px] sm:text-[16px] my-1">Your marriage biodata format showcases a snapshot of your life, encapsulating your morals, education, career, and family values. It is the marriage resume that speaks volumes before the first hello.</p>
-            </div>
-
-            <div data-aos="fade-up">
-              <h4 className="text-[#4649c0] text-[16px] sm:text-[20px] font-bold mt-6">2. Cultural Relevance :-</h4>
-              <p className="text-[#707070]  text-[14px] sm:text-[16px] my-1">In cultures where arranged marriages are prevalent, matrimonial biodata holds immense significance. The biodata for marriage proposal contains details that reflect ones social and cultural background, which is essential for traditional matchmaking.</p>
-            </div>
-
-            <div data-aos="fade-up">
-              <h4 className="text-[#4649c0] text-[16px] sm:text-[20px] font-bold mt-6">3. Matchmaking Made Easy :-</h4>
-              <p className="text-[#707070] text-[14px] sm:text-[16px] my-1">With our online biodata maker for marriage, creating a matrimonial profile is hassle-free. The bio data for marriage format is designed to cover all aspects that are important for finding the right match.</p>
-            </div>
-
-            <div data-aos="fade-up">
-              <h4 className="text-[#4649c0] text-[16px] sm:text-[20px] font-bold mt-6">4. Time-Saving Tool :-</h4>
-              <p className="text-[#707070] text-[14px] sm:text-[16px] my-1">Our free online biodata maker for marriage streamlines the process of creating a marriage profile. It is a time-efficient way to prepare biodata for marriage without compromising on the quality or details.</p>
-            </div>
-
-            <div data-aos="fade-up">
-              <h4 className="text-[#4649c0] text-[16px] sm:text-[20px] font-bold mt-6">5. Wide Range of Choices :-</h4>
-              <p className="text-[#707070] text-[14px] sm:text-[16px] my-1">Whether you choose a simple shadi biodata format or an elaborate marriage biodata design, our free biodata maker offers a variety of templates to suit your needs.</p>
-            </div>
-
-            <div data-aos="fade-up">
-              <h4 className="text-[#4649c0] text-[16px] sm:text-[20px] font-bold mt-6">6. Accessibility :-</h4>
-              <p className="text-[#707070] text-[14px] sm:text-[16px] my-1">Whether you choose a simple shadi biodata format or an elaborate marriage biodata design, our free biodata maker offers a variety of templates to suit your needs.</p>
-            </div>
-
-            <div data-aos="fade-up">
-              <h4 className="text-[#4649c0] text-[16px] sm:text-[20px] font-bold mt-6">7. First Step to a Lifelong Journey :-</h4>
-              <p className="text-[#707070] text-[14px] sm:text-[16px] my-1">Whether you choose a simple shadi biodata format or an elaborate marriage biodata design, our free biodata maker offers a variety of templates to suit your needs.</p>
-            </div>
-
+          <div className="text-center">
+            <h2 className="text-[28px] sm:text-[45px] text-white font-bold mb-3">What is Marriage Biodata?</h2>
+            <p className="text-[14px] sm:text-[16px] text-white">
+              Many cultures have arranged marriages. A marriage biodata is a quick and clear way to introduce yourself to potential partners and their families.
+              A good online biodata can help you make a strong first impression and increase your chances of finding a suitable match.
+            </p>
           </div>
-
+          <div>
+            <h3 className="text-[20px] sm:text-[30px] my-[30px] text-white font-bold">Importance of Biodata in Matrimonial Search</h3>
+            {
+              problem.map((item, index) => (
+                <div key={index} data-aos="fade-up" className="mb-4 cursor-pointer" onClick={() => toggleIndex(index)}>
+                  <div className="bg-[white] rounded-xl p-4 transition-all duration-300 ease-in-out">
+                    <h4 className="text-black text-[16px] sm:text-[20px] font-medium mt-2 flex justify-between items-center">
+                      {item.title}
+                      <span>{openIndex === index ? '-' : '+'}</span>
+                    </h4>
+                    {
+                      openIndex === index && (
+                        <p className="text-[gray] text-[14px] sm:text-[16px] mt-2">
+                          {item.description}
+                        </p>
+                      )
+                    }
+                  </div>
+                </div>
+              ))
+            }
+          </div>
         </div>
       </div>
+
       {/* What is Marriage Biodata section end */}
 
       {/* Essential features biodata section start */}
-      <div className="bg-[#B92753]">
+      {/* <div className="bg-[#B92753]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-[80px]">
           <div className="text-center">
             <h2 className="text-[30px] sm:text-[45px] text-[white] font-bold">Essential Features Of Our Biodata Maker</h2>
@@ -427,11 +540,11 @@ export default function Home() {
 
           </div>
         </div>
-      </div>
+      </div> */}
       {/* Essential features biodata section end */}
 
       {/*Why Choose MyBiodataforMarriage section start */}
-      <div className="bg-[white]">
+      {/* <div className="bg-[white]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-[80px]">
           <div className="text-left">
             <h2 className="text-[28px] sm:text-[45px] text-[#B92753] font-bold mb-3">Why Choose Wedding Biodata?</h2>
@@ -463,21 +576,21 @@ export default function Home() {
           </div>
 
         </div>
-      </div>
+      </div> */}
       {/*Why Choose MyBiodataforMarriage section end */}
 
       {/* reviews section start */}
-      <div className="bg-[#B92753]">
+      <div className="bg-[white]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-[60px]">
-          <h2 className="text-[30px] sm:text-[48px] text-[white] font-bold mb-5 text-center mx-0 md:mx-24">What Our Happy Users Say About Our Marriage Biodata Format</h2>
-          <h6 className="text-[16px] sm:text-[20px] text-[white] mb-[60px] text-center mx-0 md:mx-24">Our goal at My Biodata for Marriage is to assist you in creating the ideal marriage biodata. Hear from some of our happy customers who have successfully used our biodata maker platform to find the right person.</h6>
+          <h2 className="text-[30px] sm:text-[48px] text-[#B92753] font-bold mb-5 text-center mx-0 md:mx-24">What Our Happy Users Say About Our Marriage Biodata Format</h2>
+          <h6 className="text-[16px] sm:text-[20px] text-gray-700 mb-[60px] text-center mx-0 md:mx-24">Our goal at My Biodata for Marriage is to assist you in creating the ideal marriage biodata. Hear from some of our happy customers who have successfully used our biodata maker platform to find the right person.</h6>
           <div>
             {
               reviewSliderLoading ? (
                 <DataLoader />
               ) : (
                 <Swiper
-                data-aos="zoom-in"
+                  data-aos="zoom-in"
                   slidesPerView={3}
                   spaceBetween={30}
                   freeMode={true}
@@ -510,8 +623,8 @@ export default function Home() {
                   {
                     reviews.map((item, index) => (
                       <SwiperSlide key={index}>
-                        <div className="bg-white shadow-lg rounded-xl p-6 sm:p-8 text-center max-w-md mx-auto border border-gray-200 [border-top:12px_solid_#4649C0] h-[350px]">
-                          <div className="flex justify-center text-[#4649C0] text-4xl">
+                        <div className="bg-white shadow-lg rounded-xl p-6 sm:p-8 text-center max-w-md mx-auto border border-gray-200 [border-top:12px_solid_#B92753] h-[350px]">
+                          <div className="flex justify-center text-[#B92753] text-4xl">
                             <BiSolidQuoteLeft />
                           </div>
                           <p className="text-gray-700 mt-4 text-[12px] sm:text-[14px]">

@@ -32,7 +32,7 @@ const Navbar = ({ scrollToBiodataForm }) => {
                         <div className="flex justify-between h-16 items-center">
 
                             <div className="flex items-center">
-                                <Link href="/" className='flex items-center'>
+                                <Link href="/" className='flex items-center mr-[45px]'>
                                     <Image
                                         src="/images/logo.png"
                                         alt="Logo"
@@ -44,15 +44,14 @@ const Navbar = ({ scrollToBiodataForm }) => {
                                         Wedding Biodata
                                     </span>
                                 </Link>
-                            </div>
 
-
-                            <div className="hidden md:flex space-x-6">
-                                {navigation.map((item) => (
-                                    <a key={item.name} href={item.href} className={classNames(
-                                        'text-[#9E2665] font-bold hover:bg-[#4649C0] hover:text-white px-3 py-2 rounded-md'
-                                    )}>{item.name}</a>
-                                ))}
+                                <div className="hidden md:flex space-x-6">
+                                    {navigation.map((item) => (
+                                        <a key={item.name} href={item.href} className={classNames(
+                                            'text-[#9E2665] font-bold hover:bg-[#4649C0] hover:text-white px-3 py-2 rounded-md'
+                                        )}>{item.name}</a>
+                                    ))}
+                                </div>
                             </div>
 
                             <div className="flex items-center gap-4">
