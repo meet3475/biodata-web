@@ -8,7 +8,7 @@ import { Tooltip } from 'react-tooltip';
 const Footer = () => {
     return (
 
-        <div className='bg-[#7b7cdb]'>
+        <div className='bg-[white]' style={{ boxShadow: '0px -5px 35px rgba(0,0,0,0.2)' }}>
             <div className='mx-auto max-w-7xl px-4 py-5 sm:px-6 lg:px-8 flex flex-wrap md:grid md:grid-cols-2 lg:flex lg:justify-between gap-6'>
 
                 <div className='w-full md:w-[75%] lg:w-[30%]'>
@@ -19,29 +19,29 @@ const Footer = () => {
                         height={50}
                         className="w-[80px] h-[50px] sm:w-[65px] sm:h-[40px]"
                     />
-                    <p className='text-white hover:font-medium'>
+                    <p className='text-[#9E2665] font-medium'>
                         Welcome to our online matrimonial biodata maker! We are a team of dedicated professionals with a passion for making the process of creating a biodata simple, easy and enjoyable.
                     </p>
                 </div>
 
                 <div className='w-full md:w-[45%] lg:w-[20%]'>
-                    <h2 className='text-white  hover:font-medium text-[24px]'>Company</h2>
+                    <h2 className='text-[#181966] font-medium text-[24px]'>Company</h2>
                     <ul>
-                        <Link href={"/"} className='block text-white hover:text-[#181966] hover:font-medium'>Home</Link>
-                        <Link href={"/about-us"} className='block text-white hover:text-[#181966] hover:font-medium'>About Us</Link>
+                        <Link href={"/"} className='block text-[#9E2665] font-medium hover:text-[#4649C0]'>Home</Link>
+                        <Link href={"/about-us"} className='block text-[#9E2665] font-medium hover:text-[#4649C0]'>About Us</Link>
                     </ul>
                 </div>
 
                 <div className='w-full md:w-[45%] lg:w-[20%]'>
-                    <h2 className='text-white hover:font-medium  text-[24px]'>Customer Service</h2>
+                    <h2 className='text-[#181966] font-medium  text-[24px]'>Customer Service</h2>
                     <ul>
-                        <Link href={"/contact-us"} className='block text-white hover:text-[#181966] hover:font-medium'>Contact Us</Link>
+                        <Link href={"/contact-us"} className='block text-[#9E2665] font-medium hover:text-[#4649C0]'>Contact Us</Link>
                     </ul>
                 </div>
 
                 <div className='w-full md:w-[45%] lg:w-[20%]'>
-                    <h2 className='text-white hover:font-medium text-[24px]'>Contact With Us</h2>
-                    <p className='text-white hover:text-[#181966] hover:font-medium my-2'>
+                    <h2 className='text-[#181966] font-medium text-[24px]'>Contact With Us</h2>
+                    <p className='text-[#9E2665] font-medium my-2 hover:text-[#4649C0]'>
                         Follow us on :-
                     </p>
                     <div className="flex flex-wrap gap-3">
