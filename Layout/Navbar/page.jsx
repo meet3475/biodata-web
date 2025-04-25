@@ -32,7 +32,7 @@ const Navbar = ({ scrollToBiodataForm }) => {
                         <div className="flex justify-between h-16 items-center">
 
                             <div className="flex items-center">
-                                <Link href="/" className='flex items-center mr-[45px]'>
+                                <Link href="/" className='flex items-center mr-0 sm:mr-[45px]'>
                                     <Image
                                         src="/images/logo.png"
                                         alt="Logo"
