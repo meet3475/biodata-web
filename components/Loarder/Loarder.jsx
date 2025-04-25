@@ -19,7 +19,7 @@ const Loarder = () => {
 
     return (
         <div className='bg-black h-screen w-full flex flex-col justify-center items-center'>
-            <span className="loader2">
+            <span className="loader2 fill">
                 <Image
                     src="/images/logo.png"
                     alt="Logo"
@@ -28,7 +28,7 @@ const Loarder = () => {
                     className="w-[90px] h-[90px] sm:w-[120px] sm:h-[120px] flex justify-self-center"
                     data-aos="zoom-in"
                 />
-                Wedding Biodata
+                {/* Wedding Biodata */}
             </span>
         </div>
     )
