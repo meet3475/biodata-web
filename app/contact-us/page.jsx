@@ -52,7 +52,7 @@ const ContactUs = () => {
         <>
             <Navbar />
 
-            <div className='bg-[#B92753]'>
+            <div className='bg-[#4649C0]'>
                 <div className='mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-[120px]'>
                     <div>
                         <h2 className='text-white text-[42px] font-bold mb-5'>Contact Us</h2>
