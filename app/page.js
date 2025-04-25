@@ -445,7 +445,7 @@ export default function Home() {
               {
                 step.map((item, index) => (
                   <SwiperSlide key={index}>
-                    <div className="bg-white shadow-lg rounded-xl p-6 sm:p-8 text-center max-w-md mx-auto border border-[#B92753]">
+                    <div className="bg-white shadow-lg rounded-xl p-6 sm:p-8 text-center max-w-md mx-auto border border-[#B92753] h-[200px]">
                       <div className="flext justify-items-center">
                         <div className="w-[40px] h-[40px] bg-[#B92753] rounded-[50%] flex justify-center items-center text-[white] font-bold mb-4">
                           {item.number}

@@ -613,6 +613,54 @@ const BiodataForm = ({ scrollToTemplates }) => {
     };
 
     // Update the handleChange function in your BiodataForm.jsx
+    // const handleChange = (e) => {
+    //     const { name, value } = e.target;
+
+    //     // List of fields that should only accept text (letters and spaces)
+    //     const textOnlyFields = [
+    //         'name',
+    //         'placeOfBirth',
+    //         'complexion',
+    //         'gotraCaste',
+    //         'occupation',
+    //         'education',
+    //         'fatherName',
+    //         'fatherOccupation',
+    //         'motherName',
+    //         'motherOccupation',
+    //         'siblings',
+    //         'contactPerson'
+    //     ];
+
+    //     // Validate numeric fields
+    //     if (name === 'height' || name === 'income' || name === 'contactNumber') {
+    //         // Only allow numbers (and decimal points for height/income)
+    //         if (value && !/^[0-9]*\.?[0-9]*$/.test(value)) {
+    //             return; // Don't update the field if it's not a valid number
+    //         }
+    //     }
+
+    //     // Validate text-only fields - only allow letters and spaces
+    //     if (textOnlyFields.includes(name)) {
+    //         // Only allow letters (including Unicode for non-English languages) and spaces
+    //         if (value && !/^[\p{L}\s]+$/u.test(value)) {
+    //             return; // Don't update the field if it contains numbers or special characters
+    //         }
+    //     }
+
+    //     setFormData({
+    //         ...formData,
+    //         [name]: value
+    //     });
+
+    //     // Clear error when user starts typing
+    //     if (errors[name]) {
+    //         setErrors({
+    //             ...errors,
+    //             [name]: ''
+    //         });
+    //     }
+    // };
     const handleChange = (e) => {
         const { name, value } = e.target;
 
@@ -633,18 +681,26 @@ const BiodataForm = ({ scrollToTemplates }) => {
         ];
 
         // Validate numeric fields
+        // if (name === 'height' || name === 'income' || name === 'contactNumber') {
+        //     // Only allow numbers (and decimal points for height/income)
+        //     if (value && !/^[0-9]*\.?[0-9]*$/.test(value)) {
+        //         return; // Don't update the field if it's not a valid number
+        //     }
+        // }
+
+        // Validate numeric fields (supporting Indian numerals)
         if (name === 'height' || name === 'income' || name === 'contactNumber') {
-            // Only allow numbers (and decimal points for height/income)
-            if (value && !/^[0-9]*\.?[0-9]*$/.test(value)) {
-                return; // Don't update the field if it's not a valid number
+            // Allow English and major Indian numerals
+            if (value && !/^[\d०-९૦-૯௦-௯౦-౯೦-೯൦-൯০-৯]+\.?[\d०-९૦-૯௦-௯౦-౯೦-೯൦-൯০-৯]*$/.test(value)) {
+                return;
             }
         }
 
-        // Validate text-only fields - only allow letters and spaces
+        // Validate text-only fields - allow all Indian language characters
         if (textOnlyFields.includes(name)) {
-            // Only allow letters (including Unicode for non-English languages) and spaces
-            if (value && !/^[\p{L}\s]+$/u.test(value)) {
-                return; // Don't update the field if it contains numbers or special characters
+            // Allow letters (including all Indian scripts), spaces, and common Indian punctuation
+            if (value && !/^[\p{L}\p{M}\s'-]+$/u.test(value)) {
+                return; // Don't update the field if it contains invalid characters
             }
         }
 
@@ -930,12 +986,12 @@ const BiodataForm = ({ scrollToTemplates }) => {
             isValid = false;
         }
 
-        // Updated contact number validation
-        if (!formData.contactNumber || !/^[0-9]{10}$/.test(formData.contactNumber)) {
-            tempErrors.contactNumber = 'Please enter a valid 10-digit phone number';
+        // Updated contact number validation for all Indian numerals
+        if (!formData.contactNumber || !/^[\d٠-٩۰-۹०-९૦-૯௦-௯౦-౯೦-೯൦-൯๐-๙໐-໙၀-၉០-៩༠-༩႐-႙]{10}$/.test(formData.contactNumber)) {
+            tempErrors.contactNumber = translations[currentLanguage].contactNumberError || 'Please enter a valid 10-digit phone number';
             isValid = false;
         }
-
+        
         if (!profileImage) {
             tempErrors.profileImage = 'Profile image is required';
             isValid = false;
@@ -1083,7 +1139,7 @@ const BiodataForm = ({ scrollToTemplates }) => {
 
     const handleDownloadPDF = async () => {
         if (!validateForm()) return;
-    
+
         if (!selectedTemplate) {
             Swal.fire({
                 icon: 'warning',
@@ -1095,7 +1151,7 @@ const BiodataForm = ({ scrollToTemplates }) => {
             });
             return;
         }
-    
+
         const doc = (
             <MyDocument
                 formData={formData}
@@ -1108,13 +1164,12 @@ const BiodataForm = ({ scrollToTemplates }) => {
                 translations={translations}
             />
         );
-    
+
         const asPdf = pdf([]);
         asPdf.updateContainer(doc);
         const blob = await asPdf.toBlob();
         saveAs(blob, `${formData.name || 'biodata'}.pdf`);
     };
-    
 
     // Remove section
     const removeSection = (section) => {
@@ -1470,7 +1525,7 @@ const BiodataForm = ({ scrollToTemplates }) => {
                                         onClick={handleDownloadPDF}
                                         className='py-2 px-4 flex items-center bg-[#9E2665] text-white text-base md:text-[14px] font-medium rounded-md hover:bg-[#4649C0]'
                                     >
-                                      
+
                                         {translations[currentLanguage].generateBiodata}
                                     </button>
                                 </div>
@@ -1498,7 +1553,7 @@ const BiodataForm = ({ scrollToTemplates }) => {
                                 </div>
                             ) : (
                                 <div onClick={scrollToTemplates}>
-                                    <p className={`font-bold ${currentLanguage === 'தமிழ்' ? 'text-[10px]' : 'text-[30px]'} flex items-center h-[600] justify-center text-center py-9 px-3`}>
+                                    <p className={`font-bold text-[30px] flex items-center h-[600] justify-center text-center py-9 px-3`}>
                                         {translations[currentLanguage].chooseTemplate}
                                     </p>
                                 </div>
@@ -1533,38 +1588,6 @@ const BiodataForm = ({ scrollToTemplates }) => {
                 currentLanguage={currentLanguage}
                 translations={translations}
             />
-
-           {/* PDF Preview Modal */}
-           {/* {showPdfPreview && (
-                <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50">
-                    <div className="bg-white p-6 rounded-lg shadow-xl w-full max-w-4xl max-h-screen overflow-hidden">
-                        <div className="mt-6 flex justify-end">
-                            <PDFDownloadLink
-                                document={
-                                    <MyDocument
-                                        formData={formData}
-                                        profileImage={profileImage}
-                                        selectedTemplate={selectedTemplate}
-                                        fieldLabels={fieldLabels}
-                                        fieldOrder={fieldOrder}
-                                        sections={sections}
-                                        currentLanguage={currentLanguage}
-                                        translations={translations}
-                                    />
-                                }
-                                fileName={`${formData.name || 'biodata'}.pdf`}
-                                className="py-2 px-6 bg-[#9E2665] text-white font-medium rounded-md hover:bg-[#4649C0]"
-                            >
-                                {({ loading }) => (
-                                    loading ? 'Preparing document...' : 'Download PDF'
-                                )}
-                            </PDFDownloadLink>
-                        </div>
-                    </div>
-                </div>
-            )} */}
-
-
 
         </div>
     );
