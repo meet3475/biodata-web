@@ -4,6 +4,8 @@ import AddFieldModal from '../AddFieldModal/AddFieldModal';
 import AddSectionModal from '../AddSectionModal/AddSectionModal';
 import { PDFDownloadLink, Document, Page, View, Text, Image, StyleSheet, Font } from '@react-pdf/renderer';
 import PDFPreview from '../PDFPreview/PDFPreview';
+import { pdf } from '@react-pdf/renderer';
+import { saveAs } from 'file-saver';
 import Swal from 'sweetalert2';
 
 // Create styles for PDF document
@@ -599,12 +601,6 @@ const BiodataForm = ({ scrollToTemplates }) => {
         };
     }, [scrollToTemplates]); // Add scrollToTemplates to dependencies
 
-    const removeSelectedTemplate = () => {
-        setSelectedTemplate(null);
-        // localStorage.removeItem('selectedTemplate');
-        sessionStorage.removeItem('selectedTemplate');
-    };
-
     const formatTimeWithAmPm = (timeString) => {
         if (!timeString) return '-';
 
@@ -1085,6 +1081,41 @@ const BiodataForm = ({ scrollToTemplates }) => {
         }
     };
 
+    const handleDownloadPDF = async () => {
+        if (!validateForm()) return;
+    
+        if (!selectedTemplate) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Template Required',
+                text: 'Please select a template first!',
+                confirmButtonColor: '#4649C0'
+            }).then(() => {
+                scrollToTemplates();
+            });
+            return;
+        }
+    
+        const doc = (
+            <MyDocument
+                formData={formData}
+                profileImage={profileImage}
+                selectedTemplate={selectedTemplate}
+                fieldLabels={fieldLabels}
+                fieldOrder={fieldOrder}
+                sections={sections}
+                currentLanguage={currentLanguage}
+                translations={translations}
+            />
+        );
+    
+        const asPdf = pdf([]);
+        asPdf.updateContainer(doc);
+        const blob = await asPdf.toBlob();
+        saveAs(blob, `${formData.name || 'biodata'}.pdf`);
+    };
+    
+
     // Remove section
     const removeSection = (section) => {
         Swal.fire({
@@ -1205,20 +1236,13 @@ const BiodataForm = ({ scrollToTemplates }) => {
                 break;
             case 'timeOfBirth':
                 inputElement = (
-                    <div className="flex items-center">
-                        <input
-                            type="time"
-                            name={fieldName}
-                            value={formData[fieldName]}
-                            onChange={handleChange}
-                            className="w-full sm:w-[48%] px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-200"
-                        />
-                        {formData[fieldName] && (
-                            <span className="ml-2 text-gray-600 " style={{ display: "none" }}>
-                                {formatTimeWithAmPm(formData[fieldName])}
-                            </span>
-                        )}
-                    </div>
+                    <input
+                        type="time"
+                        name={fieldName}
+                        value={formData[fieldName]}
+                        onChange={handleChange}
+                        className="w-full sm:w-[48%] px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-200"
+                    />
                 );
                 break;
             case 'contactNumber':
@@ -1306,9 +1330,6 @@ const BiodataForm = ({ scrollToTemplates }) => {
                             type="button"
                             className="ml-2 text-gray-500 hover:text-[#4649C0]"
                         >
-                            {/* <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-                            </svg> */}
                         </button>
                     </h2>
                     <button
@@ -1354,7 +1375,7 @@ const BiodataForm = ({ scrollToTemplates }) => {
                     </h2>
                 </div>
 
-                <div className='text-center mb-8 relative'> {/* Added relative here */}
+                <div className='flex justify-center lg:block text-center mb-8 relative'> {/* Added relative here */}
                     <button
                         className="relative flex items-center bg-white rounded-lg shadow-2xl py-3 px-5 ml-2 sm:ml-0"
                         onClick={() => setDropdownOpen(!isDropdownOpen)}
@@ -1366,7 +1387,7 @@ const BiodataForm = ({ scrollToTemplates }) => {
 
                     {/* Language Dropdown */}
                     {isDropdownOpen && (
-                        <div className="absolute left-[40%] sm:left-[8%] transform -translate-x-1/2 mt-2 w-48 bg-white shadow-lg rounded-md z-[999]">
+                        <div className="absolute left-[50%] top-[100%] lg:left-[8%] lg:top-[100%]  transform -translate-x-1/2 mt-2 w-48 bg-white shadow-lg rounded-md z-[999]">
                             <ul className="text-[#B92753] font-medium">
                                 {['English', 'हिंदी', 'मराठी', 'বাংলা', 'ગુજરાતી', 'தமிழ்'].map((lang) => (
                                     <li
@@ -1382,9 +1403,9 @@ const BiodataForm = ({ scrollToTemplates }) => {
                     )}
                 </div>
 
-                <div className='flex flex-col-reverse lg:flex-row justify-between'>
+                <div className='flex flex-col-reverse items-center lg:items-stretch lg:flex-row justify-between'>
 
-                    <div className="bg-white shadow-md rounded-lg p-6 mb-8 w-full lg:w-[65%]">
+                    <div className="bg-white shadow-md rounded-lg p-6 mb-8 w-[98%] mx- lg:w-[65%]">
                         <div className="flex justify-between mb-6">
                             <div className="relative w-28 h-28 sm:w-32 sm:h-32 bg-gray-100 rounded-full overflow-hidden border-2 border-gray-300">
                                 {profileImage ? (
@@ -1443,11 +1464,13 @@ const BiodataForm = ({ scrollToTemplates }) => {
                                         {translations[currentLanguage].resetForm}
                                     </button>
 
+
                                     <button
-                                        type="submit"
+                                        type="button"
+                                        onClick={handleDownloadPDF}
                                         className='py-2 px-4 flex items-center bg-[#9E2665] text-white text-base md:text-[14px] font-medium rounded-md hover:bg-[#4649C0]'
                                     >
-                                        {/* Generate Biodata */}
+                                      
                                         {translations[currentLanguage].generateBiodata}
                                     </button>
                                 </div>
@@ -1455,30 +1478,27 @@ const BiodataForm = ({ scrollToTemplates }) => {
                         </form>
                     </div>
 
-                    <div className='w-full lg:w-[28%] relative'>
+
+                    <div className='flex justify-center w-full md:w-[43%] lg:[32%] relative'>
                         <div
-                            className='sticky top-[20px] mb-[30px] w-[320px] h-[400px] sm:w-[420px] sm:h-[600px] bg-gray-100 rounded-2xl overflow-hidden border-2 border-gray-300 cursor-pointer'
+                            className='sticky top-[20px] mb-[30px] w-[350px] md:w-[305px] xl:w-[350px] h-[600px] bg-gray-100 rounded-2xl overflow-hidden border-2 border-gray-300 cursor-pointer'
                         >
                             {selectedTemplate ? (
                                 <div className="relative w-full h-full">
-                                    <img
-                                        src={selectedTemplate}
-                                        alt="Selected template"
-                                        className="w-full h-full object-fill"
+                                    <PDFPreview
+                                        formData={formData}
+                                        profileImage={profileImage}
+                                        selectedTemplate={selectedTemplate}
+                                        fieldLabels={fieldLabels}
+                                        fieldOrder={fieldOrder}
+                                        sections={sections}
+                                        translations={translations}
+                                        currentLanguage={currentLanguage}
                                     />
-                                    <button
-                                        className="absolute top-1 right-1 bg-[#B92753] text-white rounded-full p-1 hover:bg-[#4649C0]"
-                                        onClick={removeSelectedTemplate}
-                                    >
-                                        <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                                        </svg>
-                                    </button>
                                 </div>
                             ) : (
                                 <div onClick={scrollToTemplates}>
-                                    {/* <p className='font-bold text-center py-9 px-3'>Choose Your Template</p> */}
-                                    <p className={`font-bold ${currentLanguage === 'தமிழ்' ? 'text-[9px] sm:text-[10px]' : 'text-[13px]  sm:text-[30px]'} flex items-center h-[600] justify-center py-9 px-3`}>
+                                    <p className={`font-bold ${currentLanguage === 'தமிழ்' ? 'text-[10px]' : 'text-[30px]'} flex items-center h-[600] justify-center text-center py-9 px-3`}>
                                         {translations[currentLanguage].chooseTemplate}
                                     </p>
                                 </div>
@@ -1514,36 +1534,10 @@ const BiodataForm = ({ scrollToTemplates }) => {
                 translations={translations}
             />
 
-            {/* PDF Preview Modal */}
-            {showPdfPreview && (
+           {/* PDF Preview Modal */}
+           {/* {showPdfPreview && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 backdrop-blur-sm flex items-center justify-center z-50">
                     <div className="bg-white p-6 rounded-lg shadow-xl w-full max-w-4xl max-h-screen overflow-hidden">
-                        <div className="flex justify-between mb-4">
-                            <h3 className="text-lg font-semibold">Biodata Preview</h3>
-                            <button
-                                onClick={() => setShowPdfPreview(false)}
-                                className="text-gray-500 hover:text-gray-700"
-                            >
-                                <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                                </svg>
-                            </button>
-                        </div>
-
-                        {/* PDF Preview Content */}
-                        <div className="border border-gray-200 rounded overflow-hidden">
-                            <PDFPreview
-                                formData={formData}
-                                profileImage={profileImage}
-                                selectedTemplate={selectedTemplate}
-                                fieldLabels={fieldLabels}
-                                fieldOrder={fieldOrder}
-                                sections={sections}
-                                translations={translations}
-                                currentLanguage={currentLanguage}
-                            />
-                        </div>
-
                         <div className="mt-6 flex justify-end">
                             <PDFDownloadLink
                                 document={
@@ -1568,7 +1562,8 @@ const BiodataForm = ({ scrollToTemplates }) => {
                         </div>
                     </div>
                 </div>
-            )}
+            )} */}
+
 
 
         </div>

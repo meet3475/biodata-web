@@ -57,7 +57,47 @@ const design = [
   {
     id: "10",
     image: "/images/biodata-bg-10.jpg"
-  }
+  },
+  {
+    id: "11",
+    image: "/images/biodata-bg-11.jpg"
+  },
+  {
+    id: "12",
+    image: "/images/biodata-bg-12.jpg"
+  },
+  {
+    id: "13",
+    image: "/images/biodata-bg-13.jpg"
+  },
+  {
+    id: "14",
+    image: "/images/biodata-bg-14.jpg"
+  },
+  {
+    id: "15",
+    image: "/images/biodata-bg-15.jpg"
+  },
+  {
+    id: "16",
+    image: "/images/biodata-bg-16.jpg"
+  },
+  {
+    id: "17",
+    image: "/images/biodata-bg-17.jpg"
+  },
+  {
+    id: "18",
+    image: "/images/biodata-bg-18.jpg"
+  },
+  {
+    id: "19",
+    image: "/images/biodata-bg-19.jpg"
+  },
+  {
+    id: "20",
+    image: "/images/biodata-bg-20.jpg"
+  },
 ]
 
 const reviews = [
@@ -262,13 +302,13 @@ export default function Home() {
         </div>
 
         <div className="relative overflow-hidden w-full md:w-[60%] order-1 md:order-2 mb-4 md:mb-0">
-          <div className="w-[750px] h-[550px] transition-transform duration-500 ease-in-out hover:scale-105 hover:translate-y-[-10px]">
+          <div className="transition-transform duration-500 ease-in-out hover:scale-105 hover:translate-y-[-10px]">
             <Image
               src="/images/hero.png"
               alt="Hero"
               width={1000}
               height={500}
-              className="w-[100%] h-[100%]"
+              className="w-full h-auto"
             />
           </div>
         </div>
