@@ -43,7 +43,7 @@ const PDFPreview = ({ formData, profileImage, selectedTemplate, fieldLabels, fie
           <img
             src={selectedTemplate}
             alt="Template background"
-            className="w-full h-full object-cover opacity-20"
+            className="w-full h-full object-fill"
           />
         </div>
       )}
@@ -99,7 +99,7 @@ const PDFPreview = ({ formData, profileImage, selectedTemplate, fieldLabels, fie
                       className="w-2/5 font-medium pr-2"
                       style={{ fontFamily: getFontFamily() }}
                     >
-                      {translations[currentLanguage][fieldName] || fieldLabels[fieldName]}:
+                      {translations[currentLanguage][fieldName] || fieldLabels[fieldName]} :-
                     </div>
                     <div 
                       className="w-3/5"

@@ -1328,9 +1328,9 @@ const BiodataForm = ({ scrollToTemplates }) => {
         }
 
         return (
-            <div key={fieldName} className="relative flex items-center mb-4">
+            <div key={fieldName} className="relative flex items-center">
                 <div className="flex-grow">
-                    <label className="w-full sm:w-[48%] inline-block px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-200 mb-1 mr-3">{fieldLabels[fieldName]}</label>
+                    <label className="w-full sm:w-[48%] inline-block px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-200  mr-3">{fieldLabels[fieldName]}</label>
                     {inputElement}
                     {errors[fieldName] && <p className="text-red-500 text-xs mt-1">{errors[fieldName]}</p>}
                 </div>
@@ -1509,7 +1509,7 @@ const BiodataForm = ({ scrollToTemplates }) => {
                                     {/* + Add New Section */}
                                     + {translations[currentLanguage].addNewSection}
                                 </button>
-                                <div className='block sm:flex justify-between gap-12'>
+                                <div className='block sm:flex justify-between gap-5'>
                                     <button
                                         type="button"
                                         onClick={resetForm}
@@ -1536,7 +1536,7 @@ const BiodataForm = ({ scrollToTemplates }) => {
 
                     <div className='flex justify-center w-full md:w-[43%] lg:[32%] relative'>
                         <div
-                            className='sticky top-[20px] mb-[30px] w-[350px] md:w-[305px] xl:w-[350px] h-[600px] bg-gray-100 rounded-2xl overflow-hidden border-2 border-gray-300 cursor-pointer'
+                            className='sticky top-[20px] mb-[30px] w-[350px] md:w-[305px] xl:w-[600px] h-[650px] bg-gray-100 rounded-2xl overflow-hidden border-2 border-gray-300 cursor-pointer'
                         >
                             {selectedTemplate ? (
                                 <div className="relative w-full h-full">
