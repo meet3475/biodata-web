@@ -613,54 +613,6 @@ const BiodataForm = ({ scrollToTemplates }) => {
     };
 
     // Update the handleChange function in your BiodataForm.jsx
-    // const handleChange = (e) => {
-    //     const { name, value } = e.target;
-
-    //     // List of fields that should only accept text (letters and spaces)
-    //     const textOnlyFields = [
-    //         'name',
-    //         'placeOfBirth',
-    //         'complexion',
-    //         'gotraCaste',
-    //         'occupation',
-    //         'education',
-    //         'fatherName',
-    //         'fatherOccupation',
-    //         'motherName',
-    //         'motherOccupation',
-    //         'siblings',
-    //         'contactPerson'
-    //     ];
-
-    //     // Validate numeric fields
-    //     if (name === 'height' || name === 'income' || name === 'contactNumber') {
-    //         // Only allow numbers (and decimal points for height/income)
-    //         if (value && !/^[0-9]*\.?[0-9]*$/.test(value)) {
-    //             return; // Don't update the field if it's not a valid number
-    //         }
-    //     }
-
-    //     // Validate text-only fields - only allow letters and spaces
-    //     if (textOnlyFields.includes(name)) {
-    //         // Only allow letters (including Unicode for non-English languages) and spaces
-    //         if (value && !/^[\p{L}\s]+$/u.test(value)) {
-    //             return; // Don't update the field if it contains numbers or special characters
-    //         }
-    //     }
-
-    //     setFormData({
-    //         ...formData,
-    //         [name]: value
-    //     });
-
-    //     // Clear error when user starts typing
-    //     if (errors[name]) {
-    //         setErrors({
-    //             ...errors,
-    //             [name]: ''
-    //         });
-    //     }
-    // };
     const handleChange = (e) => {
         const { name, value } = e.target;
 
@@ -679,14 +631,6 @@ const BiodataForm = ({ scrollToTemplates }) => {
             'siblings',
             'contactPerson'
         ];
-
-        // Validate numeric fields
-        // if (name === 'height' || name === 'income' || name === 'contactNumber') {
-        //     // Only allow numbers (and decimal points for height/income)
-        //     if (value && !/^[0-9]*\.?[0-9]*$/.test(value)) {
-        //         return; // Don't update the field if it's not a valid number
-        //     }
-        // }
 
         // Validate numeric fields (supporting Indian numerals)
         if (name === 'height' || name === 'income' || name === 'contactNumber') {
@@ -1137,6 +1081,7 @@ const BiodataForm = ({ scrollToTemplates }) => {
         }
     };
 
+    // Download pdf
     const handleDownloadPDF = async () => {
         if (!validateForm()) return;
 
@@ -1328,9 +1273,9 @@ const BiodataForm = ({ scrollToTemplates }) => {
         }
 
         return (
-            <div key={fieldName} className="relative flex items-center">
+            <div key={fieldName} className="relative flex items-center mb-3 sm:mb-0">
                 <div className="flex-grow">
-                    <label className="w-full sm:w-[48%] inline-block px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-200  mr-3">{fieldLabels[fieldName]}</label>
+                    <label className="w-full mb-1 sm:mb-0 sm:w-[48%] inline-block px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-200  mr-3">{fieldLabels[fieldName]}</label>
                     {inputElement}
                     {errors[fieldName] && <p className="text-red-500 text-xs mt-1">{errors[fieldName]}</p>}
                 </div>
@@ -1536,7 +1481,7 @@ const BiodataForm = ({ scrollToTemplates }) => {
 
                     <div className='flex justify-center w-full md:w-[43%] lg:[32%] relative'>
                         <div
-                            className='sticky top-[20px] mb-[30px] w-[350px] md:w-[305px] xl:w-[600px] h-[650px] bg-gray-100 rounded-2xl overflow-hidden border-2 border-gray-300 cursor-pointer'
+                            className='sticky top-[20px] mb-[30px] w-[350px] md:w-[305px] xl:w-[460px] h-[750px] bg-gray-100 rounded-2xl overflow-hidden border-2 border-gray-300 cursor-pointer'
                         >
                             {selectedTemplate ? (
                                 <div className="relative w-full h-full">
