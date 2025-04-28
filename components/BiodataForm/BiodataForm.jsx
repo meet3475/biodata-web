@@ -1479,9 +1479,9 @@ const BiodataForm = ({ scrollToTemplates }) => {
                     </div>
 
 
-                    <div className='flex justify-center w-full md:w-[43%] lg:[32%] relative'>
+                    <div className='flex justify-center w-full lg:w-[32%] relative'>
                         <div
-                            className='sticky top-[20px] mb-[30px] w-[350px] md:w-[305px] xl:w-[460px] h-[750px] bg-gray-100 rounded-2xl overflow-hidden border-2 border-gray-300 cursor-pointer'
+                            className='sticky top-[20px] mb-[30px] w-[90%] md:w-[90%] xl:w-[80%] h-[650px] lg:h-[750px] bg-gray-100 rounded-2xl overflow-hidden border-2 border-gray-300 cursor-pointer'
                         >
                             {selectedTemplate ? (
                                 <div className="relative w-full h-full">
@@ -1498,7 +1498,7 @@ const BiodataForm = ({ scrollToTemplates }) => {
                                 </div>
                             ) : (
                                 <div onClick={scrollToTemplates}>
-                                    <p className={`font-bold text-[30px] flex items-center justify-center text-center h-[750px] py-9 px-3`}>
+                                    <p className={`font-bold text-[30px] flex items-center justify-center text-center h-[650px] lg:h-[750px] py-9 px-3`}>
                                         {translations[currentLanguage].chooseTemplate}
                                     </p>
                                 </div>
