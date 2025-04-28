@@ -511,7 +511,7 @@ export default function Home() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-[80px]">
           <div className="text-center">
             <h2 className="text-[28px] sm:text-[45px] text-[#B92753] font-bold mb-3 bg-[white] rounded-lg lg:shadow-2xl block lg:inline py-3 px-2 sm:px-5">How to Create a Marriage Biodata ?</h2>
-            <p className="text-[16px] sm:text-[18px] py-10">Just follow a few easy steps, and you'll be ready to proceed</p>
+            <p className="text-[16px] sm:text-[18px] py-10">Just follow a few easy steps, and you all be ready to proceed</p>
           </div>
 
           <div>
