@@ -20,6 +20,9 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
+      <head>
+        <link rel="canonical" href="https://biodataweb.vercel.app" />
+      </head>
       <body>
         {children}
       </body>
