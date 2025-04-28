@@ -6,7 +6,6 @@ export const metadata = {
   keywords: "Wedding, Biodata, Marriage, Matrimony, Profile",
   author: "Wedding Biodata Team",
   viewport: "width=device-width, initial-scale=1",
-  canonical: "https://biodataweb.vercel.app",
   themeColor: "#B92753",
   robots: "index, follow",
   openGraph: {
@@ -15,6 +14,7 @@ export const metadata = {
     url: "https://biodataweb.vercel.app",
     type: "website"
   },
+  canonical: "https://biodataweb.vercel.app",
 };
 
 export default function RootLayout({ children }) {
