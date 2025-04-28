@@ -7,7 +7,7 @@ import { Tooltip } from 'react-tooltip';
 
 const Footer = () => {
     return (
-        <div className='bg-[#B92753]  py-[30px]'>
+        <div className='bg-[black] py-[30px]'>
             <div className='mx-auto max-w-7xl px-4 py-5 sm:px-6 lg:px-8 flex flex-wrap md:grid md:grid-cols-2 lg:flex lg:justify-between gap-6'>
 
                 <div className='w-full md:w-[75%] lg:w-[30%]'>
@@ -56,7 +56,7 @@ const Footer = () => {
                 
             </div>
             <div className='w-full flex justify-center items-center mt-10 md:mt-0'>
-                    <p className='text-[#e0cfcf] text-center'>
+                    <p className='text-[white] text-center'>
                         ©weddingbiodata 2025. All rights reserved.
                     </p>
                 </div>

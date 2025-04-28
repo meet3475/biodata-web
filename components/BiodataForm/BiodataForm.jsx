@@ -1498,7 +1498,7 @@ const BiodataForm = ({ scrollToTemplates }) => {
                                 </div>
                             ) : (
                                 <div onClick={scrollToTemplates}>
-                                    <p className={`font-bold text-[30px] flex items-center h-[600] justify-center text-center py-9 px-3`}>
+                                    <p className={`font-bold text-[30px] flex items-center justify-center text-center h-[750px] py-9 px-3`}>
                                         {translations[currentLanguage].chooseTemplate}
                                     </p>
                                 </div>

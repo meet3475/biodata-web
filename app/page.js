@@ -475,7 +475,7 @@ export default function Home() {
       {/* create biodata section end */}
 
       {/* How to Create biodata section start */}
-      <div className="bg-[white]">
+      {/* <div className="bg-[white]">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-[80px]">
           <div className="text-center">
             <h2 className="text-[28px] sm:text-[45px] text-[white] font-bold mb-3 bg-[#B92753] rounded-lg lg:shadow-2xl block lg:inline py-3 px-2 sm:px-5">How to Create Free Marriage Biodata?</h2>
@@ -502,6 +502,101 @@ export default function Home() {
               <p className="mt-3 mb-7 text-[white]">Click on the <span className="font-semibold"> Generate Biodata</span> button. You will be directed to the Privews page. <span className="font-semibold">Download</span> your biodata by clicking on the Download Biodata button.</p>
             </div>
           </div>
+        </div>
+      </div> */}
+      {/* How to Create biodata section end */}
+
+      {/* How to Create biodata section start */}
+      <div className="bg-[white]">
+        <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-[80px]">
+          <div className="text-center">
+            <h2 className="text-[28px] sm:text-[45px] text-[#B92753] font-bold mb-3 bg-[white] rounded-lg lg:shadow-2xl block lg:inline py-3 px-2 sm:px-5">How to Create a Marriage Biodata ?</h2>
+            <p className="text-[16px] sm:text-[18px] py-10">Just follow a few easy steps, and you'll be ready to proceed</p>
+          </div>
+
+          <div>
+            <div className="flex sm:flex-row flex-col items-center sm:items-stretch mb-8" data-aos="fade-up">
+              <div className="w-[160px] h-[200px] mr-5">
+                <Image
+                  src="/images/personal-detail.png"
+                  alt="personal-detail"
+                  width={1000}
+                  height={500}
+                  className="w-[100%] h-[100%] fill"
+                  data-aos="zoom-in"
+                />
+              </div>
+
+              <div className="py-10 w-[95%]">
+                <div className="flex justify-center sm:justify-start">
+                  <div className="w-[80px] bg-[#B92753] hover:bg-[#4649C0] text-[white] font-bold rounded-xl px-2 py-1.5 text-center">
+                    Step 1
+                  </div>
+                </div>
+                <div>
+                  <h3 className="text-[22px] font-semibold py-2">Choose the Free Template</h3>
+                  <p className="w-[95%] text-[gray] font-medium">
+                    Click on the Choose Your Template at Now choose the Free template from our Popular Marriage Biodata Designs.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="flex sm:flex-row flex-col-reverse items-center sm:items-stretch mb-8" data-aos="fade-up">
+              <div className="py-10 w-[95%]">
+                <div className="flex justify-center sm:justify-start">
+                  <div className="w-[80px] bg-[#B92753] hover:bg-[#4649C0] text-[white] font-bold rounded-xl px-2 py-1.5 text-center">
+                    Step 2
+                  </div>
+                </div>
+                <div>
+                  <h3 className="text-[22px] font-semibold py-2">Fill all your details in the language of your choice</h3>
+                  <p className=" text-[gray] font-medium">
+                    Click on the Create Biodata Button. In the biodata form, select the language in which you want to create your biodata. Add your Profile Photho and fill in your personal, family and contact details.
+                  </p>
+                </div>
+              </div>
+
+              <div className="w-[160px] h-[200px]">
+                <Image
+                  src="/images/contact-detail.png"
+                  alt="contact-detail"
+                  width={1000}
+                  height={500}
+                  className="w-[100%] h-[100%] fill"
+                  data-aos="zoom-in"
+                />
+              </div>
+            </div>
+
+            <div className="flex sm:flex-row flex-col items-center sm:items-stretch mb-8" data-aos="fade-up">
+              <div className="w-[160px] h-[200px] mr-5">
+                <Image
+                  src="/images/family-detail.png"
+                  alt="family-detail"
+                  width={1000}
+                  height={500}
+                  className="w-[100%] h-[100%] fill"
+                  data-aos="zoom-in"
+                />
+              </div>
+
+              <div className="py-10 w-[95%]">
+                <div className="flex justify-center sm:justify-start">
+                  <div className="w-[80px] bg-[#B92753] hover:bg-[#4649C0] text-[white] font-bold rounded-xl px-2 py-1.5 text-center">
+                    Step 3
+                  </div>
+                </div>
+                <div>
+                  <h3 className="text-[22px] font-semibold py-2">Download Free Marriage Biodata</h3>
+                  <p className=" text-[gray] font-medium">
+                    Click on the Generate Biodata button. You will be directed to the Privews page. Download your biodata by clicking on the Download Biodata button.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
       </div>
       {/* How to Create biodata section end */}
@@ -639,31 +734,26 @@ export default function Home() {
                   className="mySwiper"
                   breakpoints={{
                     310: {
-                      slidesPerView: 1,
-                      spaceBetween: 10,
+                      slidesPerView: 1
                     },
                     540: {
-                      slidesPerView: 1.5,
-                      spaceBetween: 15,
+                      slidesPerView: 1.5
                     },
                     940: {
-                      slidesPerView: 2,
-                      spaceBetween: 20,
+                      slidesPerView: 2
                     },
                     1024: {
-                      slidesPerView: 2.5,
-                      spaceBetween: 30,
+                      slidesPerView: 2.5
                     },
                     1600: {
-                      slidesPerView: 3,
-                      spaceBetween: 30,
-                    },
+                      slidesPerView: 3
+                    }
                   }}
                 >
                   {
                     reviews.map((item, index) => (
                       <SwiperSlide key={index}>
-                        <div className="bg-white shadow-lg rounded-xl p-6 sm:p-8 text-center max-w-md mx-auto border border-gray-200 [border-top:12px_solid_#B92753] h-[350px]">
+                        <div className="bg-white shadow-lg rounded-xl p-6 sm:p-8 text-center max-w-md mx-auto border border-gray-200 [border-top:12px_solid_#B92753] h-[370px]">
                           <div className="flex justify-center text-[#B92753] text-4xl">
                             <BiSolidQuoteLeft />
                           </div>

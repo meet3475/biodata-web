@@ -1,12 +1,12 @@
 @import "tailwindcss";
 
 @font-face {
-  font-family: 'DM';
-  src: url('../public/fonts/DMSans-Regular.ttf');
+  font-family: 'Montserrat';
+  src: url('../public/fonts/Montserrat-Regular.ttf');
 }
 
 *{
-  font-family: 'DM', 'sans-sarif';
+  font-family: 'Montserrat', 'sans-sarif';
 }
 
 :root {
