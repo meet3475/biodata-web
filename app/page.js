@@ -148,31 +148,31 @@ const step = [
 
 const problem = [
   {
-    title: '1. A Personal Snapshot :-',
+    title: '1. A Personal Snapshot',
     description: 'Your marriage biodata format showcases a snapshot of your life, encapsulating your morals, education, career, and family values. It is the marriage resume that speaks volumes before the first hello.'
   },
   {
-    title: '2. Cultural Relevance :-',
+    title: '2. Cultural Relevance',
     description: 'In cultures where arranged marriages are prevalent, matrimonial biodata holds immense significance. The biodata for marriage proposal contains details that reflect ones social and cultural background, which is essential for traditional matchmaking.'
   },
   {
-    title: '3. Matchmaking Made Easy :-',
+    title: '3. Matchmaking Made Easy',
     description: 'With our online biodata maker for marriage, creating a matrimonial profile is hassle-free. The bio data for marriage format is designed to cover all aspects that are important for finding the right match.'
   },
   {
-    title: '4. Time-Saving Tool :-',
+    title: '4. Time-Saving Tool',
     description: 'Our free online biodata maker for marriage streamlines the process of creating a marriage profile. It is a time-efficient way to prepare biodata for marriage without compromising on the quality or details.'
   },
   {
-    title: '5. Wide Range of Choices :-',
+    title: '5. Wide Range of Choices',
     description: 'Whether you choose a simple shadi biodata format or an elaborate marriage biodata design, our free biodata maker offers a variety of templates to suit your needs.'
   },
   {
-    title: '6. Accessibility :-',
+    title: '6. Accessibility',
     description: 'Whether you choose a simple shadi biodata format or an elaborate marriage biodata design, our free biodata maker offers a variety of templates to suit your needs.'
   },
   {
-    title: '7. First Step to a Lifelong Journey :-',
+    title: '7. First Step to a Lifelong Journey',
     description: 'Whether you choose a simple shadi biodata format or an elaborate marriage biodata design, our free biodata maker offers a variety of templates to suit your needs.'
   }
 

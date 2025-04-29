@@ -7,6 +7,7 @@ import PDFPreview from '../PDFPreview/PDFPreview';
 import { pdf } from '@react-pdf/renderer';
 import { saveAs } from 'file-saver';
 import Swal from 'sweetalert2';
+import DataLoader from '../Loarder/DataLoader';
 
 // Create styles for PDF document
 
@@ -218,7 +219,7 @@ const BiodataForm = ({ scrollToTemplates }) => {
     const [sectionFields, setSectionFields] = useState([]);
     const [isDropdownOpen, setDropdownOpen] = useState(false);
 
-    console.log(newFieldName)
+    const [loading, setLoading] = useState(false);
 
     // Add to your existing state
     const [currentLanguage, setCurrentLanguage] = useState('English');
@@ -568,6 +569,18 @@ const BiodataForm = ({ scrollToTemplates }) => {
 
     // State for selected template
     const [selectedTemplate, setSelectedTemplate] = useState(null);
+
+    useEffect(() => {
+        if (selectedTemplate) {
+            setLoading(true);
+            const timeout = setTimeout(() => {
+                setLoading(false);
+            }, 2000); // 1 second delay
+
+            return () => clearTimeout(timeout); // cleanup
+        }
+    }, [selectedTemplate]);
+
 
     useEffect(() => {
         // Get selected template on initial load
@@ -935,7 +948,7 @@ const BiodataForm = ({ scrollToTemplates }) => {
             tempErrors.contactNumber = translations[currentLanguage].contactNumberError || 'Please enter a valid 10-digit phone number';
             isValid = false;
         }
-        
+
         if (!profileImage) {
             tempErrors.profileImage = 'Profile image is required';
             isValid = false;
@@ -1405,7 +1418,7 @@ const BiodataForm = ({ scrollToTemplates }) => {
 
                 <div className='flex flex-col-reverse items-center lg:items-stretch lg:flex-row justify-between'>
 
-                    <div className="bg-white shadow-md rounded-lg p-6 mb-8 w-[98%] mx- lg:w-[65%]">
+                    <div className="bg-white shadow-md rounded-lg p-6 mb-8 w-[98%] lg:w-[58%] xl:w-[65%]">
                         <div className="flex justify-between mb-6">
                             <div className="relative w-28 h-28 sm:w-32 sm:h-32 bg-gray-100 rounded-full overflow-hidden border-2 border-gray-300">
                                 {profileImage ? (
@@ -1479,26 +1492,32 @@ const BiodataForm = ({ scrollToTemplates }) => {
                     </div>
 
 
-                    <div className='flex justify-center w-full lg:w-[32%] relative'>
+                    <div className='flex justify-center w-full lg:w-[40%] xl:w-[38%] relative'>
                         <div
-                            className='sticky top-[20px] mb-[30px] w-[90%] md:w-[90%] xl:w-[80%] h-[650px] lg:h-[750px] bg-gray-100 rounded-2xl overflow-hidden border-2 border-gray-300 cursor-pointer'
+                            className='sticky top-[20px] mb-[30px] w-[90%] md:w-[95%] xl:w-[88%] h-[700px] lg:h-[750px] bg-gray-100 rounded-2xl overflow-hidden border-2 border-gray-300 cursor-pointer'
                         >
                             {selectedTemplate ? (
-                                <div className="relative w-full h-full">
-                                    <PDFPreview
-                                        formData={formData}
-                                        profileImage={profileImage}
-                                        selectedTemplate={selectedTemplate}
-                                        fieldLabels={fieldLabels}
-                                        fieldOrder={fieldOrder}
-                                        sections={sections}
-                                        translations={translations}
-                                        currentLanguage={currentLanguage}
-                                    />
-                                </div>
+                                loading ? (
+                                    <div className="flex justify-center items-center h-full">
+                                        <DataLoader />
+                                    </div>
+                                ) : (
+                                    <div className="relative w-full h-full">
+                                        <PDFPreview
+                                            formData={formData}
+                                            profileImage={profileImage}
+                                            selectedTemplate={selectedTemplate}
+                                            fieldLabels={fieldLabels}
+                                            fieldOrder={fieldOrder}
+                                            sections={sections}
+                                            translations={translations}
+                                            currentLanguage={currentLanguage}
+                                        />
+                                    </div>
+                                )
                             ) : (
                                 <div onClick={scrollToTemplates}>
-                                    <p className={`font-bold text-[30px] flex items-center justify-center text-center h-[650px] lg:h-[750px] py-9 px-3`}>
+                                    <p className={`font-bold text-[30px] flex items-center justify-center text-center h-[700px] lg:h-[750px] py-9 px-3`}>
                                         {translations[currentLanguage].chooseTemplate}
                                     </p>
                                 </div>
