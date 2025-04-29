@@ -367,8 +367,8 @@ export default function Home() {
                               src={item.image}
                               width={500}
                               height={1000}
-                              alt="Template"
-                              className="temp-img  fill"
+                              alt="Template" 
+                              className="temp-img fill"
                             />
                           </div>
 
